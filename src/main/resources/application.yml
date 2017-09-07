@@ -1,0 +1,9 @@
+server:
+  port: 8080
+  contextPath: /
+  
+spring:
+  jackson:
+    date-format: com.ronvel.farztev.admin.config.RFC3339DateFormat
+    serialization: 
+      WRITE_DATES_AS_TIMESTAMPS: false
