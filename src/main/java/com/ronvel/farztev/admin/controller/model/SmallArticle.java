@@ -8,11 +8,14 @@ import io.swagger.annotations.ApiModelProperty;
 /**
  * SmallArticle
  */
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2017-09-07T23:10:06.754+02:00")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2017-09-09T12:22:56.850+02:00")
 
 public class SmallArticle   {
   @JsonProperty("id")
   private Long id = null;
+
+  @JsonProperty("country")
+  private String country = null;
 
   @JsonProperty("name")
   private String name = null;
@@ -36,6 +39,24 @@ public class SmallArticle   {
 
   public void setId(Long id) {
     this.id = id;
+  }
+
+  public SmallArticle country(String country) {
+    this.country = country;
+    return this;
+  }
+
+   /**
+   * Get country
+   * @return country
+  **/
+  @ApiModelProperty(example = "fr", value = "")
+  public String getCountry() {
+    return country;
+  }
+
+  public void setCountry(String country) {
+    this.country = country;
   }
 
   public SmallArticle name(String name) {
@@ -85,13 +106,14 @@ public class SmallArticle   {
     }
     SmallArticle smallArticle = (SmallArticle) o;
     return Objects.equals(this.id, smallArticle.id) &&
+        Objects.equals(this.country, smallArticle.country) &&
         Objects.equals(this.name, smallArticle.name) &&
         Objects.equals(this.photo, smallArticle.photo);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, name, photo);
+    return Objects.hash(id, country, name, photo);
   }
 
   @Override
@@ -100,6 +122,7 @@ public class SmallArticle   {
     sb.append("class SmallArticle {\n");
     
     sb.append("    id: ").append(toIndentedString(id)).append("\n");
+    sb.append("    country: ").append(toIndentedString(country)).append("\n");
     sb.append("    name: ").append(toIndentedString(name)).append("\n");
     sb.append("    photo: ").append(toIndentedString(photo)).append("\n");
     sb.append("}");

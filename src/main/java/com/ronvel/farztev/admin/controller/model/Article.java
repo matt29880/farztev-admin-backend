@@ -8,11 +8,14 @@ import io.swagger.annotations.ApiModelProperty;
 /**
  * Article
  */
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2017-09-07T23:10:06.754+02:00")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2017-09-09T12:22:56.850+02:00")
 
 public class Article   {
   @JsonProperty("id")
   private Long id = null;
+
+  @JsonProperty("country")
+  private String country = null;
 
   @JsonProperty("name")
   private String name = null;
@@ -39,6 +42,24 @@ public class Article   {
 
   public void setId(Long id) {
     this.id = id;
+  }
+
+  public Article country(String country) {
+    this.country = country;
+    return this;
+  }
+
+   /**
+   * Get country
+   * @return country
+  **/
+  @ApiModelProperty(example = "fr", value = "")
+  public String getCountry() {
+    return country;
+  }
+
+  public void setCountry(String country) {
+    this.country = country;
   }
 
   public Article name(String name) {
@@ -106,6 +127,7 @@ public class Article   {
     }
     Article article = (Article) o;
     return Objects.equals(this.id, article.id) &&
+        Objects.equals(this.country, article.country) &&
         Objects.equals(this.name, article.name) &&
         Objects.equals(this.photo, article.photo) &&
         Objects.equals(this.description, article.description);
@@ -113,7 +135,7 @@ public class Article   {
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, name, photo, description);
+    return Objects.hash(id, country, name, photo, description);
   }
 
   @Override
@@ -122,6 +144,7 @@ public class Article   {
     sb.append("class Article {\n");
     
     sb.append("    id: ").append(toIndentedString(id)).append("\n");
+    sb.append("    country: ").append(toIndentedString(country)).append("\n");
     sb.append("    name: ").append(toIndentedString(name)).append("\n");
     sb.append("    photo: ").append(toIndentedString(photo)).append("\n");
     sb.append("    description: ").append(toIndentedString(description)).append("\n");

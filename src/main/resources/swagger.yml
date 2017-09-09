@@ -50,7 +50,7 @@ definitions:
         type: "integer"
         format: "int64"
       country:
-        type: "country"
+        type: "string"
         example: "fr"
       name:
         type: "string"
@@ -65,7 +65,7 @@ definitions:
         type: "integer"
         format: "int64"
       country:
-        type: "country"
+        type: "string"
         example: "fr"
       name:
         type: "string"
