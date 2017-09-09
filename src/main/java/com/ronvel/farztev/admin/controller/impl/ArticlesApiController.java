@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 import com.ronvel.farztev.admin.controller.ArticlesApi;
 import com.ronvel.farztev.admin.controller.model.Article;
-import com.ronvel.farztev.admin.controller.model.SmallArticle;
+import com.ronvel.farztev.admin.controller.model.ListArticle;
 
 import io.swagger.annotations.ApiParam;
 
@@ -30,21 +30,21 @@ public class ArticlesApiController implements ArticlesApi {
 		return new ResponseEntity<Article>(article,HttpStatus.OK);
 	}
 
-	public ResponseEntity<List<SmallArticle>> articlesGet() {
-		List<SmallArticle> articles = new ArrayList<>();
-		SmallArticle article = new SmallArticle();
+	public ResponseEntity<List<ListArticle>> articlesGet() {
+		List<ListArticle> articles = new ArrayList<>();
+		ListArticle article = new ListArticle();
 		article.setId(1L);
 		article.setCountry("DE");
 		article.setName("Visit in Berlin");
 		article.setPhoto("http://lorempixel.com/400/200/city/");
 		articles.add(article);
-		article = new SmallArticle();
+		article = new ListArticle();
 		article.setId(1L);
 		article.setCountry("EN");
 		article.setName("Visit in London");
 		article.setPhoto("http://lorempixel.com/400/200/city/");
 		articles.add(article);
-		return new ResponseEntity<List<SmallArticle>>(articles, HttpStatus.OK);
+		return new ResponseEntity<List<ListArticle>>(articles, HttpStatus.OK);
 	}
 
 }

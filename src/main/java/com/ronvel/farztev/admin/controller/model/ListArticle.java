@@ -10,7 +10,7 @@ import io.swagger.annotations.ApiModelProperty;
  */
 @javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2017-09-09T12:22:56.850+02:00")
 
-public class SmallArticle   {
+public class ListArticle   {
   @JsonProperty("id")
   private Long id = null;
 
@@ -23,7 +23,7 @@ public class SmallArticle   {
   @JsonProperty("photo")
   private String photo = null;
 
-  public SmallArticle id(Long id) {
+  public ListArticle id(Long id) {
     this.id = id;
     return this;
   }
@@ -41,7 +41,7 @@ public class SmallArticle   {
     this.id = id;
   }
 
-  public SmallArticle country(String country) {
+  public ListArticle country(String country) {
     this.country = country;
     return this;
   }
@@ -59,7 +59,7 @@ public class SmallArticle   {
     this.country = country;
   }
 
-  public SmallArticle name(String name) {
+  public ListArticle name(String name) {
     this.name = name;
     return this;
   }
@@ -77,7 +77,7 @@ public class SmallArticle   {
     this.name = name;
   }
 
-  public SmallArticle photo(String photo) {
+  public ListArticle photo(String photo) {
     this.photo = photo;
     return this;
   }
@@ -104,7 +104,7 @@ public class SmallArticle   {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    SmallArticle smallArticle = (SmallArticle) o;
+    ListArticle smallArticle = (ListArticle) o;
     return Objects.equals(this.id, smallArticle.id) &&
         Objects.equals(this.country, smallArticle.country) &&
         Objects.equals(this.name, smallArticle.name) &&

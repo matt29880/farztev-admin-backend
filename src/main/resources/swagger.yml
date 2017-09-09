@@ -21,7 +21,7 @@ paths:
           schema:
             type: "array"
             items:
-              $ref: "#/definitions/SmallArticle"
+              $ref: "#/definitions/ListArticle"
         400:
           description: "Invalid status value"
   /articles/{articleId}:
@@ -43,7 +43,7 @@ paths:
         404:
           description: "Article not found"
 definitions:
-  SmallArticle:
+  ListArticle:
     type: "object"
     properties:
       id:

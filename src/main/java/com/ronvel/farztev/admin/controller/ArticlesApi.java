@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.ronvel.farztev.admin.controller.model.Article;
-import com.ronvel.farztev.admin.controller.model.SmallArticle;
+import com.ronvel.farztev.admin.controller.model.ListArticle;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -30,13 +30,13 @@ public interface ArticlesApi {
     ResponseEntity<Article> articlesArticleIdGet(@ApiParam(value = "ID of the article to return",required=true ) @PathVariable("articleId") Long articleId);
 
 
-    @ApiOperation(value = "", notes = "", response = SmallArticle.class, responseContainer = "List", tags={  })
+    @ApiOperation(value = "", notes = "", response = ListArticle.class, responseContainer = "List", tags={  })
     @ApiResponses(value = { 
-        @ApiResponse(code = 200, message = "successful operation", response = SmallArticle.class),
-        @ApiResponse(code = 400, message = "Invalid status value", response = SmallArticle.class) })
+        @ApiResponse(code = 200, message = "successful operation", response = ListArticle.class),
+        @ApiResponse(code = 400, message = "Invalid status value", response = ListArticle.class) })
     @RequestMapping(value = "/articles",
         produces = { "application/json" }, 
         method = RequestMethod.GET)
-    ResponseEntity<List<SmallArticle>> articlesGet();
+    ResponseEntity<List<ListArticle>> articlesGet();
 
 }
