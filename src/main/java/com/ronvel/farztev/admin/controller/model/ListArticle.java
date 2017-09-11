@@ -1,14 +1,15 @@
 package com.ronvel.farztev.admin.controller.model;
 
+import java.util.Date;
 import java.util.Objects;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import io.swagger.annotations.ApiModelProperty;
 /**
- * SmallArticle
+ * ListArticle
  */
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2017-09-09T12:22:56.850+02:00")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2017-09-11T22:47:11.093+02:00")
 
 public class ListArticle   {
   @JsonProperty("id")
@@ -22,6 +23,12 @@ public class ListArticle   {
 
   @JsonProperty("photo")
   private String photo = null;
+
+  @JsonProperty("created")
+  private Date created = null;
+
+  @JsonProperty("updated")
+  private Date updated = null;
 
   public ListArticle id(Long id) {
     this.id = id;
@@ -95,6 +102,42 @@ public class ListArticle   {
     this.photo = photo;
   }
 
+  public ListArticle created(Date created) {
+    this.created = created;
+    return this;
+  }
+
+   /**
+   * Get created
+   * @return created
+  **/
+  @ApiModelProperty(example = "Blablabla", value = "")
+  public Date getCreated() {
+    return created;
+  }
+
+  public void setCreated(Date created) {
+    this.created = created;
+  }
+
+  public ListArticle updated(Date updated) {
+    this.updated = updated;
+    return this;
+  }
+
+   /**
+   * Get updated
+   * @return updated
+  **/
+  @ApiModelProperty(example = "Blablabla", value = "")
+  public Date getUpdated() {
+    return updated;
+  }
+
+  public void setUpdated(Date updated) {
+    this.updated = updated;
+  }
+
 
   @Override
   public boolean equals(java.lang.Object o) {
@@ -104,27 +147,31 @@ public class ListArticle   {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    ListArticle smallArticle = (ListArticle) o;
-    return Objects.equals(this.id, smallArticle.id) &&
-        Objects.equals(this.country, smallArticle.country) &&
-        Objects.equals(this.name, smallArticle.name) &&
-        Objects.equals(this.photo, smallArticle.photo);
+    ListArticle listArticle = (ListArticle) o;
+    return Objects.equals(this.id, listArticle.id) &&
+        Objects.equals(this.country, listArticle.country) &&
+        Objects.equals(this.name, listArticle.name) &&
+        Objects.equals(this.photo, listArticle.photo) &&
+        Objects.equals(this.created, listArticle.created) &&
+        Objects.equals(this.updated, listArticle.updated);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, country, name, photo);
+    return Objects.hash(id, country, name, photo, created, updated);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class SmallArticle {\n");
+    sb.append("class ListArticle {\n");
     
     sb.append("    id: ").append(toIndentedString(id)).append("\n");
     sb.append("    country: ").append(toIndentedString(country)).append("\n");
     sb.append("    name: ").append(toIndentedString(name)).append("\n");
     sb.append("    photo: ").append(toIndentedString(photo)).append("\n");
+    sb.append("    created: ").append(toIndentedString(created)).append("\n");
+    sb.append("    updated: ").append(toIndentedString(updated)).append("\n");
     sb.append("}");
     return sb.toString();
   }

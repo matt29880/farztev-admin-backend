@@ -1,5 +1,6 @@
 package com.ronvel.farztev.admin.controller.model;
 
+import java.util.Date;
 import java.util.Objects;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -8,7 +9,7 @@ import io.swagger.annotations.ApiModelProperty;
 /**
  * Article
  */
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2017-09-09T12:22:56.850+02:00")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2017-09-11T22:47:11.093+02:00")
 
 public class Article   {
   @JsonProperty("id")
@@ -25,6 +26,12 @@ public class Article   {
 
   @JsonProperty("description")
   private String description = null;
+
+  @JsonProperty("created")
+  private Date created = null;
+
+  @JsonProperty("updated")
+  private Date updated = null;
 
   public Article id(Long id) {
     this.id = id;
@@ -116,6 +123,42 @@ public class Article   {
     this.description = description;
   }
 
+  public Article created(Date created) {
+    this.created = created;
+    return this;
+  }
+
+   /**
+   * Get created
+   * @return created
+  **/
+  @ApiModelProperty(example = "Blablabla", value = "")
+  public Date getCreated() {
+    return created;
+  }
+
+  public void setCreated(Date created) {
+    this.created = created;
+  }
+
+  public Article updated(Date updated) {
+    this.updated = updated;
+    return this;
+  }
+
+   /**
+   * Get updated
+   * @return updated
+  **/
+  @ApiModelProperty(example = "Blablabla", value = "")
+  public Date getUpdated() {
+    return updated;
+  }
+
+  public void setUpdated(Date updated) {
+    this.updated = updated;
+  }
+
 
   @Override
   public boolean equals(java.lang.Object o) {
@@ -130,12 +173,14 @@ public class Article   {
         Objects.equals(this.country, article.country) &&
         Objects.equals(this.name, article.name) &&
         Objects.equals(this.photo, article.photo) &&
-        Objects.equals(this.description, article.description);
+        Objects.equals(this.description, article.description) &&
+        Objects.equals(this.created, article.created) &&
+        Objects.equals(this.updated, article.updated);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, country, name, photo, description);
+    return Objects.hash(id, country, name, photo, description, created, updated);
   }
 
   @Override
@@ -148,6 +193,8 @@ public class Article   {
     sb.append("    name: ").append(toIndentedString(name)).append("\n");
     sb.append("    photo: ").append(toIndentedString(photo)).append("\n");
     sb.append("    description: ").append(toIndentedString(description)).append("\n");
+    sb.append("    created: ").append(toIndentedString(created)).append("\n");
+    sb.append("    updated: ").append(toIndentedString(updated)).append("\n");
     sb.append("}");
     return sb.toString();
   }

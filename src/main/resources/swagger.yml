@@ -42,6 +42,37 @@ paths:
             $ref: "#/definitions/Article"
         404:
           description: "Article not found"
+  /countries:
+    get:
+      produces:
+      - "application/json"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/ListCountry"
+      400:
+        description: "Invalid status value"
+  /countries/{countryId}:
+    get:
+      produces:
+      - "application/json"
+      parameters:
+      - name: "countryId"
+        in: "path"
+        description: "ID of the country to return"
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/Country"
+        404:
+          description: "Country not found"
 definitions:
   ListArticle:
     type: "object"
@@ -58,6 +89,14 @@ definitions:
       photo:
         type: "string"
         example: "dublin.jpg"
+      created:
+        type: "string"
+        format: "date"
+        example: "Blablabla"
+      updated:
+        type: "string"
+        format: "date"
+        example: "Blablabla"
   Article:
     type: "object"
     properties:
@@ -76,6 +115,99 @@ definitions:
       description:
         type: "string"
         example: "Dublin is the capital of Irland..."
+      created:
+        type: "string"
+        format: "date"
+        example: "Blablabla"
+      updated:
+        type: "string"
+        format: "date"
+        example: "Blablabla"
+  ListCountry:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+        format: "int64"
+        example: 10
+      name:
+        type: "string"
+        example: "Espagne"
+      abbreviation:
+        type: "string"
+        example: "ES"
+      beginning:
+        type: "string"
+        format: "date"
+        example: "Blablabla"
+      ending:
+        type: "string"
+        format: "date"
+        example: "Blablabla"
+      created:
+        type: "string"
+        format: "date"
+        example: "Blablabla"
+      updated:
+        type: "string"
+        format: "date"
+        example: "Blablabla"
+      online:
+        type: "boolean"
+        example: true
+      continent:
+        type: "string"
+        example: "ASIA"
+  Country:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+        format: "int64"
+        example: 10
+      name:
+        type: "string"
+        example: "Espagne"
+      abbreviation:
+        type: "string"
+        example: "es"
+      description:
+        type: "string"
+        example: "Blablabla"
+      trip:
+        type: "string"
+        example: "Blablabla"
+      why:
+        type: "string"
+        example: "Blablabla"
+      favorite:
+        type: "string"
+        example: "Blablabla"
+      conclusion:
+        type: "string"
+        example: "Blablabla"
+      beginning:
+        type: "string"
+        format: "date"
+        example: "Blablabla"
+      ending:
+        type: "string"
+        format: "date"
+        example: "Blablabla"
+      created:
+        type: "string"
+        format: "date"
+        example: "Blablabla"
+      updated:
+        type: "string"
+        format: "date"
+        example: "Blablabla"
+      online:
+        type: "boolean"
+        example: true
+      continent:
+        type: "string"
+        example: "ASIA"
 externalDocs:
   description: "Find out more about Swagger"
   url: "http://swagger.io"
