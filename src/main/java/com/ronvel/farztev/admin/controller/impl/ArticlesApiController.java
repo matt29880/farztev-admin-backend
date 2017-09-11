@@ -23,7 +23,7 @@ public class ArticlesApiController implements ArticlesApi {
 			@ApiParam(value = "ID of the article to return", required = true) @PathVariable("articleId") Long articleId) {
 		Article article = new Article();
 		article.setId(1L);
-		article.setCountry("DE");
+		article.setCountry("de");
 		article.setName("Visit in Berlin");
 		article.setDescription("Berlin is a the capital of Germany");
 		article.setPhoto("http://lorempixel.com/400/200/city/");
@@ -34,13 +34,13 @@ public class ArticlesApiController implements ArticlesApi {
 		List<ListArticle> articles = new ArrayList<>();
 		ListArticle article = new ListArticle();
 		article.setId(1L);
-		article.setCountry("DE");
+		article.setCountry("de");
 		article.setName("Visit in Berlin");
 		article.setPhoto("http://lorempixel.com/400/200/city/");
 		articles.add(article);
 		article = new ListArticle();
 		article.setId(1L);
-		article.setCountry("EN");
+		article.setCountry("en");
 		article.setName("Visit in London");
 		article.setPhoto("http://lorempixel.com/400/200/city/");
 		articles.add(article);
