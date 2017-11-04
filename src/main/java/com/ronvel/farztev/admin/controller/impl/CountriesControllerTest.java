@@ -10,8 +10,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import com.ronvel.farztev.admin.controller.CountryController;
-import com.ronvel.farztev.admin.controller.model.Country;
-import com.ronvel.farztev.admin.controller.model.ListCountry;
+import com.ronvel.farztev.admin.controller.dto.Country;
+import com.ronvel.farztev.admin.controller.dto.ListCountry;
 
 import io.swagger.annotations.ApiParam;
 

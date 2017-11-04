@@ -7,8 +7,8 @@ import java.util.List;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.ronvel.farztev.admin.controller.model.Country;
-import com.ronvel.farztev.admin.controller.model.ListCountry;
+import com.ronvel.farztev.admin.controller.dto.Country;
+import com.ronvel.farztev.admin.controller.dto.ListCountry;
 
 public class CountryApiTest extends BaseControllerTest {
 
@@ -24,7 +24,6 @@ public class CountryApiTest extends BaseControllerTest {
 	@Test
 	public void countriesCountryIdGet() {
 		Country country = countryController.countriesCountryIdGet(1L).getBody();
-		
 	}
 
 }

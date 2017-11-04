@@ -1,4 +1,4 @@
-package com.ronvel.farztev.admin.controller.model;
+package com.ronvel.farztev.admin.controller.dto;
 
 import java.util.Date;
 import java.util.Objects;
@@ -7,11 +7,11 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import io.swagger.annotations.ApiModelProperty;
 /**
- * ListCountry
+ * Country
  */
 @javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2017-09-11T22:47:11.093+02:00")
 
-public class ListCountry   {
+public class Country   {
   @JsonProperty("id")
   private Long id = null;
 
@@ -20,6 +20,21 @@ public class ListCountry   {
 
   @JsonProperty("abbreviation")
   private String abbreviation = null;
+
+  @JsonProperty("description")
+  private String description = null;
+
+  @JsonProperty("trip")
+  private String trip = null;
+
+  @JsonProperty("why")
+  private String why = null;
+
+  @JsonProperty("favorite")
+  private String favorite = null;
+
+  @JsonProperty("conclusion")
+  private String conclusion = null;
 
   @JsonProperty("beginning")
   private Date beginning = null;
@@ -39,7 +54,7 @@ public class ListCountry   {
   @JsonProperty("continent")
   private String continent = null;
 
-  public ListCountry id(Long id) {
+  public Country id(Long id) {
     this.id = id;
     return this;
   }
@@ -57,7 +72,7 @@ public class ListCountry   {
     this.id = id;
   }
 
-  public ListCountry name(String name) {
+  public Country name(String name) {
     this.name = name;
     return this;
   }
@@ -75,7 +90,7 @@ public class ListCountry   {
     this.name = name;
   }
 
-  public ListCountry abbreviation(String abbreviation) {
+  public Country abbreviation(String abbreviation) {
     this.abbreviation = abbreviation;
     return this;
   }
@@ -84,7 +99,7 @@ public class ListCountry   {
    * Get abbreviation
    * @return abbreviation
   **/
-  @ApiModelProperty(example = "ES", value = "")
+  @ApiModelProperty(example = "es", value = "")
   public String getAbbreviation() {
     return abbreviation;
   }
@@ -93,7 +108,97 @@ public class ListCountry   {
     this.abbreviation = abbreviation;
   }
 
-  public ListCountry beginning(Date beginning) {
+  public Country description(String description) {
+    this.description = description;
+    return this;
+  }
+
+   /**
+   * Get description
+   * @return description
+  **/
+  @ApiModelProperty(example = "Blablabla", value = "")
+  public String getDescription() {
+    return description;
+  }
+
+  public void setDescription(String description) {
+    this.description = description;
+  }
+
+  public Country trip(String trip) {
+    this.trip = trip;
+    return this;
+  }
+
+   /**
+   * Get trip
+   * @return trip
+  **/
+  @ApiModelProperty(example = "Blablabla", value = "")
+  public String getTrip() {
+    return trip;
+  }
+
+  public void setTrip(String trip) {
+    this.trip = trip;
+  }
+
+  public Country why(String why) {
+    this.why = why;
+    return this;
+  }
+
+   /**
+   * Get why
+   * @return why
+  **/
+  @ApiModelProperty(example = "Blablabla", value = "")
+  public String getWhy() {
+    return why;
+  }
+
+  public void setWhy(String why) {
+    this.why = why;
+  }
+
+  public Country favorite(String favorite) {
+    this.favorite = favorite;
+    return this;
+  }
+
+   /**
+   * Get favorite
+   * @return favorite
+  **/
+  @ApiModelProperty(example = "Blablabla", value = "")
+  public String getFavorite() {
+    return favorite;
+  }
+
+  public void setFavorite(String favorite) {
+    this.favorite = favorite;
+  }
+
+  public Country conclusion(String conclusion) {
+    this.conclusion = conclusion;
+    return this;
+  }
+
+   /**
+   * Get conclusion
+   * @return conclusion
+  **/
+  @ApiModelProperty(example = "Blablabla", value = "")
+  public String getConclusion() {
+    return conclusion;
+  }
+
+  public void setConclusion(String conclusion) {
+    this.conclusion = conclusion;
+  }
+
+  public Country beginning(Date beginning) {
     this.beginning = beginning;
     return this;
   }
@@ -111,7 +216,7 @@ public class ListCountry   {
     this.beginning = beginning;
   }
 
-  public ListCountry ending(Date ending) {
+  public Country ending(Date ending) {
     this.ending = ending;
     return this;
   }
@@ -129,7 +234,7 @@ public class ListCountry   {
     this.ending = ending;
   }
 
-  public ListCountry created(Date created) {
+  public Country created(Date created) {
     this.created = created;
     return this;
   }
@@ -147,7 +252,7 @@ public class ListCountry   {
     this.created = created;
   }
 
-  public ListCountry updated(Date updated) {
+  public Country updated(Date updated) {
     this.updated = updated;
     return this;
   }
@@ -165,7 +270,7 @@ public class ListCountry   {
     this.updated = updated;
   }
 
-  public ListCountry online(Boolean online) {
+  public Country online(Boolean online) {
     this.online = online;
     return this;
   }
@@ -183,7 +288,7 @@ public class ListCountry   {
     this.online = online;
   }
 
-  public ListCountry continent(String continent) {
+  public Country continent(String continent) {
     this.continent = continent;
     return this;
   }
@@ -210,31 +315,41 @@ public class ListCountry   {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    ListCountry listCountry = (ListCountry) o;
-    return Objects.equals(this.id, listCountry.id) &&
-        Objects.equals(this.name, listCountry.name) &&
-        Objects.equals(this.abbreviation, listCountry.abbreviation) &&
-        Objects.equals(this.beginning, listCountry.beginning) &&
-        Objects.equals(this.ending, listCountry.ending) &&
-        Objects.equals(this.created, listCountry.created) &&
-        Objects.equals(this.updated, listCountry.updated) &&
-        Objects.equals(this.online, listCountry.online) &&
-        Objects.equals(this.continent, listCountry.continent);
+    Country country = (Country) o;
+    return Objects.equals(this.id, country.id) &&
+        Objects.equals(this.name, country.name) &&
+        Objects.equals(this.abbreviation, country.abbreviation) &&
+        Objects.equals(this.description, country.description) &&
+        Objects.equals(this.trip, country.trip) &&
+        Objects.equals(this.why, country.why) &&
+        Objects.equals(this.favorite, country.favorite) &&
+        Objects.equals(this.conclusion, country.conclusion) &&
+        Objects.equals(this.beginning, country.beginning) &&
+        Objects.equals(this.ending, country.ending) &&
+        Objects.equals(this.created, country.created) &&
+        Objects.equals(this.updated, country.updated) &&
+        Objects.equals(this.online, country.online) &&
+        Objects.equals(this.continent, country.continent);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, name, abbreviation, beginning, ending, created, updated, online, continent);
+    return Objects.hash(id, name, abbreviation, description, trip, why, favorite, conclusion, beginning, ending, created, updated, online, continent);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class ListCountry {\n");
+    sb.append("class Country {\n");
     
     sb.append("    id: ").append(toIndentedString(id)).append("\n");
     sb.append("    name: ").append(toIndentedString(name)).append("\n");
     sb.append("    abbreviation: ").append(toIndentedString(abbreviation)).append("\n");
+    sb.append("    description: ").append(toIndentedString(description)).append("\n");
+    sb.append("    trip: ").append(toIndentedString(trip)).append("\n");
+    sb.append("    why: ").append(toIndentedString(why)).append("\n");
+    sb.append("    favorite: ").append(toIndentedString(favorite)).append("\n");
+    sb.append("    conclusion: ").append(toIndentedString(conclusion)).append("\n");
     sb.append("    beginning: ").append(toIndentedString(beginning)).append("\n");
     sb.append("    ending: ").append(toIndentedString(ending)).append("\n");
     sb.append("    created: ").append(toIndentedString(created)).append("\n");

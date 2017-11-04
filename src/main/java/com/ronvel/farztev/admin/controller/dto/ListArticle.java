@@ -1,4 +1,4 @@
-package com.ronvel.farztev.admin.controller.model;
+package com.ronvel.farztev.admin.controller.dto;
 
 import java.util.Date;
 import java.util.Objects;
@@ -7,11 +7,11 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import io.swagger.annotations.ApiModelProperty;
 /**
- * Article
+ * ListArticle
  */
 @javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2017-09-11T22:47:11.093+02:00")
 
-public class Article   {
+public class ListArticle   {
   @JsonProperty("id")
   private Long id = null;
 
@@ -24,16 +24,13 @@ public class Article   {
   @JsonProperty("photo")
   private String photo = null;
 
-  @JsonProperty("description")
-  private String description = null;
-
   @JsonProperty("created")
   private Date created = null;
 
   @JsonProperty("updated")
   private Date updated = null;
 
-  public Article id(Long id) {
+  public ListArticle id(Long id) {
     this.id = id;
     return this;
   }
@@ -51,7 +48,7 @@ public class Article   {
     this.id = id;
   }
 
-  public Article country(String country) {
+  public ListArticle country(String country) {
     this.country = country;
     return this;
   }
@@ -69,7 +66,7 @@ public class Article   {
     this.country = country;
   }
 
-  public Article name(String name) {
+  public ListArticle name(String name) {
     this.name = name;
     return this;
   }
@@ -87,7 +84,7 @@ public class Article   {
     this.name = name;
   }
 
-  public Article photo(String photo) {
+  public ListArticle photo(String photo) {
     this.photo = photo;
     return this;
   }
@@ -105,25 +102,7 @@ public class Article   {
     this.photo = photo;
   }
 
-  public Article description(String description) {
-    this.description = description;
-    return this;
-  }
-
-   /**
-   * Get description
-   * @return description
-  **/
-  @ApiModelProperty(example = "Dublin is the capital of Irland...", value = "")
-  public String getDescription() {
-    return description;
-  }
-
-  public void setDescription(String description) {
-    this.description = description;
-  }
-
-  public Article created(Date created) {
+  public ListArticle created(Date created) {
     this.created = created;
     return this;
   }
@@ -141,7 +120,7 @@ public class Article   {
     this.created = created;
   }
 
-  public Article updated(Date updated) {
+  public ListArticle updated(Date updated) {
     this.updated = updated;
     return this;
   }
@@ -168,31 +147,29 @@ public class Article   {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    Article article = (Article) o;
-    return Objects.equals(this.id, article.id) &&
-        Objects.equals(this.country, article.country) &&
-        Objects.equals(this.name, article.name) &&
-        Objects.equals(this.photo, article.photo) &&
-        Objects.equals(this.description, article.description) &&
-        Objects.equals(this.created, article.created) &&
-        Objects.equals(this.updated, article.updated);
+    ListArticle listArticle = (ListArticle) o;
+    return Objects.equals(this.id, listArticle.id) &&
+        Objects.equals(this.country, listArticle.country) &&
+        Objects.equals(this.name, listArticle.name) &&
+        Objects.equals(this.photo, listArticle.photo) &&
+        Objects.equals(this.created, listArticle.created) &&
+        Objects.equals(this.updated, listArticle.updated);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, country, name, photo, description, created, updated);
+    return Objects.hash(id, country, name, photo, created, updated);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class Article {\n");
+    sb.append("class ListArticle {\n");
     
     sb.append("    id: ").append(toIndentedString(id)).append("\n");
     sb.append("    country: ").append(toIndentedString(country)).append("\n");
     sb.append("    name: ").append(toIndentedString(name)).append("\n");
     sb.append("    photo: ").append(toIndentedString(photo)).append("\n");
-    sb.append("    description: ").append(toIndentedString(description)).append("\n");
     sb.append("    created: ").append(toIndentedString(created)).append("\n");
     sb.append("    updated: ").append(toIndentedString(updated)).append("\n");
     sb.append("}");

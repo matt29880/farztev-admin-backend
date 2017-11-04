@@ -7,8 +7,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.ronvel.farztev.admin.controller.model.Article;
-import com.ronvel.farztev.admin.controller.model.ListArticle;
+import com.ronvel.farztev.admin.controller.dto.Article;
+import com.ronvel.farztev.admin.controller.dto.ListArticle;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
