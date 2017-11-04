@@ -18,7 +18,7 @@ import io.swagger.annotations.ApiResponses;
 @javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2017-09-07T23:10:06.754+02:00")
 
 @Api(value = "articles", description = "the articles API")
-public interface ArticlesApi {
+public interface ArticleController {
 
     @ApiOperation(value = "", notes = "", response = Article.class, tags={  })
     @ApiResponses(value = { 

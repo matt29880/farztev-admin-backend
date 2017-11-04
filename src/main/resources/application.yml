@@ -4,6 +4,6 @@ server:
   
 spring:
   jackson:
-    date-format: com.ronvel.farztev.admin.config.RFC3339DateFormat
+    date-format: com.ronvel.farztev.admin.controller.config.RFC3339DateFormat
     serialization: 
       WRITE_DATES_AS_TIMESTAMPS: false

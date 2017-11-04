@@ -9,7 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 
-import com.ronvel.farztev.admin.controller.CountriesApi;
+import com.ronvel.farztev.admin.controller.CountryController;
 import com.ronvel.farztev.admin.controller.model.Country;
 import com.ronvel.farztev.admin.controller.model.ListCountry;
 
@@ -18,7 +18,7 @@ import io.swagger.annotations.ApiParam;
 @javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2017-09-11T22:32:17.694+02:00")
 
 @Controller
-public class CountriesApiController implements CountriesApi {
+public class CountriesControllerTest implements CountryController {
 
 	public ResponseEntity<Country> countriesCountryIdGet(
 			@ApiParam(value = "ID of the country to return", required = true) @PathVariable("countryId") Long countryId) {
