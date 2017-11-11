@@ -1,15 +1,16 @@
 package com.ronvel.farztev.admin.controller.dto;
 
-import java.util.Date;
 import java.util.Objects;
-
 import com.fasterxml.jackson.annotation.JsonProperty;
-
+import com.fasterxml.jackson.annotation.JsonCreator;
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import org.joda.time.LocalDate;
+import javax.validation.constraints.*;
 /**
  * ListCountry
  */
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2017-09-11T22:47:11.093+02:00")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2017-11-11T19:02:46.574+01:00")
 
 public class ListCountry   {
   @JsonProperty("id")
@@ -22,16 +23,16 @@ public class ListCountry   {
   private String abbreviation = null;
 
   @JsonProperty("beginning")
-  private Date beginning = null;
+  private LocalDate beginning = null;
 
   @JsonProperty("ending")
-  private Date ending = null;
+  private LocalDate ending = null;
 
   @JsonProperty("created")
-  private Date created = null;
+  private LocalDate created = null;
 
   @JsonProperty("updated")
-  private Date updated = null;
+  private LocalDate updated = null;
 
   @JsonProperty("online")
   private Boolean online = null;
@@ -93,7 +94,7 @@ public class ListCountry   {
     this.abbreviation = abbreviation;
   }
 
-  public ListCountry beginning(Date beginning) {
+  public ListCountry beginning(LocalDate beginning) {
     this.beginning = beginning;
     return this;
   }
@@ -103,15 +104,15 @@ public class ListCountry   {
    * @return beginning
   **/
   @ApiModelProperty(example = "Blablabla", value = "")
-  public Date getBeginning() {
+  public LocalDate getBeginning() {
     return beginning;
   }
 
-  public void setBeginning(Date beginning) {
+  public void setBeginning(LocalDate beginning) {
     this.beginning = beginning;
   }
 
-  public ListCountry ending(Date ending) {
+  public ListCountry ending(LocalDate ending) {
     this.ending = ending;
     return this;
   }
@@ -121,15 +122,15 @@ public class ListCountry   {
    * @return ending
   **/
   @ApiModelProperty(example = "Blablabla", value = "")
-  public Date getEnding() {
+  public LocalDate getEnding() {
     return ending;
   }
 
-  public void setEnding(Date ending) {
+  public void setEnding(LocalDate ending) {
     this.ending = ending;
   }
 
-  public ListCountry created(Date created) {
+  public ListCountry created(LocalDate created) {
     this.created = created;
     return this;
   }
@@ -139,15 +140,15 @@ public class ListCountry   {
    * @return created
   **/
   @ApiModelProperty(example = "Blablabla", value = "")
-  public Date getCreated() {
+  public LocalDate getCreated() {
     return created;
   }
 
-  public void setCreated(Date created) {
+  public void setCreated(LocalDate created) {
     this.created = created;
   }
 
-  public ListCountry updated(Date updated) {
+  public ListCountry updated(LocalDate updated) {
     this.updated = updated;
     return this;
   }
@@ -157,11 +158,11 @@ public class ListCountry   {
    * @return updated
   **/
   @ApiModelProperty(example = "Blablabla", value = "")
-  public Date getUpdated() {
+  public LocalDate getUpdated() {
     return updated;
   }
 
-  public void setUpdated(Date updated) {
+  public void setUpdated(LocalDate updated) {
     this.updated = updated;
   }
 

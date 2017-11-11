@@ -1,7 +1,8 @@
 package com.ronvel.farztev.admin.controller.dto;
 
-import java.util.Date;
 import java.util.Objects;
+
+import org.joda.time.LocalDate;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -9,7 +10,7 @@ import io.swagger.annotations.ApiModelProperty;
 /**
  * Article
  */
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2017-09-11T22:47:11.093+02:00")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2017-11-11T19:02:46.574+01:00")
 
 public class Article   {
   @JsonProperty("id")
@@ -28,10 +29,13 @@ public class Article   {
   private String description = null;
 
   @JsonProperty("created")
-  private Date created = null;
+  private LocalDate created = null;
 
   @JsonProperty("updated")
-  private Date updated = null;
+  private LocalDate updated = null;
+
+  @JsonProperty("online")
+  private Boolean online = null;
 
   public Article id(Long id) {
     this.id = id;
@@ -123,7 +127,7 @@ public class Article   {
     this.description = description;
   }
 
-  public Article created(Date created) {
+  public Article created(LocalDate created) {
     this.created = created;
     return this;
   }
@@ -133,15 +137,15 @@ public class Article   {
    * @return created
   **/
   @ApiModelProperty(example = "Blablabla", value = "")
-  public Date getCreated() {
+  public LocalDate getCreated() {
     return created;
   }
 
-  public void setCreated(Date created) {
+  public void setCreated(LocalDate created) {
     this.created = created;
   }
 
-  public Article updated(Date updated) {
+  public Article updated(LocalDate updated) {
     this.updated = updated;
     return this;
   }
@@ -151,12 +155,30 @@ public class Article   {
    * @return updated
   **/
   @ApiModelProperty(example = "Blablabla", value = "")
-  public Date getUpdated() {
+  public LocalDate getUpdated() {
     return updated;
   }
 
-  public void setUpdated(Date updated) {
+  public void setUpdated(LocalDate updated) {
     this.updated = updated;
+  }
+
+  public Article online(Boolean online) {
+    this.online = online;
+    return this;
+  }
+
+   /**
+   * Get online
+   * @return online
+  **/
+  @ApiModelProperty(example = "true", value = "")
+  public Boolean getOnline() {
+    return online;
+  }
+
+  public void setOnline(Boolean online) {
+    this.online = online;
   }
 
 
@@ -175,12 +197,13 @@ public class Article   {
         Objects.equals(this.photo, article.photo) &&
         Objects.equals(this.description, article.description) &&
         Objects.equals(this.created, article.created) &&
-        Objects.equals(this.updated, article.updated);
+        Objects.equals(this.updated, article.updated) &&
+        Objects.equals(this.online, article.online);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, country, name, photo, description, created, updated);
+    return Objects.hash(id, country, name, photo, description, created, updated, online);
   }
 
   @Override
@@ -195,6 +218,7 @@ public class Article   {
     sb.append("    description: ").append(toIndentedString(description)).append("\n");
     sb.append("    created: ").append(toIndentedString(created)).append("\n");
     sb.append("    updated: ").append(toIndentedString(updated)).append("\n");
+    sb.append("    online: ").append(toIndentedString(online)).append("\n");
     sb.append("}");
     return sb.toString();
   }

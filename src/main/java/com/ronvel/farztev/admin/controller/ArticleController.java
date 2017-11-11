@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -20,6 +21,16 @@ import io.swagger.annotations.ApiResponses;
 @Api(value = "articles", description = "the articles API")
 public interface ArticleController {
 
+    @ApiOperation(value = "", notes = "", response = Void.class, tags={  })
+    @ApiResponses(value = { 
+        @ApiResponse(code = 200, message = "successful operation", response = Void.class),
+        @ApiResponse(code = 400, message = "Invalid status value", response = Void.class) })
+    @RequestMapping(value = "/articles/{articleId}",
+        produces = { "application/json" }, 
+        method = RequestMethod.DELETE)
+    ResponseEntity<Void> articlesArticleIdDelete(@ApiParam(value = "Article ID",required=true ) @PathVariable("articleId") Long articleId);
+
+
     @ApiOperation(value = "", notes = "", response = Article.class, tags={  })
     @ApiResponses(value = { 
         @ApiResponse(code = 200, message = "successful operation", response = Article.class),
@@ -27,7 +38,18 @@ public interface ArticleController {
     @RequestMapping(value = "/articles/{articleId}",
         produces = { "application/json" }, 
         method = RequestMethod.GET)
-    ResponseEntity<Article> articlesArticleIdGet(@ApiParam(value = "ID of the article to return",required=true ) @PathVariable("articleId") Long articleId);
+    ResponseEntity<Article> articlesArticleIdGet(@ApiParam(value = "Article ID",required=true ) @PathVariable("articleId") Long articleId);
+
+
+    @ApiOperation(value = "", notes = "", response = Article.class, tags={  })
+    @ApiResponses(value = { 
+        @ApiResponse(code = 200, message = "successful operation", response = Article.class),
+        @ApiResponse(code = 400, message = "Invalid status value", response = Article.class) })
+    @RequestMapping(value = "/articles/{articleId}",
+        produces = { "application/json" }, 
+        method = RequestMethod.PUT)
+    ResponseEntity<Article> articlesArticleIdPut(@ApiParam(value = "Article ID",required=true ) @PathVariable("articleId") Long articleId,
+        @ApiParam(value = "Article data." ,required=true ) @RequestBody Article article);
 
 
     @ApiOperation(value = "", notes = "", response = ListArticle.class, responseContainer = "List", tags={  })
@@ -38,5 +60,15 @@ public interface ArticleController {
         produces = { "application/json" }, 
         method = RequestMethod.GET)
     ResponseEntity<List<ListArticle>> articlesGet();
+
+
+    @ApiOperation(value = "", notes = "", response = Article.class, tags={  })
+    @ApiResponses(value = { 
+        @ApiResponse(code = 200, message = "successful operation", response = Article.class),
+        @ApiResponse(code = 400, message = "Invalid status value", response = Article.class) })
+    @RequestMapping(value = "/articles",
+        produces = { "application/json" }, 
+        method = RequestMethod.POST)
+    ResponseEntity<Article> articlesPost(@ApiParam(value = "Article data." ,required=true ) @RequestBody Article article);
 
 }

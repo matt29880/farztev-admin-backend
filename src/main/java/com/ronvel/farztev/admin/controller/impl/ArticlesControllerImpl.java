@@ -1,12 +1,12 @@
 package com.ronvel.farztev.admin.controller.impl;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import com.ronvel.farztev.admin.controller.ArticleController;
 import com.ronvel.farztev.admin.controller.dto.Article;
@@ -19,32 +19,30 @@ import io.swagger.annotations.ApiParam;
 @Controller
 public class ArticlesControllerImpl implements ArticleController {
 
-	public ResponseEntity<Article> articlesArticleIdGet(
-			@ApiParam(value = "ID of the article to return", required = true) @PathVariable("articleId") Long articleId) {
-		Article article = new Article();
-		article.setId(1L);
-		article.setCountry("de");
-		article.setName("Visit in Berlin");
-		article.setDescription("Berlin is a the capital of Germany");
-		article.setPhoto("http://lorempixel.com/400/200/city/");
-		return new ResponseEntity<Article>(article,HttpStatus.OK);
-	}
+    public ResponseEntity<Void> articlesArticleIdDelete(@ApiParam(value = "Article ID",required=true ) @PathVariable("articleId") Long articleId) {
+        // do some magic!
+        return new ResponseEntity<Void>(HttpStatus.OK);
+    }
 
-	public ResponseEntity<List<ListArticle>> articlesGet() {
-		List<ListArticle> articles = new ArrayList<>();
-		ListArticle article = new ListArticle();
-		article.setId(1L);
-		article.setCountry("de");
-		article.setName("Visit in Berlin");
-		article.setPhoto("http://lorempixel.com/400/200/city/");
-		articles.add(article);
-		article = new ListArticle();
-		article.setId(1L);
-		article.setCountry("en");
-		article.setName("Visit in London");
-		article.setPhoto("http://lorempixel.com/400/200/city/");
-		articles.add(article);
-		return new ResponseEntity<List<ListArticle>>(articles, HttpStatus.OK);
-	}
+    public ResponseEntity<Article> articlesArticleIdGet(@ApiParam(value = "Article ID",required=true ) @PathVariable("articleId") Long articleId) {
+        // do some magic!
+        return new ResponseEntity<Article>(HttpStatus.OK);
+    }
+
+    public ResponseEntity<Article> articlesArticleIdPut(@ApiParam(value = "Article ID",required=true ) @PathVariable("articleId") Long articleId,
+        @ApiParam(value = "Article data." ,required=true ) @RequestBody Article article) {
+        // do some magic!
+        return new ResponseEntity<Article>(HttpStatus.OK);
+    }
+
+    public ResponseEntity<List<ListArticle>> articlesGet() {
+        // do some magic!
+        return new ResponseEntity<List<ListArticle>>(HttpStatus.OK);
+    }
+
+    public ResponseEntity<Article> articlesPost(@ApiParam(value = "Article data." ,required=true ) @RequestBody Article article) {
+        // do some magic!
+        return new ResponseEntity<Article>(HttpStatus.OK);
+    }
 
 }

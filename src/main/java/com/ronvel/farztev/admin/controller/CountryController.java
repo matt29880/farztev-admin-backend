@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -20,6 +21,16 @@ import io.swagger.annotations.ApiResponses;
 @Api(value = "countries", description = "the countries API")
 public interface CountryController {
 
+    @ApiOperation(value = "", notes = "", response = Void.class, tags={  })
+    @ApiResponses(value = { 
+        @ApiResponse(code = 200, message = "successful operation", response = Void.class),
+        @ApiResponse(code = 400, message = "Invalid status value", response = Void.class) })
+    @RequestMapping(value = "/countries/{countryId}",
+        produces = { "application/json" }, 
+        method = RequestMethod.DELETE)
+    ResponseEntity<Void> countriesCountryIdDelete(@ApiParam(value = "Country ID",required=true ) @PathVariable("countryId") Long countryId);
+
+
     @ApiOperation(value = "", notes = "", response = Country.class, tags={  })
     @ApiResponses(value = { 
         @ApiResponse(code = 200, message = "successful operation", response = Country.class),
@@ -27,7 +38,18 @@ public interface CountryController {
     @RequestMapping(value = "/countries/{countryId}",
         produces = { "application/json" }, 
         method = RequestMethod.GET)
-    ResponseEntity<Country> countriesCountryIdGet(@ApiParam(value = "ID of the country to return",required=true ) @PathVariable("countryId") Long countryId);
+    ResponseEntity<Country> countriesCountryIdGet(@ApiParam(value = "Country ID",required=true ) @PathVariable("countryId") Long countryId);
+
+
+    @ApiOperation(value = "", notes = "", response = Country.class, tags={  })
+    @ApiResponses(value = { 
+        @ApiResponse(code = 200, message = "successful operation", response = Country.class),
+        @ApiResponse(code = 400, message = "Invalid status value", response = Country.class) })
+    @RequestMapping(value = "/countries/{countryId}",
+        produces = { "application/json" }, 
+        method = RequestMethod.PUT)
+    ResponseEntity<Country> countriesCountryIdPut(@ApiParam(value = "Country ID",required=true ) @PathVariable("countryId") Long countryId,
+        @ApiParam(value = "Country data." ,required=true ) @RequestBody Country country);
 
 
     @ApiOperation(value = "", notes = "", response = ListCountry.class, responseContainer = "List", tags={  })
@@ -37,5 +59,15 @@ public interface CountryController {
         produces = { "application/json" }, 
         method = RequestMethod.GET)
     ResponseEntity<List<ListCountry>> countriesGet();
+
+
+    @ApiOperation(value = "", notes = "", response = Country.class, tags={  })
+    @ApiResponses(value = { 
+        @ApiResponse(code = 200, message = "successful operation", response = Country.class),
+        @ApiResponse(code = 400, message = "Invalid status value", response = Country.class) })
+    @RequestMapping(value = "/countries",
+        produces = { "application/json" }, 
+        method = RequestMethod.POST)
+    ResponseEntity<Country> countriesPost(@ApiParam(value = "Country data." ,required=true ) @RequestBody Country country);
 
 }
