@@ -1,0 +1,22 @@
+server:
+  port: 8080
+  contextPath: /
+  
+spring:
+  jackson:
+    date-format: com.ronvel.farztev.admin.controller.config.RFC3339DateFormat
+    serialization: 
+      WRITE_DATES_AS_TIMESTAMPS: false
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: validate
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQLDialect
+  datasource:
+    url: jdbc:mysql://localhost:3306/farztevtest
+    username: root
+    password: root
+    driver-class-name: com.mysql.jdbc.Driver
+    

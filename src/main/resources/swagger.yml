@@ -1,0 +1,315 @@
+swagger: '2.0'
+info:
+  title: Farztev admin API
+  description: Manage Farztev
+  version: "1.0.0"
+host: localhost
+schemes:
+  - https
+basePath: /
+produces:
+  - application/json
+parameters:
+  CountryId:
+    name: countryId
+    in: path
+    type: integer
+    format: int64
+    description: Country ID
+    required: true
+  Country:
+    name: country
+    in: body
+    description: Country data.
+    required: true
+    schema:
+      $ref: '#/definitions/Country'
+  ArticleId:
+    name: articleId
+    in: path
+    type: integer
+    format: int64
+    description: Article ID
+    required: true
+  Article:
+    name: article
+    in: body
+    description: Article data.
+    required: true
+    schema:
+      $ref: '#/definitions/Article'
+paths:
+  /api/article:
+    get:
+      produces:
+      - "application/json"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/ListArticle"
+        400:
+          description: "Invalid status value"
+    post:
+      produces:
+      - "application/json"
+      parameters:
+        - $ref: '#/parameters/Article'
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/Article"
+        400:
+          description: "Invalid status value"
+  /api/article/{articleId}:
+    get:
+      produces:
+      - "application/json"
+      parameters:
+        - $ref: '#/parameters/ArticleId'
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/Article"
+        404:
+          description: "Article not found"
+    put:
+      produces:
+      - "application/json"
+      parameters:
+        - $ref: '#/parameters/ArticleId'
+        - $ref: '#/parameters/Article'
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/Article"
+        400:
+          description: "Invalid status value"
+    delete:
+      produces:
+      - "application/json"
+      parameters:
+        - $ref: '#/parameters/ArticleId'
+      responses:
+        200:
+          description: "successful operation"
+        400:
+          description: "Invalid status value"
+  /api/country:
+    get:
+      produces:
+      - "application/json"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/ListCountry"
+      400:
+        description: "Invalid status value"
+    post:
+      produces:
+      - "application/json"
+      parameters:
+        - $ref: '#/parameters/Country'
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/Country"
+        400:
+          description: "Invalid status value"
+  /api/country/{countryId}:
+    get:
+      produces:
+      - "application/json"
+      parameters:
+        - $ref: '#/parameters/CountryId'
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/Country"
+        404:
+          description: "Country not found"
+    put:
+      produces:
+      - "application/json"
+      parameters:
+        - $ref: '#/parameters/CountryId'
+        - $ref: '#/parameters/Country'
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/Country"
+        400:
+          description: "Invalid status value"
+    delete:
+      produces:
+      - "application/json"
+      parameters:
+        - $ref: '#/parameters/CountryId'
+      responses:
+        200:
+          description: "successful operation"
+        400:
+          description: "Invalid status value"
+definitions:
+  ListArticle:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+        format: "int64"
+        example: 1
+      country:
+        type: "string"
+        example: "fr"
+      name:
+        type: "string"
+        example: "Visit in Dublin"
+      photo:
+        type: "string"
+        example: "dublin.jpg"
+      created:
+        type: "string"
+        format: "date"
+        example: "Blablabla"
+      updated:
+        type: "string"
+        format: "date"
+        example: "Blablabla"
+      countryId:
+        type: "integer"
+        format: "int64"
+        example: 1
+      countryName:
+        type: "string"
+        example: Ireland
+      online:
+        type: "boolean"
+        example: true
+  Article:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+        format: "int64"
+      country:
+        type: "string"
+        example: "fr"
+      name:
+        type: "string"
+        example: "Visit in Dublin"
+      photo:
+        type: "string"
+        example: "dublin.jpg"
+      description:
+        type: "string"
+        example: "Dublin is the capital of Irland..."
+      created:
+        type: "string"
+        format: "date"
+        example: "Blablabla"
+      updated:
+        type: "string"
+        format: "date"
+        example: "Blablabla"
+      online:
+        type: "boolean"
+        example: true
+  ListCountry:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+        format: "int64"
+        example: 10
+      name:
+        type: "string"
+        example: "Espagne"
+      abbreviation:
+        type: "string"
+        example: "ES"
+      beginning:
+        type: "string"
+        format: "date"
+        example: "Blablabla"
+      ending:
+        type: "string"
+        format: "date"
+        example: "Blablabla"
+      created:
+        type: "string"
+        format: "date"
+        example: "Blablabla"
+      updated:
+        type: "string"
+        format: "date"
+        example: "Blablabla"
+      online:
+        type: "boolean"
+        example: true
+      continent:
+        type: "string"
+        example: "ASIA"
+  Country:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+        format: "int64"
+        example: 10
+      name:
+        type: "string"
+        example: "Espagne"
+      abbreviation:
+        type: "string"
+        example: "es"
+      description:
+        type: "string"
+        example: "Blablabla"
+      trip:
+        type: "string"
+        example: "Blablabla"
+      why:
+        type: "string"
+        example: "Blablabla"
+      favorite:
+        type: "string"
+        example: "Blablabla"
+      conclusion:
+        type: "string"
+        example: "Blablabla"
+      beginning:
+        type: "string"
+        format: "date"
+        example: "Blablabla"
+      ending:
+        type: "string"
+        format: "date"
+        example: "Blablabla"
+      created:
+        type: "string"
+        format: "date"
+        example: "Blablabla"
+      updated:
+        type: "string"
+        format: "date"
+        example: "Blablabla"
+      online:
+        type: "boolean"
+        example: true
+      continent:
+        type: "string"
+        example: "ASIA"
+externalDocs:
+  description: "Find out more about Swagger"
+  url: "http://swagger.io"
