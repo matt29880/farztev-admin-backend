@@ -5,10 +5,13 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 
+import org.hibernate.annotations.GenericGenerator;
+
 @MappedSuperclass
 public abstract class BaseModel {
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY, generator = "IdOrGenerated")
+	@GenericGenerator(name = "IdOrGenerated", strategy = "com.ronvel.farztev.admin.dao.UseIdOrGenerate")
 	private Long id;
 
 	public Long getId() {

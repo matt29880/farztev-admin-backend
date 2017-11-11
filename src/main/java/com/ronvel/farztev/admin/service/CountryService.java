@@ -7,6 +7,7 @@ import com.ronvel.farztev.admin.controller.dto.ListCountry;
 
 /**
  * Service for selecting countries.
+ * 
  * @author mronvel
  *
  */
@@ -25,4 +26,24 @@ public interface CountryService {
 	 * @return
 	 */
 	List<ListCountry> listCountries();
+
+	/**
+	 * Add a new country.
+	 * @param country
+	 * @return
+	 */
+	Country addCountry(Country country);
+
+	/**
+	 * Update a country.
+	 * @param id
+	 * @param country
+	 */
+	void updateCountry(Long id, Country country);
+	
+	/**Delete a country.
+	 * 
+	 * @param id
+	 */
+	void deleteCountry(Long id);
 }
