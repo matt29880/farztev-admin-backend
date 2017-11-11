@@ -1,12 +1,9 @@
 package com.ronvel.farztev.admin.controller.dto;
 
+import java.util.Date;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonCreator;
-import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import org.joda.time.LocalDate;
-import javax.validation.constraints.*;
 /**
  * ListCountry
  */
@@ -23,16 +20,16 @@ public class ListCountry   {
   private String abbreviation = null;
 
   @JsonProperty("beginning")
-  private LocalDate beginning = null;
+  private Date beginning = null;
 
   @JsonProperty("ending")
-  private LocalDate ending = null;
+  private Date ending = null;
 
   @JsonProperty("created")
-  private LocalDate created = null;
+  private Date created = null;
 
   @JsonProperty("updated")
-  private LocalDate updated = null;
+  private Date updated = null;
 
   @JsonProperty("online")
   private Boolean online = null;
@@ -94,7 +91,7 @@ public class ListCountry   {
     this.abbreviation = abbreviation;
   }
 
-  public ListCountry beginning(LocalDate beginning) {
+  public ListCountry beginning(Date beginning) {
     this.beginning = beginning;
     return this;
   }
@@ -104,15 +101,15 @@ public class ListCountry   {
    * @return beginning
   **/
   @ApiModelProperty(example = "Blablabla", value = "")
-  public LocalDate getBeginning() {
+  public Date getBeginning() {
     return beginning;
   }
 
-  public void setBeginning(LocalDate beginning) {
+  public void setBeginning(Date beginning) {
     this.beginning = beginning;
   }
 
-  public ListCountry ending(LocalDate ending) {
+  public ListCountry ending(Date ending) {
     this.ending = ending;
     return this;
   }
@@ -122,15 +119,15 @@ public class ListCountry   {
    * @return ending
   **/
   @ApiModelProperty(example = "Blablabla", value = "")
-  public LocalDate getEnding() {
+  public Date getEnding() {
     return ending;
   }
 
-  public void setEnding(LocalDate ending) {
+  public void setEnding(Date ending) {
     this.ending = ending;
   }
 
-  public ListCountry created(LocalDate created) {
+  public ListCountry created(Date created) {
     this.created = created;
     return this;
   }
@@ -140,15 +137,15 @@ public class ListCountry   {
    * @return created
   **/
   @ApiModelProperty(example = "Blablabla", value = "")
-  public LocalDate getCreated() {
+  public Date getCreated() {
     return created;
   }
 
-  public void setCreated(LocalDate created) {
+  public void setCreated(Date created) {
     this.created = created;
   }
 
-  public ListCountry updated(LocalDate updated) {
+  public ListCountry updated(Date updated) {
     this.updated = updated;
     return this;
   }
@@ -158,11 +155,11 @@ public class ListCountry   {
    * @return updated
   **/
   @ApiModelProperty(example = "Blablabla", value = "")
-  public LocalDate getUpdated() {
+  public Date getUpdated() {
     return updated;
   }
 
-  public void setUpdated(LocalDate updated) {
+  public void setUpdated(Date updated) {
     this.updated = updated;
   }
 

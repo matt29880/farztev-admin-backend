@@ -1,7 +1,7 @@
 package com.ronvel.farztev.admin.service;
 
 import java.util.List;
-
+import java.util.Optional;
 import com.ronvel.farztev.admin.controller.dto.Country;
 import com.ronvel.farztev.admin.controller.dto.ListCountry;
 
@@ -18,7 +18,7 @@ public interface CountryService {
 	 * @param id
 	 * @return
 	 */
-	Country findCountryById(Long id);
+	Optional<Country> findCountryById(Long id);
 
 	/**
 	 * List all the countries.

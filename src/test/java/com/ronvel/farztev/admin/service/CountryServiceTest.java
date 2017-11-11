@@ -1,18 +1,16 @@
 package com.ronvel.farztev.admin.service;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.assertFalse;
-
 import java.util.Date;
 import java.util.List;
-
+import java.util.Optional;
 import org.junit.Before;
 import org.junit.Test;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-
 import com.ronvel.farztev.admin.controller.dto.Country;
 import com.ronvel.farztev.admin.controller.dto.ListCountry;
 import com.ronvel.farztev.admin.dao.CountryDao;
@@ -40,28 +38,31 @@ public class CountryServiceTest extends BaseServiceTest {
 	public void findCountry() {
 		countryDao.save(createSwissCountry());
 		assertEquals(1L,countryDao.count());
-		Country country = countryService.findCountryById(1L);
-		testSwissCountry(country);
+		Optional<Country> optionalCountry = countryService.findCountryById(1L);
+		assertTrue(optionalCountry.isPresent());
+		testSwissCountry(optionalCountry.get());
 	}
 
+    @Test
+    public void findCountry_notFound() {
+        Optional<Country> optionalCountry = countryService.findCountryById(1L);
+        assertFalse(optionalCountry.isPresent());
+    }
+    
 	@Test
 	public void listCountries() {
 		countryDao.save(createSwissCountry());
 		assertEquals(1L,countryDao.count());
 		List<ListCountry> countries = countryService.listCountries();
-		assertNotNull(countries);
-		assertEquals(1, countries.size());
-		ListCountry country = countries.get(0);
-		assertEquals(1L,country.getId().longValue());
-		assertEquals("CH", country.getAbbreviation());
-		assertEquals(new Date(1234567910L), country.getBeginning());
-		assertEquals(Continent.EUROPE.toString(), country.getContinent());
-		assertEquals(new Date(1234567911L), country.getCreated());
-		assertEquals(new Date(1234567912L), country.getEnding());
-		assertEquals("Switzerland", country.getName());
-		assertTrue(country.getOnline());
-		assertEquals(new Date(1234567913L), country.getUpdated());
+		testListCountries(countries);
 	}
+	
+    @Test
+    public void listCountries_empty() {
+        List<ListCountry> countries = countryService.listCountries();
+        assertNotNull(countries);
+        assertTrue(countries.isEmpty());
+    }
 	
 	@Test
 	public void addCountry() {
@@ -78,8 +79,9 @@ public class CountryServiceTest extends BaseServiceTest {
 		assertEquals(1L,countryDao.count());
 		Country updateCountry = createUpdateSwissCountry();
 		countryService.updateCountry(1L,updateCountry);
-		Country country = countryService.findCountryById(1L);
-		testUpdatedSwissCountry(country);
+		Optional<Country> optionalCountry = countryService.findCountryById(1L);
+        assertTrue(optionalCountry.isPresent());
+		testUpdatedSwissCountry(optionalCountry.get());
 	}
 
 	@Test
@@ -90,7 +92,7 @@ public class CountryServiceTest extends BaseServiceTest {
 		assertEquals(0L,countryDao.count());
 	}
 	
-	private void testSwissCountry(Country country) {
+	public static void testSwissCountry(Country country) {
 		assertNotNull(country);
 		assertEquals(1L,country.getId().longValue());
 		assertEquals("CH", country.getAbbreviation());
@@ -107,8 +109,23 @@ public class CountryServiceTest extends BaseServiceTest {
 		assertEquals(new Date(1234567913L), country.getUpdated());
 		assertEquals("The swiss why", country.getWhy());
 	}
+	
+	public static void testListCountries(List<ListCountry> countries) {
+		assertNotNull(countries);
+		assertEquals(1, countries.size());
+		ListCountry country = countries.get(0);
+		assertEquals(1L,country.getId().longValue());
+		assertEquals("CH", country.getAbbreviation());
+		assertEquals(new Date(1234567910L), country.getBeginning());
+		assertEquals(Continent.EUROPE.toString(), country.getContinent());
+		assertEquals(new Date(1234567911L), country.getCreated());
+		assertEquals(new Date(1234567912L), country.getEnding());
+		assertEquals("Switzerland", country.getName());
+		assertTrue(country.getOnline());
+		assertEquals(new Date(1234567913L), country.getUpdated());
+	}
 
-	private CountryModel createSwissCountry() {
+	public static CountryModel createSwissCountry() {
 		CountryModel country = new CountryModel();
 		country.setId(1L);
 		country.setAbbreviation("CH");
@@ -126,7 +143,7 @@ public class CountryServiceTest extends BaseServiceTest {
 		country.setWhy("The swiss why");
 		return country;
 	}
-	private Country createUpdateSwissCountry() {
+	public static Country createUpdateSwissCountry() {
 		Country country = new Country();
 		country.setId(2L);
 		country.setAbbreviation("CH2");
@@ -144,7 +161,7 @@ public class CountryServiceTest extends BaseServiceTest {
 		country.setWhy("The swiss why2");
 		return country;
 	}
-	private void testUpdatedSwissCountry(Country country) {
+	public static void testUpdatedSwissCountry(Country country) {
 		assertNotNull(country);
 		assertEquals(1L,country.getId().longValue());
 		assertEquals("CH2", country.getAbbreviation());

@@ -21,53 +21,54 @@ import io.swagger.annotations.ApiResponses;
 @Api(value = "countries", description = "the countries API")
 public interface CountryController {
 
-    @ApiOperation(value = "", notes = "", response = Void.class, tags={  })
-    @ApiResponses(value = { 
-        @ApiResponse(code = 200, message = "successful operation", response = Void.class),
-        @ApiResponse(code = 400, message = "Invalid status value", response = Void.class) })
-    @RequestMapping(value = "/countries/{countryId}",
-        produces = { "application/json" }, 
-        method = RequestMethod.DELETE)
-    ResponseEntity<Void> countriesCountryIdDelete(@ApiParam(value = "Country ID",required=true ) @PathVariable("countryId") Long countryId);
+  @ApiOperation(value = "", notes = "", response = Country.class, tags = {})
+  @ApiResponses(
+      value = {@ApiResponse(code = 200, message = "successful operation", response = Country.class),
+          @ApiResponse(code = 404, message = "Country not found", response = Country.class)})
+  @RequestMapping(value = "/api/country/{countryId}", produces = {"application/json"},
+      method = RequestMethod.GET)
+  ResponseEntity<Country> apiCountryCountryIdGet(
+      @ApiParam(value = "Country ID", required = true) @PathVariable("countryId") Long countryId);
 
 
-    @ApiOperation(value = "", notes = "", response = Country.class, tags={  })
-    @ApiResponses(value = { 
-        @ApiResponse(code = 200, message = "successful operation", response = Country.class),
-        @ApiResponse(code = 404, message = "Country not found", response = Country.class) })
-    @RequestMapping(value = "/countries/{countryId}",
-        produces = { "application/json" }, 
-        method = RequestMethod.GET)
-    ResponseEntity<Country> countriesCountryIdGet(@ApiParam(value = "Country ID",required=true ) @PathVariable("countryId") Long countryId);
+  @ApiOperation(value = "", notes = "", response = Country.class, tags = {})
+  @ApiResponses(
+      value = {@ApiResponse(code = 200, message = "successful operation", response = Country.class),
+          @ApiResponse(code = 400, message = "Invalid status value", response = Country.class)})
+  @RequestMapping(value = "/api/country/{countryId}", produces = {"application/json"},
+      method = RequestMethod.PUT)
+  ResponseEntity<Country> apiCountryCountryIdPut(
+      @ApiParam(value = "Country ID", required = true) @PathVariable("countryId") Long countryId,
+      @ApiParam(value = "Country data.", required = true) @RequestBody Country country);
 
 
-    @ApiOperation(value = "", notes = "", response = Country.class, tags={  })
-    @ApiResponses(value = { 
-        @ApiResponse(code = 200, message = "successful operation", response = Country.class),
-        @ApiResponse(code = 400, message = "Invalid status value", response = Country.class) })
-    @RequestMapping(value = "/countries/{countryId}",
-        produces = { "application/json" }, 
-        method = RequestMethod.PUT)
-    ResponseEntity<Country> countriesCountryIdPut(@ApiParam(value = "Country ID",required=true ) @PathVariable("countryId") Long countryId,
-        @ApiParam(value = "Country data." ,required=true ) @RequestBody Country country);
+  @ApiOperation(value = "", notes = "", response = ListCountry.class, responseContainer = "List",
+      tags = {})
+  @ApiResponses(value = {
+      @ApiResponse(code = 200, message = "successful operation", response = ListCountry.class)})
+  @RequestMapping(value = "/api/country", produces = {"application/json"},
+      method = RequestMethod.GET)
+  ResponseEntity<List<ListCountry>> apiCountryGet();
 
 
-    @ApiOperation(value = "", notes = "", response = ListCountry.class, responseContainer = "List", tags={  })
-    @ApiResponses(value = { 
-        @ApiResponse(code = 200, message = "successful operation", response = ListCountry.class) })
-    @RequestMapping(value = "/countries",
-        produces = { "application/json" }, 
-        method = RequestMethod.GET)
-    ResponseEntity<List<ListCountry>> countriesGet();
+  @ApiOperation(value = "", notes = "", response = Country.class, tags = {})
+  @ApiResponses(
+      value = {@ApiResponse(code = 200, message = "successful operation", response = Country.class),
+          @ApiResponse(code = 400, message = "Invalid status value", response = Country.class)})
+  @RequestMapping(value = "/api/country", produces = {"application/json"},
+      method = RequestMethod.POST)
+  ResponseEntity<Country> apiCountryPost(
+      @ApiParam(value = "Country data.", required = true) @RequestBody Country country);
 
 
-    @ApiOperation(value = "", notes = "", response = Country.class, tags={  })
-    @ApiResponses(value = { 
-        @ApiResponse(code = 200, message = "successful operation", response = Country.class),
-        @ApiResponse(code = 400, message = "Invalid status value", response = Country.class) })
-    @RequestMapping(value = "/countries",
-        produces = { "application/json" }, 
-        method = RequestMethod.POST)
-    ResponseEntity<Country> countriesPost(@ApiParam(value = "Country data." ,required=true ) @RequestBody Country country);
+  @ApiOperation(value = "", notes = "", response = Void.class, tags = {})
+  @ApiResponses(
+      value = {@ApiResponse(code = 200, message = "successful operation", response = Void.class),
+          @ApiResponse(code = 400, message = "Invalid status value", response = Void.class)})
+  @RequestMapping(value = "/api/country/{countryId}", produces = {"application/json"},
+      method = RequestMethod.DELETE)
+  ResponseEntity<Void> apiCountryCountryIdDelete(
+      @ApiParam(value = "Country ID", required = true) @PathVariable("countryId") Long countryId);
+
 
 }

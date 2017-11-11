@@ -11,10 +11,10 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @EnableAutoConfiguration
 @EnableSwagger2
 @ComponentScan(basePackages = "com.ronvel")
-public class Application {
+public class FarztevApplication {
 
     public static void main(String[] args) throws Exception {
-        SpringApplication.run(Application.class, args);
+        SpringApplication.run(FarztevApplication.class, args);
     }
     
 }

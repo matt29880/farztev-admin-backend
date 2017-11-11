@@ -39,7 +39,7 @@ parameters:
     schema:
       $ref: '#/definitions/Article'
 paths:
-  /api/articles:
+  /api/article:
     get:
       produces:
       - "application/json"
@@ -64,7 +64,7 @@ paths:
             $ref: "#/definitions/Article"
         400:
           description: "Invalid status value"
-  /api/articles/{articleId}:
+  /api/article/{articleId}:
     get:
       produces:
       - "application/json"
@@ -100,7 +100,7 @@ paths:
           description: "successful operation"
         400:
           description: "Invalid status value"
-  /api/countries:
+  /api/country:
     get:
       produces:
       - "application/json"
@@ -125,7 +125,7 @@ paths:
             $ref: "#/definitions/Country"
         400:
           description: "Invalid status value"
-  /api/countries/{countryId}:
+  /api/country/{countryId}:
     get:
       produces:
       - "application/json"
