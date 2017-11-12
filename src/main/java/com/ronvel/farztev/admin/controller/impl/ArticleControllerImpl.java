@@ -1,6 +1,8 @@
 package com.ronvel.farztev.admin.controller.impl;
 
 import java.util.List;
+import java.util.Optional;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -9,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import com.ronvel.farztev.admin.controller.ArticleController;
 import com.ronvel.farztev.admin.controller.dto.Article;
 import com.ronvel.farztev.admin.controller.dto.ListArticle;
+import com.ronvel.farztev.admin.service.ArticleService;
 import io.swagger.annotations.ApiParam;
 
 @javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen",
@@ -17,34 +20,46 @@ import io.swagger.annotations.ApiParam;
 @Controller
 public class ArticleControllerImpl implements ArticleController {
 
+  @Autowired
+  private ArticleService articleService;
+
+  
   public ResponseEntity<Void> apiArticleArticleIdDelete(
       @ApiParam(value = "Article ID", required = true) @PathVariable("articleId") Long articleId) {
-    // do some magic!
+    articleService.deleteArticle(articleId);
     return new ResponseEntity<Void>(HttpStatus.OK);
   }
 
   public ResponseEntity<Article> apiArticleArticleIdGet(
       @ApiParam(value = "Article ID", required = true) @PathVariable("articleId") Long articleId) {
-    // do some magic!
-    return new ResponseEntity<Article>(HttpStatus.OK);
+    ResponseEntity<Article> response;
+
+    Optional<Article> optionalArticle = articleService.findArticleById(articleId);
+    if (optionalArticle.isPresent()) {
+      response = new ResponseEntity<Article>(optionalArticle.get(),HttpStatus.OK);
+    } else {
+      response = new ResponseEntity<Article>(HttpStatus.NOT_FOUND);
+    }
+
+    return response;
   }
 
   public ResponseEntity<Article> apiArticleArticleIdPut(
       @ApiParam(value = "Article ID", required = true) @PathVariable("articleId") Long articleId,
       @ApiParam(value = "Article data.", required = true) @RequestBody Article article) {
-    // do some magic!
+    articleService.updateArticle(articleId, article);
     return new ResponseEntity<Article>(HttpStatus.OK);
   }
 
   public ResponseEntity<List<ListArticle>> apiArticleGet() {
-    // do some magic!
-    return new ResponseEntity<List<ListArticle>>(HttpStatus.OK);
+    List<ListArticle> listArticles = articleService.listArticles();
+    return new ResponseEntity<List<ListArticle>>(listArticles,HttpStatus.OK);
   }
 
   public ResponseEntity<Article> apiArticlePost(
       @ApiParam(value = "Article data.", required = true) @RequestBody Article article) {
-    // do some magic!
-    return new ResponseEntity<Article>(HttpStatus.OK);
+    Article newArticle = articleService.addArticle(article);
+    return new ResponseEntity<Article>(newArticle,HttpStatus.OK);
   }
 
 }
