@@ -129,6 +129,7 @@ public class CountryControllerTest extends BaseControllerTest {
         HttpMethod.DELETE, request, new ParameterizedTypeReference<Void>() {});
 
     assertTrue(deleteResponse.getStatusCode().is2xxSuccessful());
+    assertEquals(0L, countryDao.count());
   }
 
 }

@@ -202,9 +202,13 @@ definitions:
       id:
         type: "integer"
         format: "int64"
-      country:
+      countryId:
+        type: "integer"
+        format: "int64"
+        example: 1
+      countryName:
         type: "string"
-        example: "fr"
+        example: Ireland
       name:
         type: "string"
         example: "Visit in Dublin"

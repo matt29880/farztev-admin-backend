@@ -1,16 +1,13 @@
 package com.ronvel.farztev.admin.controller.dto;
 
+import java.util.Date;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonCreator;
-import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import org.joda.time.LocalDate;
-import javax.validation.constraints.*;
 /**
  * ListArticle
  */
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2017-11-11T19:02:46.574+01:00")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2017-11-12T10:06:04.705+01:00")
 
 public class ListArticle   {
   @JsonProperty("id")
@@ -26,10 +23,10 @@ public class ListArticle   {
   private String photo = null;
 
   @JsonProperty("created")
-  private LocalDate created = null;
+  private Date created = null;
 
   @JsonProperty("updated")
-  private LocalDate updated = null;
+  private Date updated = null;
 
   @JsonProperty("countryId")
   private Long countryId = null;
@@ -112,7 +109,7 @@ public class ListArticle   {
     this.photo = photo;
   }
 
-  public ListArticle created(LocalDate created) {
+  public ListArticle created(Date created) {
     this.created = created;
     return this;
   }
@@ -122,15 +119,15 @@ public class ListArticle   {
    * @return created
   **/
   @ApiModelProperty(example = "Blablabla", value = "")
-  public LocalDate getCreated() {
+  public Date getCreated() {
     return created;
   }
 
-  public void setCreated(LocalDate created) {
+  public void setCreated(Date created) {
     this.created = created;
   }
 
-  public ListArticle updated(LocalDate updated) {
+  public ListArticle updated(Date updated) {
     this.updated = updated;
     return this;
   }
@@ -140,11 +137,11 @@ public class ListArticle   {
    * @return updated
   **/
   @ApiModelProperty(example = "Blablabla", value = "")
-  public LocalDate getUpdated() {
+  public Date getUpdated() {
     return updated;
   }
 
-  public void setUpdated(LocalDate updated) {
+  public void setUpdated(Date updated) {
     this.updated = updated;
   }
 
