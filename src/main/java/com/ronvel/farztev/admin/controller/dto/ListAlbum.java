@@ -5,19 +5,13 @@ import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.annotations.ApiModelProperty;
 /**
- * Article
+ * ListAlbum
  */
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2017-11-12T10:06:04.705+01:00")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2018-01-18T21:47:27.717+01:00")
 
-public class Article   {
+public class ListAlbum   {
   @JsonProperty("id")
   private Long id = null;
-
-  @JsonProperty("countryId")
-  private Long countryId = null;
-
-  @JsonProperty("countryName")
-  private String countryName = null;
 
   @JsonProperty("name")
   private String name = null;
@@ -31,10 +25,19 @@ public class Article   {
   @JsonProperty("updated")
   private Date updated = null;
 
+  @JsonProperty("thumbnail")
+  private Integer thumbnail = null;
+
+  @JsonProperty("countryId")
+  private Long countryId = null;
+
+  @JsonProperty("countryName")
+  private String countryName = null;
+
   @JsonProperty("online")
   private Boolean online = null;
 
-  public Article id(Long id) {
+  public ListAlbum id(Long id) {
     this.id = id;
     return this;
   }
@@ -43,7 +46,7 @@ public class Article   {
    * Get id
    * @return id
   **/
-  @ApiModelProperty(value = "")
+  @ApiModelProperty(example = "1", value = "")
   public Long getId() {
     return id;
   }
@@ -52,43 +55,7 @@ public class Article   {
     this.id = id;
   }
 
-  public Article countryId(Long countryId) {
-    this.countryId = countryId;
-    return this;
-  }
-
-   /**
-   * Get countryId
-   * @return countryId
-  **/
-  @ApiModelProperty(example = "1", value = "")
-  public Long getCountryId() {
-    return countryId;
-  }
-
-  public void setCountryId(Long countryId) {
-    this.countryId = countryId;
-  }
-
-  public Article countryName(String countryName) {
-    this.countryName = countryName;
-    return this;
-  }
-
-   /**
-   * Get countryName
-   * @return countryName
-  **/
-  @ApiModelProperty(example = "Ireland", value = "")
-  public String getCountryName() {
-    return countryName;
-  }
-
-  public void setCountryName(String countryName) {
-    this.countryName = countryName;
-  }
-
-  public Article name(String name) {
+  public ListAlbum name(String name) {
     this.name = name;
     return this;
   }
@@ -97,7 +64,7 @@ public class Article   {
    * Get name
    * @return name
   **/
-  @ApiModelProperty(example = "Visit in Dublin", value = "")
+  @ApiModelProperty(example = "Patong", value = "")
   public String getName() {
     return name;
   }
@@ -106,7 +73,7 @@ public class Article   {
     this.name = name;
   }
 
-  public Article description(String description) {
+  public ListAlbum description(String description) {
     this.description = description;
     return this;
   }
@@ -115,7 +82,7 @@ public class Article   {
    * Get description
    * @return description
   **/
-  @ApiModelProperty(example = "Dublin is the capital of Irland...", value = "")
+  @ApiModelProperty(example = "Patong is the most famous place of Phuket...", value = "")
   public String getDescription() {
     return description;
   }
@@ -124,7 +91,7 @@ public class Article   {
     this.description = description;
   }
 
-  public Article created(Date created) {
+  public ListAlbum created(Date created) {
     this.created = created;
     return this;
   }
@@ -142,7 +109,7 @@ public class Article   {
     this.created = created;
   }
 
-  public Article updated(Date updated) {
+  public ListAlbum updated(Date updated) {
     this.updated = updated;
     return this;
   }
@@ -160,7 +127,61 @@ public class Article   {
     this.updated = updated;
   }
 
-  public Article online(Boolean online) {
+  public ListAlbum thumbnail(Integer thumbnail) {
+    this.thumbnail = thumbnail;
+    return this;
+  }
+
+   /**
+   * Get thumbnail
+   * @return thumbnail
+  **/
+  @ApiModelProperty(example = "68", value = "")
+  public Integer getThumbnail() {
+    return thumbnail;
+  }
+
+  public void setThumbnail(Integer thumbnail) {
+    this.thumbnail = thumbnail;
+  }
+
+  public ListAlbum countryId(Long countryId) {
+    this.countryId = countryId;
+    return this;
+  }
+
+   /**
+   * Get countryId
+   * @return countryId
+  **/
+  @ApiModelProperty(example = "1", value = "")
+  public Long getCountryId() {
+    return countryId;
+  }
+
+  public void setCountryId(Long countryId) {
+    this.countryId = countryId;
+  }
+
+  public ListAlbum countryName(String countryName) {
+    this.countryName = countryName;
+    return this;
+  }
+
+   /**
+   * Get countryName
+   * @return countryName
+  **/
+  @ApiModelProperty(example = "Ireland", value = "")
+  public String getCountryName() {
+    return countryName;
+  }
+
+  public void setCountryName(String countryName) {
+    this.countryName = countryName;
+  }
+
+  public ListAlbum online(Boolean online) {
     this.online = online;
     return this;
   }
@@ -187,34 +208,36 @@ public class Article   {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    Article article = (Article) o;
-    return Objects.equals(this.id, article.id) &&
-        Objects.equals(this.countryId, article.countryId) &&
-        Objects.equals(this.countryName, article.countryName) &&
-        Objects.equals(this.name, article.name) &&
-        Objects.equals(this.description, article.description) &&
-        Objects.equals(this.created, article.created) &&
-        Objects.equals(this.updated, article.updated) &&
-        Objects.equals(this.online, article.online);
+    ListAlbum listAlbum = (ListAlbum) o;
+    return Objects.equals(this.id, listAlbum.id) &&
+        Objects.equals(this.name, listAlbum.name) &&
+        Objects.equals(this.description, listAlbum.description) &&
+        Objects.equals(this.created, listAlbum.created) &&
+        Objects.equals(this.updated, listAlbum.updated) &&
+        Objects.equals(this.thumbnail, listAlbum.thumbnail) &&
+        Objects.equals(this.countryId, listAlbum.countryId) &&
+        Objects.equals(this.countryName, listAlbum.countryName) &&
+        Objects.equals(this.online, listAlbum.online);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, countryId, countryName, name, description, created, updated, online);
+    return Objects.hash(id, name, description, created, updated, thumbnail, countryId, countryName, online);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class Article {\n");
+    sb.append("class ListAlbum {\n");
     
     sb.append("    id: ").append(toIndentedString(id)).append("\n");
-    sb.append("    countryId: ").append(toIndentedString(countryId)).append("\n");
-    sb.append("    countryName: ").append(toIndentedString(countryName)).append("\n");
     sb.append("    name: ").append(toIndentedString(name)).append("\n");
     sb.append("    description: ").append(toIndentedString(description)).append("\n");
     sb.append("    created: ").append(toIndentedString(created)).append("\n");
     sb.append("    updated: ").append(toIndentedString(updated)).append("\n");
+    sb.append("    thumbnail: ").append(toIndentedString(thumbnail)).append("\n");
+    sb.append("    countryId: ").append(toIndentedString(countryId)).append("\n");
+    sb.append("    countryName: ").append(toIndentedString(countryName)).append("\n");
     sb.append("    online: ").append(toIndentedString(online)).append("\n");
     sb.append("}");
     return sb.toString();

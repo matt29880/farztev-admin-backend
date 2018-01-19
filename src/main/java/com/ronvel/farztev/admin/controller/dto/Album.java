@@ -5,25 +5,25 @@ import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.annotations.ApiModelProperty;
 /**
- * Article
+ * Album
  */
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2017-11-12T10:06:04.705+01:00")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2018-01-18T21:47:27.717+01:00")
 
-public class Article   {
+public class Album   {
   @JsonProperty("id")
   private Long id = null;
-
-  @JsonProperty("countryId")
-  private Long countryId = null;
-
-  @JsonProperty("countryName")
-  private String countryName = null;
 
   @JsonProperty("name")
   private String name = null;
 
   @JsonProperty("description")
   private String description = null;
+
+  @JsonProperty("countryId")
+  private Long countryId = null;
+
+  @JsonProperty("countryName")
+  private String countryName = null;
 
   @JsonProperty("created")
   private Date created = null;
@@ -34,7 +34,7 @@ public class Article   {
   @JsonProperty("online")
   private Boolean online = null;
 
-  public Article id(Long id) {
+  public Album id(Long id) {
     this.id = id;
     return this;
   }
@@ -43,7 +43,7 @@ public class Article   {
    * Get id
    * @return id
   **/
-  @ApiModelProperty(value = "")
+  @ApiModelProperty(example = "1", value = "")
   public Long getId() {
     return id;
   }
@@ -52,7 +52,43 @@ public class Article   {
     this.id = id;
   }
 
-  public Article countryId(Long countryId) {
+  public Album name(String name) {
+    this.name = name;
+    return this;
+  }
+
+   /**
+   * Get name
+   * @return name
+  **/
+  @ApiModelProperty(example = "Patong", value = "")
+  public String getName() {
+    return name;
+  }
+
+  public void setName(String name) {
+    this.name = name;
+  }
+
+  public Album description(String description) {
+    this.description = description;
+    return this;
+  }
+
+   /**
+   * Get description
+   * @return description
+  **/
+  @ApiModelProperty(example = "Patong is the most famous place of Phuket...", value = "")
+  public String getDescription() {
+    return description;
+  }
+
+  public void setDescription(String description) {
+    this.description = description;
+  }
+
+  public Album countryId(Long countryId) {
     this.countryId = countryId;
     return this;
   }
@@ -70,7 +106,7 @@ public class Article   {
     this.countryId = countryId;
   }
 
-  public Article countryName(String countryName) {
+  public Album countryName(String countryName) {
     this.countryName = countryName;
     return this;
   }
@@ -88,43 +124,7 @@ public class Article   {
     this.countryName = countryName;
   }
 
-  public Article name(String name) {
-    this.name = name;
-    return this;
-  }
-
-   /**
-   * Get name
-   * @return name
-  **/
-  @ApiModelProperty(example = "Visit in Dublin", value = "")
-  public String getName() {
-    return name;
-  }
-
-  public void setName(String name) {
-    this.name = name;
-  }
-
-  public Article description(String description) {
-    this.description = description;
-    return this;
-  }
-
-   /**
-   * Get description
-   * @return description
-  **/
-  @ApiModelProperty(example = "Dublin is the capital of Irland...", value = "")
-  public String getDescription() {
-    return description;
-  }
-
-  public void setDescription(String description) {
-    this.description = description;
-  }
-
-  public Article created(Date created) {
+  public Album created(Date created) {
     this.created = created;
     return this;
   }
@@ -142,7 +142,7 @@ public class Article   {
     this.created = created;
   }
 
-  public Article updated(Date updated) {
+  public Album updated(Date updated) {
     this.updated = updated;
     return this;
   }
@@ -160,7 +160,7 @@ public class Article   {
     this.updated = updated;
   }
 
-  public Article online(Boolean online) {
+  public Album online(Boolean online) {
     this.online = online;
     return this;
   }
@@ -187,32 +187,32 @@ public class Article   {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    Article article = (Article) o;
-    return Objects.equals(this.id, article.id) &&
-        Objects.equals(this.countryId, article.countryId) &&
-        Objects.equals(this.countryName, article.countryName) &&
-        Objects.equals(this.name, article.name) &&
-        Objects.equals(this.description, article.description) &&
-        Objects.equals(this.created, article.created) &&
-        Objects.equals(this.updated, article.updated) &&
-        Objects.equals(this.online, article.online);
+    Album album = (Album) o;
+    return Objects.equals(this.id, album.id) &&
+        Objects.equals(this.name, album.name) &&
+        Objects.equals(this.description, album.description) &&
+        Objects.equals(this.countryId, album.countryId) &&
+        Objects.equals(this.countryName, album.countryName) &&
+        Objects.equals(this.created, album.created) &&
+        Objects.equals(this.updated, album.updated) &&
+        Objects.equals(this.online, album.online);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, countryId, countryName, name, description, created, updated, online);
+    return Objects.hash(id, name, description, countryId, countryName, created, updated, online);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class Article {\n");
+    sb.append("class Album {\n");
     
     sb.append("    id: ").append(toIndentedString(id)).append("\n");
-    sb.append("    countryId: ").append(toIndentedString(countryId)).append("\n");
-    sb.append("    countryName: ").append(toIndentedString(countryName)).append("\n");
     sb.append("    name: ").append(toIndentedString(name)).append("\n");
     sb.append("    description: ").append(toIndentedString(description)).append("\n");
+    sb.append("    countryId: ").append(toIndentedString(countryId)).append("\n");
+    sb.append("    countryName: ").append(toIndentedString(countryName)).append("\n");
     sb.append("    created: ").append(toIndentedString(created)).append("\n");
     sb.append("    updated: ").append(toIndentedString(updated)).append("\n");
     sb.append("    online: ").append(toIndentedString(online)).append("\n");
