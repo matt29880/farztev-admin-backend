@@ -14,8 +14,8 @@ import javax.validation.constraints.Size;
 import org.hibernate.annotations.Type;
 
 @Entity
-@Table(name="article")
-public class ArticleModel extends BaseModel {
+@Table(name="album")
+public class AlbumModel extends BaseModel {
   @NotNull
   @ManyToOne(fetch = FetchType.EAGER)
   @JoinColumn(name = "country")

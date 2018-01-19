@@ -38,6 +38,20 @@ parameters:
     required: true
     schema:
       $ref: '#/definitions/Article'
+  AlbumId:
+    name: albumId
+    in: path
+    type: integer
+    format: int64
+    description: Album ID
+    required: true
+  Album:
+    name: album
+    in: body
+    description: Album data.
+    required: true
+    schema:
+      $ref: '#/definitions/Album'
 paths:
   /api/article:
     get:
@@ -156,6 +170,67 @@ paths:
       - "application/json"
       parameters:
         - $ref: '#/parameters/CountryId'
+      responses:
+        200:
+          description: "successful operation"
+        400:
+          description: "Invalid status value"
+  /api/album:
+    get:
+      produces:
+      - "application/json"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/ListAlbum"
+      400:
+        description: "Invalid status value"
+    post:
+      produces:
+      - "application/json"
+      parameters:
+        - $ref: '#/parameters/Album'
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/Album"
+        400:
+          description: "Invalid status value"
+  /api/album/{albumId}:
+    get:
+      produces:
+      - "application/json"
+      parameters:
+        - $ref: '#/parameters/AlbumId'
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/Album"
+        404:
+          description: "Country not found"
+    put:
+      produces:
+      - "application/json"
+      parameters:
+        - $ref: '#/parameters/AlbumId'
+        - $ref: '#/parameters/Album'
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/Album"
+        400:
+          description: "Invalid status value"
+    delete:
+      produces:
+      - "application/json"
+      parameters:
+        - $ref: '#/parameters/AlbumId'
       responses:
         200:
           description: "successful operation"
@@ -314,6 +389,71 @@ definitions:
       continent:
         type: "string"
         example: "ASIA"
+  ListAlbum:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+        format: "int64"
+        example: 1
+      name:
+        type: "string"
+        example: "Patong"
+      description:
+        type: "string"
+        example: "Patong is the most famous place of Phuket..."
+      created:
+        type: "string"
+        format: "date"
+        example: "Blablabla"
+      updated:
+        type: "string"
+        format: "date"
+        example: "Blablabla"
+      thumbnail:
+        type: "integer"
+        example: "68"
+      countryId:
+        type: "integer"
+        format: "int64"
+        example: 1
+      countryName:
+        type: "string"
+        example: Ireland
+      online:
+        type: "boolean"
+        example: true
+  Album:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+        format: "int64"
+        example: 1
+      name:
+        type: "string"
+        example: "Patong"
+      description:
+        type: "string"
+        example: "Patong is the most famous place of Phuket..."
+      countryId:
+        type: "integer"
+        format: "int64"
+        example: 1
+      countryName:
+        type: "string"
+        example: Ireland
+      created:
+        type: "string"
+        format: "date"
+        example: "Blablabla"
+      updated:
+        type: "string"
+        format: "date"
+        example: "Blablabla"
+      online:
+        type: "boolean"
+        example: true
 externalDocs:
   description: "Find out more about Swagger"
   url: "http://swagger.io"

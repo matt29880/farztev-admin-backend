@@ -106,7 +106,6 @@ public class ArticleServiceTest extends BaseServiceTest {
     assertEquals(new Date(1234567911L), article.getCreated());
     assertEquals("The zug description", article.getDescription());
     assertEquals("Zug, the place to be", article.getName());
-    assertEquals("zug.jpg", article.getPhoto());
     assertTrue(article.getOnline());
     assertEquals(new Date(1234567913L), article.getUpdated());
   }
@@ -121,7 +120,6 @@ public class ArticleServiceTest extends BaseServiceTest {
     assertEquals(new Date(1234567911L), article.getCreated());
     assertEquals("Zug, the place to be", article.getName());
     assertTrue(article.getOnline());
-    assertEquals("zug.jpg", article.getPhoto());
     assertEquals(new Date(1234567913L), article.getUpdated());
   }
 
@@ -134,7 +132,6 @@ public class ArticleServiceTest extends BaseServiceTest {
     article.setCreated(new Date(1234567911L));
     article.setDescription("The zug description");
     article.setName("Zug, the place to be");
-    article.setPhoto("zug.jpg");
     article.setOnline(true);
     article.setUpdated(new Date(1234567913L));
     return article;
@@ -148,7 +145,6 @@ public class ArticleServiceTest extends BaseServiceTest {
     article.setCreated(new Date(12345679112L));
     article.setDescription("The zug description2");
     article.setName("Zug, the place to be2");
-    article.setPhoto("zug.jpg2");
     article.setOnline(false);
     article.setUpdated(new Date(12345679132L));
     return article;
@@ -162,7 +158,6 @@ public class ArticleServiceTest extends BaseServiceTest {
     assertEquals(new Date(12345679112L), article.getCreated());
     assertEquals("The zug description2", article.getDescription());
     assertEquals("Zug, the place to be2", article.getName());
-    assertEquals("zug.jpg2", article.getPhoto());
     assertFalse(article.getOnline());
     assertEquals(new Date(12345679132L), article.getUpdated());
   }

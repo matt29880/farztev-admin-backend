@@ -19,9 +19,6 @@ public class ListArticle   {
   @JsonProperty("name")
   private String name = null;
 
-  @JsonProperty("photo")
-  private String photo = null;
-
   @JsonProperty("created")
   private Date created = null;
 
@@ -89,24 +86,6 @@ public class ListArticle   {
 
   public void setName(String name) {
     this.name = name;
-  }
-
-  public ListArticle photo(String photo) {
-    this.photo = photo;
-    return this;
-  }
-
-   /**
-   * Get photo
-   * @return photo
-  **/
-  @ApiModelProperty(example = "dublin.jpg", value = "")
-  public String getPhoto() {
-    return photo;
-  }
-
-  public void setPhoto(String photo) {
-    this.photo = photo;
   }
 
   public ListArticle created(Date created) {
@@ -212,7 +191,6 @@ public class ListArticle   {
     return Objects.equals(this.id, listArticle.id) &&
         Objects.equals(this.country, listArticle.country) &&
         Objects.equals(this.name, listArticle.name) &&
-        Objects.equals(this.photo, listArticle.photo) &&
         Objects.equals(this.created, listArticle.created) &&
         Objects.equals(this.updated, listArticle.updated) &&
         Objects.equals(this.countryId, listArticle.countryId) &&
@@ -222,7 +200,7 @@ public class ListArticle   {
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, country, name, photo, created, updated, countryId, countryName, online);
+    return Objects.hash(id, country, name, created, updated, countryId, countryName, online);
   }
 
   @Override
@@ -233,7 +211,6 @@ public class ListArticle   {
     sb.append("    id: ").append(toIndentedString(id)).append("\n");
     sb.append("    country: ").append(toIndentedString(country)).append("\n");
     sb.append("    name: ").append(toIndentedString(name)).append("\n");
-    sb.append("    photo: ").append(toIndentedString(photo)).append("\n");
     sb.append("    created: ").append(toIndentedString(created)).append("\n");
     sb.append("    updated: ").append(toIndentedString(updated)).append("\n");
     sb.append("    countryId: ").append(toIndentedString(countryId)).append("\n");

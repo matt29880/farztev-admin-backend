@@ -20,3 +20,12 @@ spring:
     password: root
     driver-class-name: com.mysql.jdbc.Driver
     
+logging:
+  level:
+    org:
+      hibernate:
+        SQL: DEBUG    
+        type:
+          descriptor:
+            sql:
+              BasicBinder: TRACE
