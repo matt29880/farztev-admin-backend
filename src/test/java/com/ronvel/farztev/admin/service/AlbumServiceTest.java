@@ -14,10 +14,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.ronvel.farztev.admin.controller.dto.Album;
 import com.ronvel.farztev.admin.controller.dto.ListAlbum;
 import com.ronvel.farztev.admin.dao.AlbumDao;
+import com.ronvel.farztev.admin.dao.AlbumTypeDao;
 import com.ronvel.farztev.admin.dao.CountryDao;
 import com.ronvel.farztev.admin.dao.model.AlbumModel;
-import com.ronvel.farztev.admin.dao.model.CountryModel;
-import com.ronvel.farztev.admin.enums.Continent;
 
 public class AlbumServiceTest extends BaseServiceTest {
 
@@ -26,26 +25,30 @@ public class AlbumServiceTest extends BaseServiceTest {
 
   @Autowired
   private AlbumDao albumDao;
-  
-  @Autowired
-  private CountryDao countryDao;
 
   @Autowired
   private ModelMapper mapper;
 
+  @Autowired
+  private AlbumTypeDao albumTypeDao;
+  
+  @Autowired
+  private CountryDao countryDao;
+
+
   @Before
   public void before() {
-    albumDao.deleteAll();
-    countryDao.deleteAll();
+    clear();
     assertEquals(0L, albumDao.count());
     countryDao.save(createDummyCountriesForTest());
+    albumTypeDao.save(createDummyAlbumTypesForTest());
   }
 
   @Test
   public void findAlbum() {
-    albumDao.save(createSwissAlbum());
+    AlbumModel album = albumDao.save(createSwissAlbum(albumTypeDao));
     assertEquals(1L, albumDao.count());
-    Optional<Album> optionalAlbum = albumService.findAlbumById(1L);
+    Optional<Album> optionalAlbum = albumService.findAlbumById(album.getId());
     assertTrue(optionalAlbum.isPresent());
     testSwissAlbum(optionalAlbum.get());
   }
@@ -58,10 +61,10 @@ public class AlbumServiceTest extends BaseServiceTest {
 
   @Test
   public void listAlbums() {
-    albumDao.save(createSwissAlbum());
+    AlbumModel album = albumDao.save(createSwissAlbum(albumTypeDao));
     assertEquals(1L, albumDao.count());
     List<ListAlbum> albums = albumService.listAlbums();
-    testListAlbums(albums);
+    testListAlbums(album.getId(),albums);
   }
 
   @Test
@@ -74,7 +77,7 @@ public class AlbumServiceTest extends BaseServiceTest {
   @Test
   public void addAlbum() {
     assertEquals(0L, albumDao.count());
-    Album newAlbum = mapper.map(createSwissAlbum(), Album.class);
+    Album newAlbum = mapper.map(createSwissAlbum(albumTypeDao), Album.class);
     Album album = albumService.addAlbum(newAlbum);
     testSwissAlbum(album);
     assertEquals(1L, albumDao.count());
@@ -82,26 +85,26 @@ public class AlbumServiceTest extends BaseServiceTest {
 
   @Test
   public void updateAlbum() {
-    albumDao.save(createSwissAlbum());
+    AlbumModel album = albumDao.save(createSwissAlbum(albumTypeDao));
     assertEquals(1L, albumDao.count());
     Album updateAlbum = createUpdateSwissAlbum();
-    albumService.updateAlbum(1L, updateAlbum);
-    Optional<Album> optionalAlbum = albumService.findAlbumById(1L);
+    albumService.updateAlbum(album.getId(), updateAlbum);
+    Optional<Album> optionalAlbum = albumService.findAlbumById(album.getId());
     assertTrue(optionalAlbum.isPresent());
-    testUpdatedSwissAlbum(optionalAlbum.get());
+    testUpdatedSwissAlbum(album.getId(),optionalAlbum.get());
   }
 
   @Test
   public void deleteAlbum() {
-    albumDao.save(createSwissAlbum());
+    AlbumModel album = albumDao.save(createSwissAlbum(albumTypeDao));
     assertEquals(1L, albumDao.count());
-    albumService.deleteAlbum(1L);
+    albumService.deleteAlbum(album.getId());
     assertEquals(0L, albumDao.count());
   }
 
   public static void testSwissAlbum(Album album) {
     assertNotNull(album);
-    assertEquals(1L, album.getId().longValue());
+    assertNotNull(album.getId());
     assertEquals(1L, album.getCountryId().longValue());
     assertEquals("Switzerland", album.getCountryName());
     assertEquals(new Date(1234567911L).getTime(), album.getCreated().getTime());
@@ -111,11 +114,11 @@ public class AlbumServiceTest extends BaseServiceTest {
     assertEquals(new Date(1234567913L).getTime(), album.getUpdated().getTime());
   }
 
-  public static void testListAlbums(List<ListAlbum> albums) {
+  public static void testListAlbums(Long id,List<ListAlbum> albums) {
     assertNotNull(albums);
     assertEquals(1, albums.size());
     ListAlbum album = albums.get(0);
-    assertEquals(1L, album.getId().longValue());
+    assertEquals(id, album.getId());
     assertEquals(1L, album.getCountryId().longValue());
     assertEquals("Switzerland", album.getCountryName());
     assertEquals(new Date(1234567911L).getTime(), album.getCreated().getTime());
@@ -124,13 +127,9 @@ public class AlbumServiceTest extends BaseServiceTest {
     assertEquals(new Date(1234567913L).getTime(), album.getUpdated().getTime());
   }
 
-  public static AlbumModel createSwissAlbum() {
+  public static AlbumModel createSwissAlbum(AlbumTypeDao albumTypeDao) {
     AlbumModel album = new AlbumModel();
-    album.setId(1L);
-    CountryModel country = new CountryModel();
-    country.setId(1L);
-    country.setContinent(Continent.EUROPE.name());
-    album.setCountry(country);
+    album.setAlbumType(albumTypeDao.findOne(1L));
     album.setCreated(new Date(1234567911L));
     album.setDescription("The zug description");
     album.setName("Zug, the place to be");
@@ -149,12 +148,13 @@ public class AlbumServiceTest extends BaseServiceTest {
     album.setName("Zug, the place to be2");
     album.setOnline(false);
     album.setUpdated(new Date(12345679132L));
+    album.setAlbumTypeId(2L);
     return album;
   }
 
-  public static void testUpdatedSwissAlbum(Album album) {
+  public static void testUpdatedSwissAlbum(Long id,Album album) {
     assertNotNull(album);
-    assertEquals(1L, album.getId().longValue());
+    assertEquals(id, album.getId());
     assertEquals(2L, album.getCountryId().longValue());
     assertEquals("Spain", album.getCountryName());
     assertEquals(new Date(12345679112L).getTime(), album.getCreated().getTime());

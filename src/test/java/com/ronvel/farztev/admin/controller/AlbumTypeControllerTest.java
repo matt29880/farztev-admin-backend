@@ -23,7 +23,7 @@ import com.ronvel.farztev.admin.dao.model.CountryModel;
 import com.ronvel.farztev.admin.service.AlbumServiceTest;
 import com.ronvel.farztev.admin.service.BaseServiceTest;
 
-public class AlbumControllerTest extends BaseControllerTest {
+public class AlbumTypeControllerTest extends BaseControllerTest {
 
   @Autowired
   private AlbumDao albumDao;

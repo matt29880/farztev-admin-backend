@@ -52,6 +52,20 @@ parameters:
     required: true
     schema:
       $ref: '#/definitions/Album'
+  AlbumTypeId:
+    name: albumTypeId
+    in: path
+    type: integer
+    format: int64
+    description: Album Type ID
+    required: true
+  AlbumType:
+    name: albumType
+    in: body
+    description: Album Type data.
+    required: true
+    schema:
+      $ref: '#/definitions/AlbumType'
 paths:
   /api/article:
     get:
@@ -231,6 +245,73 @@ paths:
       - "application/json"
       parameters:
         - $ref: '#/parameters/AlbumId'
+      responses:
+        200:
+          description: "successful operation"
+        400:
+          description: "Invalid status value"
+  /api/album/{albumId}/albumtype:
+    get:
+      produces:
+      - "application/json"
+      parameters:
+        - $ref: '#/parameters/AlbumId'
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/ListAlbumType"
+      400:
+        description: "Invalid status value"
+    post:
+      produces:
+      - "application/json"
+      parameters:
+        - $ref: '#/parameters/AlbumId'
+        - $ref: '#/parameters/AlbumType'
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/AlbumType"
+        400:
+          description: "Invalid status value"
+  /api/album/{albumId}/albumtype/{albumTypeId}:
+    get:
+      produces:
+      - "application/json"
+      parameters:
+        - $ref: '#/parameters/AlbumId'
+        - $ref: '#/parameters/AlbumTypeId'
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/AlbumType"
+        404:
+          description: "Country not found"
+    put:
+      produces:
+      - "application/json"
+      parameters:
+        - $ref: '#/parameters/AlbumId'
+        - $ref: '#/parameters/AlbumTypeId'
+        - $ref: '#/parameters/AlbumType'
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/AlbumType"
+        400:
+          description: "Invalid status value"
+    delete:
+      produces:
+      - "application/json"
+      parameters:
+        - $ref: '#/parameters/AlbumId'
+        - $ref: '#/parameters/AlbumTypeId'
       responses:
         200:
           description: "successful operation"
@@ -420,6 +501,13 @@ definitions:
       countryName:
         type: "string"
         example: Ireland
+      albumTypeId:
+        type: "integer"
+        format: "int64"
+        example: 1
+      albumTypeName:
+        type: "string"
+        example: Zug canton
       online:
         type: "boolean"
         example: true
@@ -443,6 +531,13 @@ definitions:
       countryName:
         type: "string"
         example: Ireland
+      albumTypeId:
+        type: "integer"
+        format: "int64"
+        example: 1
+      albumTypeName:
+        type: "string"
+        example: Zug canton
       created:
         type: "string"
         format: "date"
@@ -454,6 +549,40 @@ definitions:
       online:
         type: "boolean"
         example: true
+  ListAlbumType:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+        format: "int64"
+        example: 1
+      name:
+        type: "string"
+        example: "Patong"
+      countryId:
+        type: "integer"
+        format: "int64"
+        example: 1
+      countryName:
+        type: "string"
+        example: Ireland
+  AlbumType:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+        format: "int64"
+        example: 1
+      name:
+        type: "string"
+        example: "Patong"
+      countryId:
+        type: "integer"
+        format: "int64"
+        example: 1
+      countryName:
+        type: "string"
+        example: Ireland
 externalDocs:
   description: "Find out more about Swagger"
   url: "http://swagger.io"

@@ -30,7 +30,7 @@ public class CountryServiceTest extends BaseServiceTest {
 
 	@Before
 	public void before() {
-		countryDao.deleteAll();
+	    clear();
 		assertEquals(0L,countryDao.count());
 	}
 

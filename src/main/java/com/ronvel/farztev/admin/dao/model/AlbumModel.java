@@ -17,11 +17,6 @@ import org.hibernate.annotations.Type;
 @Table(name="album")
 public class AlbumModel extends BaseModel {
   @NotNull
-  @ManyToOne(fetch = FetchType.EAGER)
-  @JoinColumn(name = "country")
-  private CountryModel country;
-
-  @NotNull
   @Size(max = 30)
   private String name;
   @NotNull
@@ -37,14 +32,11 @@ public class AlbumModel extends BaseModel {
   @Type(type = "org.hibernate.type.NumericBooleanType")
   @Column(columnDefinition = "TINYINT(1)")
   private Boolean online;
-
-  public CountryModel getCountry() {
-    return country;
-  }
-
-  public void setCountry(CountryModel country) {
-    this.country = country;
-  }
+  
+  @NotNull
+  @ManyToOne(fetch = FetchType.EAGER)
+  @JoinColumn(name = "album_type")
+  private AlbumTypeModel albumType;
 
   public String getName() {
     return name;
@@ -84,6 +76,14 @@ public class AlbumModel extends BaseModel {
 
   public void setOnline(Boolean online) {
     this.online = online;
+  }
+
+  public AlbumTypeModel getAlbumType() {
+    return albumType;
+  }
+
+  public void setAlbumType(AlbumTypeModel albumType) {
+    this.albumType = albumType;
   }
 
 
