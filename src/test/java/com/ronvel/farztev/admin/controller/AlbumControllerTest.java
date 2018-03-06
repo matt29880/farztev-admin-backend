@@ -16,10 +16,10 @@ import org.springframework.http.ResponseEntity;
 import com.ronvel.farztev.admin.controller.dto.Album;
 import com.ronvel.farztev.admin.controller.dto.ListAlbum;
 import com.ronvel.farztev.admin.dao.AlbumDao;
+import com.ronvel.farztev.admin.dao.AlbumTypeDao;
 import com.ronvel.farztev.admin.dao.CountryDao;
-import com.ronvel.farztev.admin.dao.model.CountryModel;
+import com.ronvel.farztev.admin.dao.model.AlbumModel;
 import com.ronvel.farztev.admin.service.AlbumServiceTest;
-import com.ronvel.farztev.admin.service.BaseServiceTest;
 
 public class AlbumControllerTest extends BaseControllerTest {
 
@@ -33,20 +33,22 @@ public class AlbumControllerTest extends BaseControllerTest {
   private TestRestTemplate restTemplate;
 
   @Autowired
+  private AlbumTypeDao albumTypeDao;
+
+  @Autowired
   private ModelMapper mapper;
 
   @Before
   public void before() {
-    albumDao.deleteAll();
-    countryDao.deleteAll();
+    clear();
     assertEquals(0L, albumDao.count());
-    List<CountryModel> countries = BaseServiceTest.createDummyCountriesForTest();
-    countryDao.save(countries);
+    countryDao.save(AlbumServiceTest.createDummyCountriesForTest());
+    albumTypeDao.save(AlbumServiceTest.createDummyAlbumTypesForTest());
   }
 
   @Test
   public void albumsGet() {
-    albumDao.save(AlbumServiceTest.createSwissAlbum());
+    AlbumModel album = albumDao.save(AlbumServiceTest.createSwissAlbum(albumTypeDao));
 
     HttpHeaders headers = new HttpHeaders();
     HttpEntity<String> request = new HttpEntity<String>(headers);
@@ -55,7 +57,7 @@ public class AlbumControllerTest extends BaseControllerTest {
         HttpMethod.GET, request, new ParameterizedTypeReference<List<ListAlbum>>() {});
     assertTrue(albumsResponse.getStatusCode().is2xxSuccessful());
 
-    AlbumServiceTest.testListAlbums(albumsResponse.getBody());
+    AlbumServiceTest.testListAlbums(album.getId(),albumsResponse.getBody());
   }
 
   @Test
@@ -71,11 +73,11 @@ public class AlbumControllerTest extends BaseControllerTest {
 
   @Test
   public void albumsAlbumIdGet() {
-    albumDao.save(AlbumServiceTest.createSwissAlbum());
+    AlbumModel album = albumDao.save(AlbumServiceTest.createSwissAlbum(albumTypeDao));
     HttpHeaders headers = new HttpHeaders();
     HttpEntity<String> request = new HttpEntity<String>(headers);
 
-    ResponseEntity<Album> albumResponse = this.restTemplate.exchange("/api/album/1",
+    ResponseEntity<Album> albumResponse = this.restTemplate.exchange("/api/album/"+album.getId(),
         HttpMethod.GET, request, new ParameterizedTypeReference<Album>() {});
     assertTrue(albumResponse.getStatusCode().is2xxSuccessful());
     AlbumServiceTest.testSwissAlbum(albumResponse.getBody());
@@ -93,7 +95,7 @@ public class AlbumControllerTest extends BaseControllerTest {
 
   @Test
   public void albumsPost() {
-    Album newAlbum = mapper.map(AlbumServiceTest.createSwissAlbum(), Album.class);
+    Album newAlbum = mapper.map(AlbumServiceTest.createSwissAlbum(albumTypeDao), Album.class);
 
     HttpEntity<Album> request = new HttpEntity<Album>(newAlbum);
 
@@ -107,35 +109,35 @@ public class AlbumControllerTest extends BaseControllerTest {
 
   @Test
   public void albumsAlbumIdPut() {
-    albumDao.save(AlbumServiceTest.createSwissAlbum());
+    AlbumModel album = albumDao.save(AlbumServiceTest.createSwissAlbum(albumTypeDao));
     assertEquals(1L, albumDao.count());
     Album updateAlbum =
         mapper.map(AlbumServiceTest.createUpdateSwissAlbum(), Album.class);
 
     HttpEntity<Album> request = new HttpEntity<Album>(updateAlbum);
 
-    ResponseEntity<Void> updateResponse = this.restTemplate.exchange("/api/album/1",
+    ResponseEntity<Void> updateResponse = this.restTemplate.exchange("/api/album/"+album.getId(),
         HttpMethod.PUT, request, new ParameterizedTypeReference<Void>() {});
 
     assertTrue(updateResponse.getStatusCode().is2xxSuccessful());
 
     assertEquals(1L, albumDao.count());
 
-    ResponseEntity<Album> albumResponse = this.restTemplate.exchange("/api/album/1",
+    ResponseEntity<Album> albumResponse = this.restTemplate.exchange("/api/album/"+album.getId(),
         HttpMethod.GET, request, new ParameterizedTypeReference<Album>() {});
     assertTrue(albumResponse.getStatusCode().is2xxSuccessful());
-    AlbumServiceTest.testUpdatedSwissAlbum(albumResponse.getBody());
+    AlbumServiceTest.testUpdatedSwissAlbum(album.getId(),albumResponse.getBody());
   }
 
   @Test
   public void albumsAlbumIdDelete() {
-    albumDao.save(AlbumServiceTest.createSwissAlbum());
+    AlbumModel album = albumDao.save(AlbumServiceTest.createSwissAlbum(albumTypeDao));
     assertEquals(1L, albumDao.count());
 
     HttpHeaders headers = new HttpHeaders();
     HttpEntity<String> request = new HttpEntity<String>(headers);
 
-    ResponseEntity<Void> deleteResponse = this.restTemplate.exchange("/api/album/1",
+    ResponseEntity<Void> deleteResponse = this.restTemplate.exchange("/api/album/"+album.getId(),
         HttpMethod.DELETE, request, new ParameterizedTypeReference<Void>() {});
 
     assertTrue(deleteResponse.getStatusCode().is2xxSuccessful());

@@ -23,12 +23,6 @@ import com.ronvel.farztev.admin.service.BaseServiceTest;
 public class ArticleControllerTest extends BaseControllerTest {
 
   @Autowired
-  private ArticleDao articleDao;
-  
-  @Autowired
-  private CountryDao countryDao;
-
-  @Autowired
   private TestRestTemplate restTemplate;
 
   @Autowired
@@ -36,8 +30,7 @@ public class ArticleControllerTest extends BaseControllerTest {
 
   @Before
   public void before() {
-    articleDao.deleteAll();
-    countryDao.deleteAll();
+    clear();
     assertEquals(0L, articleDao.count());
     countryDao.save(BaseServiceTest.createDummyCountriesForTest());
   }

@@ -23,18 +23,26 @@ DROP TABLE IF EXISTS `album`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `album` (
-  `id` bigint(20) NOT NULL,
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `name` varchar(30) NOT NULL,
   `description` text,
   `created` datetime(6) DEFAULT NULL,
   `updated` datetime(6) DEFAULT NULL,
   `online` tinyint(4) NOT NULL,
-  `country` bigint(20) NOT NULL,
-  PRIMARY KEY (`id`,`country`),
-  KEY `fk_album_1_idx` (`country`),
-  CONSTRAINT `fk_album_1` FOREIGN KEY (`country`) REFERENCES `country` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+  `album_type` bigint(20) NOT NULL,
+  PRIMARY KEY (`id`,`album_type`),
+  KEY `fk_album_1_idx` (`album_type`),
+  CONSTRAINT `fk_album_1` FOREIGN KEY (`album_type`) REFERENCES `album_type` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+CREATE TABLE `album_type` (
+  `id` BIGINT(20) NOT NULL AUTO_INCREMENT,
+  `name` VARCHAR(60) NOT NULL,
+  `country` BIGINT(20) NOT NULL,
+  PRIMARY KEY (`id`),
+  CONSTRAINT `fk_album_type_1` FOREIGN KEY (`country`) REFERENCES `country` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION);
+
 
 --
 -- Dumping data for table `album`
@@ -53,7 +61,7 @@ DROP TABLE IF EXISTS `article`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `article` (
-  `id` bigint(20) NOT NULL,
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `name` varchar(30) NOT NULL,
   `description` text NOT NULL,
   `created` datetime(6) DEFAULT NULL,
@@ -83,7 +91,7 @@ DROP TABLE IF EXISTS `country`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `country` (
-  `id` bigint(20) NOT NULL,
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `name` varchar(30) NOT NULL,
   `abbreviation` varchar(20) DEFAULT NULL,
   `description` text,

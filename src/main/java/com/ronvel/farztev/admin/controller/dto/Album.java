@@ -7,7 +7,7 @@ import io.swagger.annotations.ApiModelProperty;
 /**
  * Album
  */
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2018-01-18T21:47:27.717+01:00")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2018-03-04T17:58:43.630+01:00")
 
 public class Album   {
   @JsonProperty("id")
@@ -24,6 +24,12 @@ public class Album   {
 
   @JsonProperty("countryName")
   private String countryName = null;
+
+  @JsonProperty("albumTypeId")
+  private Long albumTypeId = null;
+
+  @JsonProperty("albumTypeName")
+  private String albumTypeName = null;
 
   @JsonProperty("created")
   private Date created = null;
@@ -124,6 +130,42 @@ public class Album   {
     this.countryName = countryName;
   }
 
+  public Album albumTypeId(Long albumTypeId) {
+    this.albumTypeId = albumTypeId;
+    return this;
+  }
+
+   /**
+   * Get albumTypeId
+   * @return albumTypeId
+  **/
+  @ApiModelProperty(example = "1", value = "")
+  public Long getAlbumTypeId() {
+    return albumTypeId;
+  }
+
+  public void setAlbumTypeId(Long albumTypeId) {
+    this.albumTypeId = albumTypeId;
+  }
+
+  public Album albumTypeName(String albumTypeName) {
+    this.albumTypeName = albumTypeName;
+    return this;
+  }
+
+   /**
+   * Get albumTypeName
+   * @return albumTypeName
+  **/
+  @ApiModelProperty(example = "Zug canton", value = "")
+  public String getAlbumTypeName() {
+    return albumTypeName;
+  }
+
+  public void setAlbumTypeName(String albumTypeName) {
+    this.albumTypeName = albumTypeName;
+  }
+
   public Album created(Date created) {
     this.created = created;
     return this;
@@ -193,6 +235,8 @@ public class Album   {
         Objects.equals(this.description, album.description) &&
         Objects.equals(this.countryId, album.countryId) &&
         Objects.equals(this.countryName, album.countryName) &&
+        Objects.equals(this.albumTypeId, album.albumTypeId) &&
+        Objects.equals(this.albumTypeName, album.albumTypeName) &&
         Objects.equals(this.created, album.created) &&
         Objects.equals(this.updated, album.updated) &&
         Objects.equals(this.online, album.online);
@@ -200,7 +244,7 @@ public class Album   {
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, name, description, countryId, countryName, created, updated, online);
+    return Objects.hash(id, name, description, countryId, countryName, albumTypeId, albumTypeName, created, updated, online);
   }
 
   @Override
@@ -213,6 +257,8 @@ public class Album   {
     sb.append("    description: ").append(toIndentedString(description)).append("\n");
     sb.append("    countryId: ").append(toIndentedString(countryId)).append("\n");
     sb.append("    countryName: ").append(toIndentedString(countryName)).append("\n");
+    sb.append("    albumTypeId: ").append(toIndentedString(albumTypeId)).append("\n");
+    sb.append("    albumTypeName: ").append(toIndentedString(albumTypeName)).append("\n");
     sb.append("    created: ").append(toIndentedString(created)).append("\n");
     sb.append("    updated: ").append(toIndentedString(updated)).append("\n");
     sb.append("    online: ").append(toIndentedString(online)).append("\n");

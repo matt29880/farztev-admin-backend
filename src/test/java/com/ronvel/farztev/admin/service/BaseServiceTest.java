@@ -1,9 +1,13 @@
 package com.ronvel.farztev.admin.service;
 
+import static org.junit.Assert.assertEquals;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import org.flywaydb.test.annotation.FlywayTest;
+import org.flywaydb.test.junit.FlywayTestExecutionListener;
 import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.context.annotation.Import;
@@ -12,16 +16,34 @@ import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
 import com.ronvel.farztev.admin.config.SpringConfiguration;
+import com.ronvel.farztev.admin.dao.AlbumDao;
+import com.ronvel.farztev.admin.dao.AlbumTypeDao;
+import com.ronvel.farztev.admin.dao.ArticleDao;
+import com.ronvel.farztev.admin.dao.CountryDao;
+import com.ronvel.farztev.admin.dao.model.AlbumTypeModel;
 import com.ronvel.farztev.admin.dao.model.CountryModel;
 import com.ronvel.farztev.admin.enums.Continent;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
 @ActiveProfiles(profiles={"test"})
-@TestExecutionListeners({DependencyInjectionTestExecutionListener.class})
+@TestExecutionListeners({DependencyInjectionTestExecutionListener.class, FlywayTestExecutionListener.class})
 @Import(SpringConfiguration.class)
+@FlywayTest(locationsForMigrate = {"db/test"})
 public abstract class BaseServiceTest {
 
+  @Autowired
+  protected ArticleDao articleDao;
+  
+  @Autowired
+  protected CountryDao countryDao;
+
+  @Autowired
+  protected AlbumTypeDao albumTypeDao;
+
+  @Autowired
+  protected AlbumDao albumDao;
+  
   public static List<CountryModel> createDummyCountriesForTest(){
     List<CountryModel> countries = new ArrayList<>();
     
@@ -29,6 +51,15 @@ public abstract class BaseServiceTest {
     countries.add(createCountryModel(2L,"Spain"));
     
     return countries;
+  }
+  
+  public static List<AlbumTypeModel> createDummyAlbumTypesForTest(){
+    List<AlbumTypeModel> albumTypes = new ArrayList<>();
+    
+    albumTypes.add(createAlbumTypeModel(1L,"Zug canton",1L));
+    albumTypes.add(createAlbumTypeModel(2L,"Barcelona region",2L));
+    
+    return albumTypes;
   }
   
   private static CountryModel createCountryModel(Long id,String name) {    
@@ -42,6 +73,31 @@ public abstract class BaseServiceTest {
     country.setContinent(continent);
     country.setOnline(true);
     return country;
+  }
+  
+  private static AlbumTypeModel createAlbumTypeModel(Long id,String name,Long countryId){
+    AlbumTypeModel albumTypeModel = new AlbumTypeModel();
+    albumTypeModel.setId(id);
+    albumTypeModel.setName(name);
+    CountryModel country = new CountryModel();
+    country.setId(countryId);
+    albumTypeModel.setCountry(country);
+    return albumTypeModel;
+  }
+
+  protected void clear() {
+    clear(countryDao, articleDao, albumTypeDao, albumDao);
+  }
+  
+  public static void clear(CountryDao countryDao,ArticleDao articleDao,AlbumTypeDao albumTypeDao,AlbumDao albumDao) {
+    albumDao.deleteAll();
+    articleDao.deleteAll();
+    albumTypeDao.deleteAll();
+    countryDao.deleteAll();
+    assertEquals(0L, countryDao.count());
+    assertEquals(0L, articleDao.count());
+    assertEquals(0L, albumTypeDao.count());
+    assertEquals(0L, albumDao.count());
   }
   
 }

@@ -34,8 +34,7 @@ public class ArticleServiceTest extends BaseServiceTest {
 
   @Before
   public void before() {
-    articleDao.deleteAll();
-    countryDao.deleteAll();
+    clear();
     assertEquals(0L, articleDao.count());
     countryDao.save(createDummyCountriesForTest());
   }

@@ -7,7 +7,7 @@ import io.swagger.annotations.ApiModelProperty;
 /**
  * ListAlbum
  */
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2018-01-18T21:47:27.717+01:00")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2018-03-04T17:58:43.630+01:00")
 
 public class ListAlbum   {
   @JsonProperty("id")
@@ -33,6 +33,12 @@ public class ListAlbum   {
 
   @JsonProperty("countryName")
   private String countryName = null;
+
+  @JsonProperty("albumTypeId")
+  private Long albumTypeId = null;
+
+  @JsonProperty("albumTypeName")
+  private String albumTypeName = null;
 
   @JsonProperty("online")
   private Boolean online = null;
@@ -181,6 +187,42 @@ public class ListAlbum   {
     this.countryName = countryName;
   }
 
+  public ListAlbum albumTypeId(Long albumTypeId) {
+    this.albumTypeId = albumTypeId;
+    return this;
+  }
+
+   /**
+   * Get albumTypeId
+   * @return albumTypeId
+  **/
+  @ApiModelProperty(example = "1", value = "")
+  public Long getAlbumTypeId() {
+    return albumTypeId;
+  }
+
+  public void setAlbumTypeId(Long albumTypeId) {
+    this.albumTypeId = albumTypeId;
+  }
+
+  public ListAlbum albumTypeName(String albumTypeName) {
+    this.albumTypeName = albumTypeName;
+    return this;
+  }
+
+   /**
+   * Get albumTypeName
+   * @return albumTypeName
+  **/
+  @ApiModelProperty(example = "Zug canton", value = "")
+  public String getAlbumTypeName() {
+    return albumTypeName;
+  }
+
+  public void setAlbumTypeName(String albumTypeName) {
+    this.albumTypeName = albumTypeName;
+  }
+
   public ListAlbum online(Boolean online) {
     this.online = online;
     return this;
@@ -217,12 +259,14 @@ public class ListAlbum   {
         Objects.equals(this.thumbnail, listAlbum.thumbnail) &&
         Objects.equals(this.countryId, listAlbum.countryId) &&
         Objects.equals(this.countryName, listAlbum.countryName) &&
+        Objects.equals(this.albumTypeId, listAlbum.albumTypeId) &&
+        Objects.equals(this.albumTypeName, listAlbum.albumTypeName) &&
         Objects.equals(this.online, listAlbum.online);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, name, description, created, updated, thumbnail, countryId, countryName, online);
+    return Objects.hash(id, name, description, created, updated, thumbnail, countryId, countryName, albumTypeId, albumTypeName, online);
   }
 
   @Override
@@ -238,6 +282,8 @@ public class ListAlbum   {
     sb.append("    thumbnail: ").append(toIndentedString(thumbnail)).append("\n");
     sb.append("    countryId: ").append(toIndentedString(countryId)).append("\n");
     sb.append("    countryName: ").append(toIndentedString(countryName)).append("\n");
+    sb.append("    albumTypeId: ").append(toIndentedString(albumTypeId)).append("\n");
+    sb.append("    albumTypeName: ").append(toIndentedString(albumTypeName)).append("\n");
     sb.append("    online: ").append(toIndentedString(online)).append("\n");
     sb.append("}");
     return sb.toString();

@@ -30,7 +30,7 @@ public class CountryControllerTest extends BaseControllerTest {
 
   @Before
   public void before() {
-    countryDao.deleteAll();
+    clear();
     assertEquals(0L, countryDao.count());
   }
 
