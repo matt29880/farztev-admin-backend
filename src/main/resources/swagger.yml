@@ -250,12 +250,10 @@ paths:
           description: "successful operation"
         400:
           description: "Invalid status value"
-  /api/album/{albumId}/albumtype:
+  /api/albumtype:
     get:
       produces:
       - "application/json"
-      parameters:
-        - $ref: '#/parameters/AlbumId'
       responses:
         200:
           description: "successful operation"
@@ -269,7 +267,6 @@ paths:
       produces:
       - "application/json"
       parameters:
-        - $ref: '#/parameters/AlbumId'
         - $ref: '#/parameters/AlbumType'
       responses:
         200:
@@ -278,12 +275,11 @@ paths:
             $ref: "#/definitions/AlbumType"
         400:
           description: "Invalid status value"
-  /api/album/{albumId}/albumtype/{albumTypeId}:
+  /api/albumtype/{albumTypeId}:
     get:
       produces:
       - "application/json"
       parameters:
-        - $ref: '#/parameters/AlbumId'
         - $ref: '#/parameters/AlbumTypeId'
       responses:
         200:
@@ -296,7 +292,6 @@ paths:
       produces:
       - "application/json"
       parameters:
-        - $ref: '#/parameters/AlbumId'
         - $ref: '#/parameters/AlbumTypeId'
         - $ref: '#/parameters/AlbumType'
       responses:
@@ -310,7 +305,6 @@ paths:
       produces:
       - "application/json"
       parameters:
-        - $ref: '#/parameters/AlbumId'
         - $ref: '#/parameters/AlbumTypeId'
       responses:
         200:

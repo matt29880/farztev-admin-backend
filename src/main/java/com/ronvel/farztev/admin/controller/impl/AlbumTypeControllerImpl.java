@@ -12,7 +12,6 @@ import com.ronvel.farztev.admin.controller.AlbumTypeController;
 import com.ronvel.farztev.admin.controller.dto.AlbumType;
 import com.ronvel.farztev.admin.controller.dto.ListAlbumType;
 import com.ronvel.farztev.admin.service.AlbumTypeService;
-import io.swagger.annotations.ApiParam;
 
 @Controller
 public class AlbumTypeControllerImpl implements AlbumTypeController {
@@ -20,14 +19,14 @@ public class AlbumTypeControllerImpl implements AlbumTypeController {
   @Autowired
   private AlbumTypeService albumTypeService;
 
-  public ResponseEntity<Void> apiAlbumAlbumIdAlbumtypeAlbumTypeIdDelete(@ApiParam(value = "Album ID",required=true ) @PathVariable("albumId") Long albumId,
-      @ApiParam(value = "Album Type ID",required=true ) @PathVariable("albumTypeId") Long albumTypeId) {
-    albumTypeService.deleteAlbumType(albumId);
+  @Override
+  public ResponseEntity<Void> apiAlbumtypeAlbumTypeIdDelete(@PathVariable("albumTypeId") Long albumTypeId) {
+    albumTypeService.deleteAlbumType(albumTypeId);
     return new ResponseEntity<Void>(HttpStatus.OK);
   }
 
-  public ResponseEntity<AlbumType> apiAlbumAlbumIdAlbumtypeAlbumTypeIdGet(@ApiParam(value = "Album ID",required=true ) @PathVariable("albumId") Long albumId,
-      @ApiParam(value = "Album Type ID",required=true ) @PathVariable("albumTypeId") Long albumTypeId) {
+  @Override
+  public ResponseEntity<AlbumType> apiAlbumtypeAlbumTypeIdGet(@PathVariable("albumTypeId") Long albumTypeId) {
     ResponseEntity<AlbumType> response;
 
     Optional<AlbumType> optionalAlbumType = albumTypeService.findAlbumTypeById(albumTypeId);
@@ -40,20 +39,21 @@ public class AlbumTypeControllerImpl implements AlbumTypeController {
     return response;
   }
 
-  public ResponseEntity<AlbumType> apiAlbumAlbumIdAlbumtypeAlbumTypeIdPut(@ApiParam(value = "Album ID",required=true ) @PathVariable("albumId") Long albumId,
-      @ApiParam(value = "Album Type ID",required=true ) @PathVariable("albumTypeId") Long albumTypeId,
-      @ApiParam(value = "Album Type data." ,required=true ) @RequestBody AlbumType albumType) {
-    albumTypeService.updateAlbumType(albumId, albumType);
-    return new ResponseEntity<AlbumType>(HttpStatus.OK);
+  @Override
+  public ResponseEntity<AlbumType> apiAlbumtypeAlbumTypeIdPut(@PathVariable("albumTypeId") Long albumTypeId,
+      @RequestBody AlbumType albumType) {
+    albumTypeService.updateAlbumType(albumTypeId, albumType);
+    return new ResponseEntity<AlbumType>(albumType,HttpStatus.OK);
   }
 
-  public ResponseEntity<List<ListAlbumType>> apiAlbumAlbumIdAlbumtypeGet(@ApiParam(value = "Album ID",required=true ) @PathVariable("albumId") Long albumId) {
+  @Override
+  public ResponseEntity<List<ListAlbumType>> apiAlbumtypeGet() {
     List<ListAlbumType> listAlbumTypes = albumTypeService.listAlbumTypes();
     return new ResponseEntity<List<ListAlbumType>>(listAlbumTypes,HttpStatus.OK);
   }
 
-  public ResponseEntity<AlbumType> apiAlbumAlbumIdAlbumtypePost(@ApiParam(value = "Album ID",required=true ) @PathVariable("albumId") Long albumId,
-      @ApiParam(value = "Album Type data." ,required=true ) @RequestBody AlbumType albumType) {
+  @Override
+  public ResponseEntity<AlbumType> apiAlbumtypePost(@RequestBody AlbumType albumType) {
     AlbumType newAlbumType = albumTypeService.addAlbumType(albumType);
     return new ResponseEntity<AlbumType>(newAlbumType,HttpStatus.OK);
   }

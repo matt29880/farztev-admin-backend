@@ -1,5 +1,6 @@
 package com.ronvel.farztev.admin.service;
 
+import static org.junit.Assert.assertEquals;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -92,7 +93,11 @@ public abstract class BaseServiceTest {
     albumDao.deleteAll();
     articleDao.deleteAll();
     albumTypeDao.deleteAll();
-    countryDao.deleteAll();    
+    countryDao.deleteAll();
+    assertEquals(0L, countryDao.count());
+    assertEquals(0L, articleDao.count());
+    assertEquals(0L, albumTypeDao.count());
+    assertEquals(0L, albumDao.count());
   }
   
 }

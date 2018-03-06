@@ -23,53 +23,49 @@ public interface AlbumTypeController {
   @ApiResponses(value = { 
       @ApiResponse(code = 200, message = "successful operation", response = Void.class),
       @ApiResponse(code = 400, message = "Invalid status value", response = Void.class) })
-  @RequestMapping(value = "/api/album/{albumId}/albumtype/{albumTypeId}",
+  @RequestMapping(value = "/api/albumtype/{albumTypeId}",
       produces = { "application/json" }, 
       method = RequestMethod.DELETE)
-  ResponseEntity<Void> apiAlbumAlbumIdAlbumtypeAlbumTypeIdDelete(@ApiParam(value = "Album ID",required=true ) @PathVariable("albumId") Long albumId,
-      @ApiParam(value = "Album Type ID",required=true ) @PathVariable("albumTypeId") Long albumTypeId);
+  ResponseEntity<Void> apiAlbumtypeAlbumTypeIdDelete(@ApiParam(value = "Album Type ID",required=true ) @PathVariable("albumTypeId") Long albumTypeId);
 
 
   @ApiOperation(value = "", notes = "", response = AlbumType.class, tags={  })
   @ApiResponses(value = { 
       @ApiResponse(code = 200, message = "successful operation", response = AlbumType.class),
       @ApiResponse(code = 404, message = "Country not found", response = AlbumType.class) })
-  @RequestMapping(value = "/api/album/{albumId}/albumtype/{albumTypeId}",
+  @RequestMapping(value = "/api/albumtype/{albumTypeId}",
       produces = { "application/json" }, 
       method = RequestMethod.GET)
-  ResponseEntity<AlbumType> apiAlbumAlbumIdAlbumtypeAlbumTypeIdGet(@ApiParam(value = "Album ID",required=true ) @PathVariable("albumId") Long albumId,
-      @ApiParam(value = "Album Type ID",required=true ) @PathVariable("albumTypeId") Long albumTypeId);
+  ResponseEntity<AlbumType> apiAlbumtypeAlbumTypeIdGet(@ApiParam(value = "Album Type ID",required=true ) @PathVariable("albumTypeId") Long albumTypeId);
 
 
   @ApiOperation(value = "", notes = "", response = AlbumType.class, tags={  })
   @ApiResponses(value = { 
       @ApiResponse(code = 200, message = "successful operation", response = AlbumType.class),
       @ApiResponse(code = 400, message = "Invalid status value", response = AlbumType.class) })
-  @RequestMapping(value = "/api/album/{albumId}/albumtype/{albumTypeId}",
+  @RequestMapping(value = "/api/albumtype/{albumTypeId}",
       produces = { "application/json" }, 
       method = RequestMethod.PUT)
-  ResponseEntity<AlbumType> apiAlbumAlbumIdAlbumtypeAlbumTypeIdPut(@ApiParam(value = "Album ID",required=true ) @PathVariable("albumId") Long albumId,
-      @ApiParam(value = "Album Type ID",required=true ) @PathVariable("albumTypeId") Long albumTypeId,
+  ResponseEntity<AlbumType> apiAlbumtypeAlbumTypeIdPut(@ApiParam(value = "Album Type ID",required=true ) @PathVariable("albumTypeId") Long albumTypeId,
       @ApiParam(value = "Album Type data." ,required=true ) @RequestBody AlbumType albumType);
 
 
   @ApiOperation(value = "", notes = "", response = ListAlbumType.class, responseContainer = "List", tags={  })
   @ApiResponses(value = { 
       @ApiResponse(code = 200, message = "successful operation", response = ListAlbumType.class) })
-  @RequestMapping(value = "/api/album/{albumId}/albumtype",
+  @RequestMapping(value = "/api/albumtype",
       produces = { "application/json" }, 
       method = RequestMethod.GET)
-  ResponseEntity<List<ListAlbumType>> apiAlbumAlbumIdAlbumtypeGet(@ApiParam(value = "Album ID",required=true ) @PathVariable("albumId") Long albumId);
+  ResponseEntity<List<ListAlbumType>> apiAlbumtypeGet();
 
 
   @ApiOperation(value = "", notes = "", response = AlbumType.class, tags={  })
   @ApiResponses(value = { 
       @ApiResponse(code = 200, message = "successful operation", response = AlbumType.class),
       @ApiResponse(code = 400, message = "Invalid status value", response = AlbumType.class) })
-  @RequestMapping(value = "/api/album/{albumId}/albumtype",
+  @RequestMapping(value = "/api/albumtype",
       produces = { "application/json" }, 
       method = RequestMethod.POST)
-  ResponseEntity<AlbumType> apiAlbumAlbumIdAlbumtypePost(@ApiParam(value = "Album ID",required=true ) @PathVariable("albumId") Long albumId,
-      @ApiParam(value = "Album Type data." ,required=true ) @RequestBody AlbumType albumType);
+  ResponseEntity<AlbumType> apiAlbumtypePost(@ApiParam(value = "Album Type data." ,required=true ) @RequestBody AlbumType albumType);
 
 }

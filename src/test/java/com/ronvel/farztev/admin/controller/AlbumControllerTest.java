@@ -19,9 +19,7 @@ import com.ronvel.farztev.admin.dao.AlbumDao;
 import com.ronvel.farztev.admin.dao.AlbumTypeDao;
 import com.ronvel.farztev.admin.dao.CountryDao;
 import com.ronvel.farztev.admin.dao.model.AlbumModel;
-import com.ronvel.farztev.admin.dao.model.CountryModel;
 import com.ronvel.farztev.admin.service.AlbumServiceTest;
-import com.ronvel.farztev.admin.service.BaseServiceTest;
 
 public class AlbumControllerTest extends BaseControllerTest {
 

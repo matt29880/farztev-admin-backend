@@ -15,8 +15,6 @@ import com.ronvel.farztev.admin.controller.dto.ListAlbumType;
 import com.ronvel.farztev.admin.dao.AlbumTypeDao;
 import com.ronvel.farztev.admin.dao.CountryDao;
 import com.ronvel.farztev.admin.dao.model.AlbumTypeModel;
-import com.ronvel.farztev.admin.dao.model.CountryModel;
-import com.ronvel.farztev.admin.enums.Continent;
 
 public class AlbumTypeServiceTest extends BaseServiceTest {
 
@@ -41,7 +39,7 @@ public class AlbumTypeServiceTest extends BaseServiceTest {
 
   @Test
   public void findAlbumTypeById() {
-    albumTypeDao.save(createSwissAlbumType());
+    albumTypeDao.save(createSwissAlbumType(countryDao));
     assertEquals(1L, albumTypeDao.count());
     Optional<AlbumType> optionalAlbumType = albumTypeService.findAlbumTypeById(1L);
     assertTrue(optionalAlbumType.isPresent());
@@ -56,7 +54,7 @@ public class AlbumTypeServiceTest extends BaseServiceTest {
 
   @Test
   public void listAlbumTypes() {
-    albumTypeDao.save(createSwissAlbumType());
+    albumTypeDao.save(createSwissAlbumType(countryDao));
     assertEquals(1L, albumTypeDao.count());
     List<ListAlbumType> albumTypes = albumTypeService.listAlbumTypes();
     testListAlbumTypes(albumTypes);
@@ -72,7 +70,7 @@ public class AlbumTypeServiceTest extends BaseServiceTest {
   @Test
   public void addAlbumType() {
     assertEquals(0L, albumTypeDao.count());
-    AlbumType newAlbumType = mapper.map(createSwissAlbumType(), AlbumType.class);
+    AlbumType newAlbumType = mapper.map(createSwissAlbumType(countryDao), AlbumType.class);
     AlbumType albumType = albumTypeService.addAlbumType(newAlbumType);
     testSwissAlbumType(albumType);
     assertEquals(1L, albumTypeDao.count());
@@ -80,7 +78,7 @@ public class AlbumTypeServiceTest extends BaseServiceTest {
 
   @Test
   public void updateAlbumType() {
-    albumTypeDao.save(createSwissAlbumType());
+    albumTypeDao.save(createSwissAlbumType(countryDao));
     assertEquals(1L, albumTypeDao.count());
     AlbumType updateAlbumType = createUpdateSpanishAlbumType();
     albumTypeService.updateAlbumType(1L, updateAlbumType);
@@ -91,7 +89,7 @@ public class AlbumTypeServiceTest extends BaseServiceTest {
 
   @Test
   public void deleteAlbumType() {
-    albumTypeDao.save(createSwissAlbumType());
+    albumTypeDao.save(createSwissAlbumType(countryDao));
     assertEquals(1L, albumTypeDao.count());
     albumTypeService.deleteAlbumType(1L);
     assertEquals(0L, albumTypeDao.count());
@@ -115,14 +113,11 @@ public class AlbumTypeServiceTest extends BaseServiceTest {
     assertEquals("Zug canton", albumType.getName());
   }
 
-  public static AlbumTypeModel createSwissAlbumType() {
-    CountryModel country = new CountryModel();
-    country.setId(1L);
-    country.setContinent(Continent.EUROPE.name());
+  public static AlbumTypeModel createSwissAlbumType(CountryDao countryDao) {
     AlbumTypeModel albumType = new AlbumTypeModel();
     albumType.setId(1L);
     albumType.setName("Zug canton");
-    albumType.setCountry(country);
+    albumType.setCountry(countryDao.findOne(1L));
     return albumType;
   }
   

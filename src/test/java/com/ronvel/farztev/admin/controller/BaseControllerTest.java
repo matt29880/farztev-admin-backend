@@ -1,5 +1,6 @@
 package com.ronvel.farztev.admin.controller;
 
+import static org.junit.Assert.assertEquals;
 import org.flywaydb.test.annotation.FlywayTest;
 import org.flywaydb.test.junit.FlywayTestExecutionListener;
 import org.junit.runner.RunWith;

@@ -14,28 +14,21 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import com.ronvel.farztev.admin.controller.dto.Album;
+import com.ronvel.farztev.admin.controller.dto.AlbumType;
 import com.ronvel.farztev.admin.controller.dto.ListAlbum;
-import com.ronvel.farztev.admin.dao.AlbumDao;
+import com.ronvel.farztev.admin.controller.dto.ListAlbumType;
 import com.ronvel.farztev.admin.dao.AlbumTypeDao;
 import com.ronvel.farztev.admin.dao.CountryDao;
 import com.ronvel.farztev.admin.dao.model.AlbumModel;
-import com.ronvel.farztev.admin.dao.model.CountryModel;
+import com.ronvel.farztev.admin.dao.model.AlbumTypeModel;
 import com.ronvel.farztev.admin.service.AlbumServiceTest;
-import com.ronvel.farztev.admin.service.BaseServiceTest;
+import com.ronvel.farztev.admin.service.AlbumTypeService;
+import com.ronvel.farztev.admin.service.AlbumTypeServiceTest;
 
 public class AlbumTypeControllerTest extends BaseControllerTest {
-
-  @Autowired
-  private AlbumDao albumDao;
   
   @Autowired
-  private CountryDao countryDao;
-
-  @Autowired
   private TestRestTemplate restTemplate;
-
-  @Autowired
-  private AlbumTypeDao albumTypeDao;
 
   @Autowired
   private ModelMapper mapper;
@@ -43,107 +36,108 @@ public class AlbumTypeControllerTest extends BaseControllerTest {
   @Before
   public void before() {
     clear();
-    assertEquals(0L, albumDao.count());
     countryDao.save(AlbumServiceTest.createDummyCountriesForTest());
-    albumTypeDao.save(AlbumServiceTest.createDummyAlbumTypesForTest());
   }
 
   @Test
-  public void albumsGet() {
-    AlbumModel album = albumDao.save(AlbumServiceTest.createSwissAlbum(albumTypeDao));
+  public void albumTypesGet() {
+    AlbumTypeModel albumType = albumTypeDao.save(AlbumTypeServiceTest.createSwissAlbumType(countryDao));
 
     HttpHeaders headers = new HttpHeaders();
     HttpEntity<String> request = new HttpEntity<String>(headers);
 
-    ResponseEntity<List<ListAlbum>> albumsResponse = this.restTemplate.exchange("/api/album",
-        HttpMethod.GET, request, new ParameterizedTypeReference<List<ListAlbum>>() {});
-    assertTrue(albumsResponse.getStatusCode().is2xxSuccessful());
+    ResponseEntity<List<ListAlbumType>> albumTypesResponse = this.restTemplate.exchange("/api/albumtype",
+        HttpMethod.GET, request, new ParameterizedTypeReference<List<ListAlbumType>>() {});
+    assertTrue(albumTypesResponse.getStatusCode().is2xxSuccessful());
 
-    AlbumServiceTest.testListAlbums(album.getId(),albumsResponse.getBody());
+    AlbumTypeServiceTest.testListAlbumTypes(albumTypesResponse.getBody());
   }
 
   @Test
-  public void albumsGet_empty() {
+  public void albumTypesGet_empty() {
     HttpHeaders headers = new HttpHeaders();
     HttpEntity<String> request = new HttpEntity<String>(headers);
 
-    ResponseEntity<List<ListAlbum>> albumsResponse = this.restTemplate.exchange("/api/album",
-        HttpMethod.GET, request, new ParameterizedTypeReference<List<ListAlbum>>() {});
+    ResponseEntity<List<ListAlbumType>> albumsResponse = this.restTemplate.exchange("/api/albumtype",
+        HttpMethod.GET, request, new ParameterizedTypeReference<List<ListAlbumType>>() {});
     assertTrue(albumsResponse.getStatusCode().is2xxSuccessful());
     assertTrue(albumsResponse.getBody().isEmpty());
   }
 
   @Test
-  public void albumsAlbumIdGet() {
-    AlbumModel album = albumDao.save(AlbumServiceTest.createSwissAlbum(albumTypeDao));
+  public void albumTypesAlbumIdGet() {
+    AlbumTypeModel albumType = albumTypeDao.save(AlbumTypeServiceTest.createSwissAlbumType(countryDao));
     HttpHeaders headers = new HttpHeaders();
     HttpEntity<String> request = new HttpEntity<String>(headers);
 
-    ResponseEntity<Album> albumResponse = this.restTemplate.exchange("/api/album/"+album.getId(),
-        HttpMethod.GET, request, new ParameterizedTypeReference<Album>() {});
-    assertTrue(albumResponse.getStatusCode().is2xxSuccessful());
-    AlbumServiceTest.testSwissAlbum(albumResponse.getBody());
+    ResponseEntity<AlbumType> albumTypeResponse = this.restTemplate.exchange("/api/albumtype/"+albumType.getId(),
+        HttpMethod.GET, request, new ParameterizedTypeReference<AlbumType>() {});
+    assertTrue(albumTypeResponse.getStatusCode().is2xxSuccessful());
+    AlbumTypeServiceTest.testSwissAlbumType(albumTypeResponse.getBody());
   }
 
   @Test
-  public void albumsAlbumIdGet_notExisting() {
+  public void albumTypesAlbumIdGet_notExisting() {
     HttpHeaders headers = new HttpHeaders();
     HttpEntity<String> request = new HttpEntity<String>(headers);
 
-    ResponseEntity<Album> albumResponse = this.restTemplate.exchange("/api/album/1",
-        HttpMethod.GET, request, new ParameterizedTypeReference<Album>() {});
+    ResponseEntity<AlbumType> albumResponse = this.restTemplate.exchange("/api/albumtype/1",
+        HttpMethod.GET, request, new ParameterizedTypeReference<AlbumType>() {});
     assertTrue(albumResponse.getStatusCode().is4xxClientError());
   }
 
   @Test
-  public void albumsPost() {
-    Album newAlbum = mapper.map(AlbumServiceTest.createSwissAlbum(albumTypeDao), Album.class);
+  public void albumTypesPost() {
+    AlbumTypeModel albumTypeModel = AlbumTypeServiceTest.createSwissAlbumType(countryDao);
+    AlbumType newAlbumType = mapper.map(albumTypeModel, AlbumType.class);
+    newAlbumType.setCountryId(albumTypeModel.getCountry().getId());
+    newAlbumType.setCountryName(albumTypeModel.getCountry().getName());
 
-    HttpEntity<Album> request = new HttpEntity<Album>(newAlbum);
+    HttpEntity<AlbumType> request = new HttpEntity<AlbumType>(newAlbumType);
 
-    ResponseEntity<Album> albumResponse = this.restTemplate.exchange("/api/album",
-        HttpMethod.POST, request, new ParameterizedTypeReference<Album>() {});
-    assertTrue(albumResponse.getStatusCode().is2xxSuccessful());
+    ResponseEntity<AlbumType> albumTypeResponse = this.restTemplate.exchange("/api/albumtype",
+        HttpMethod.POST, request, new ParameterizedTypeReference<AlbumType>() {});
+    assertTrue(albumTypeResponse.getStatusCode().is2xxSuccessful());
 
-    assertEquals(1L, albumDao.count());
-    AlbumServiceTest.testSwissAlbum(albumResponse.getBody());
+    assertEquals(1L, albumTypeDao.count());
+    AlbumTypeServiceTest.testSwissAlbumType(albumTypeResponse.getBody());
   }
 
   @Test
-  public void albumsAlbumIdPut() {
-    AlbumModel album = albumDao.save(AlbumServiceTest.createSwissAlbum(albumTypeDao));
-    assertEquals(1L, albumDao.count());
-    Album updateAlbum =
-        mapper.map(AlbumServiceTest.createUpdateSwissAlbum(), Album.class);
+  public void albumsAlbumTypeIdPut() {
+    AlbumTypeModel albumType = albumTypeDao.save(AlbumTypeServiceTest.createSwissAlbumType(countryDao));
+    assertEquals(1L, albumTypeDao.count());
+    AlbumType updateAlbumType =
+        mapper.map(AlbumTypeServiceTest.createUpdateSpanishAlbumType(), AlbumType.class);
 
-    HttpEntity<Album> request = new HttpEntity<Album>(updateAlbum);
+    HttpEntity<AlbumType> request = new HttpEntity<AlbumType>(updateAlbumType);
 
-    ResponseEntity<Void> updateResponse = this.restTemplate.exchange("/api/album/"+album.getId(),
+    ResponseEntity<Void> updateResponse = this.restTemplate.exchange("/api/albumtype/"+albumType.getId(),
         HttpMethod.PUT, request, new ParameterizedTypeReference<Void>() {});
 
     assertTrue(updateResponse.getStatusCode().is2xxSuccessful());
 
-    assertEquals(1L, albumDao.count());
+    assertEquals(1L, albumTypeDao.count());
 
-    ResponseEntity<Album> albumResponse = this.restTemplate.exchange("/api/album/"+album.getId(),
-        HttpMethod.GET, request, new ParameterizedTypeReference<Album>() {});
-    assertTrue(albumResponse.getStatusCode().is2xxSuccessful());
-    AlbumServiceTest.testUpdatedSwissAlbum(album.getId(),albumResponse.getBody());
+    ResponseEntity<AlbumType> albumTypeResponse = this.restTemplate.exchange("/api/albumtype/"+albumType.getId(),
+        HttpMethod.GET, request, new ParameterizedTypeReference<AlbumType>() {});
+    assertTrue(albumTypeResponse.getStatusCode().is2xxSuccessful());
+    AlbumTypeServiceTest.testUpdatedSpanishAlbumType(albumTypeResponse.getBody());
   }
 
   @Test
-  public void albumsAlbumIdDelete() {
-    AlbumModel album = albumDao.save(AlbumServiceTest.createSwissAlbum(albumTypeDao));
-    assertEquals(1L, albumDao.count());
+  public void albumsAlbumTypeIdDelete() {
+    AlbumTypeModel albumType = albumTypeDao.save(AlbumTypeServiceTest.createSwissAlbumType(countryDao));
+    assertEquals(1L, albumTypeDao.count());
 
     HttpHeaders headers = new HttpHeaders();
     HttpEntity<String> request = new HttpEntity<String>(headers);
 
-    ResponseEntity<Void> deleteResponse = this.restTemplate.exchange("/api/album/"+album.getId(),
+    ResponseEntity<Void> deleteResponse = this.restTemplate.exchange("/api/albumtype/"+albumType.getId(),
         HttpMethod.DELETE, request, new ParameterizedTypeReference<Void>() {});
 
     assertTrue(deleteResponse.getStatusCode().is2xxSuccessful());
-    assertEquals(0L, albumDao.count());
+    assertEquals(0L, albumTypeDao.count());
   }
 
 }
