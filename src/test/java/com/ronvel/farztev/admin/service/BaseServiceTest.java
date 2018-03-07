@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.context.annotation.Import;
+import org.springframework.data.repository.CrudRepository;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -20,8 +21,11 @@ import com.ronvel.farztev.admin.dao.AlbumDao;
 import com.ronvel.farztev.admin.dao.AlbumTypeDao;
 import com.ronvel.farztev.admin.dao.ArticleDao;
 import com.ronvel.farztev.admin.dao.CountryDao;
+import com.ronvel.farztev.admin.dao.MediaDao;
+import com.ronvel.farztev.admin.dao.model.AlbumModel;
 import com.ronvel.farztev.admin.dao.model.AlbumTypeModel;
 import com.ronvel.farztev.admin.dao.model.CountryModel;
+import com.ronvel.farztev.admin.dao.model.MediaModel;
 import com.ronvel.farztev.admin.enums.Continent;
 
 @RunWith(SpringRunner.class)
@@ -43,6 +47,9 @@ public abstract class BaseServiceTest {
 
   @Autowired
   protected AlbumDao albumDao;
+
+  @Autowired
+  protected MediaDao mediaDao;
   
   public static List<CountryModel> createDummyCountriesForTest(){
     List<CountryModel> countries = new ArrayList<>();
@@ -60,6 +67,15 @@ public abstract class BaseServiceTest {
     albumTypes.add(createAlbumTypeModel(2L,"Barcelona region",2L));
     
     return albumTypes;
+  }
+
+  public static List<AlbumModel> createDummyAlbumsForTest(){
+    List<AlbumModel> album = new ArrayList<>();
+    
+    album.add(createAlbumModel(1L,"Zug beach",1L));
+    album.add(createAlbumModel(2L,"Barcelona beach",2L));
+    
+    return album;
   }
   
   private static CountryModel createCountryModel(Long id,String name) {    
@@ -84,20 +100,30 @@ public abstract class BaseServiceTest {
     albumTypeModel.setCountry(country);
     return albumTypeModel;
   }
+  
+  private static AlbumModel createAlbumModel(Long id,String name,Long albumTypeId){
+    AlbumTypeModel albumTypeModel = new AlbumTypeModel();
+    albumTypeModel.setId(albumTypeId);
+    AlbumModel albumModel = new AlbumModel();
+    albumModel.setId(albumTypeId);
+    albumModel.setName(name);
+    albumModel.setAlbumType(albumTypeModel);
+    albumModel.setCreated(new Date());
+    albumModel.setUpdated(new Date());
+    albumModel.setDescription("");
+    albumModel.setOnline(true);
+    return albumModel;
+  }
 
   protected void clear() {
-    clear(countryDao, articleDao, albumTypeDao, albumDao);
+    clear(mediaDao,albumDao,articleDao,albumTypeDao,countryDao);
   }
   
-  public static void clear(CountryDao countryDao,ArticleDao articleDao,AlbumTypeDao albumTypeDao,AlbumDao albumDao) {
-    albumDao.deleteAll();
-    articleDao.deleteAll();
-    albumTypeDao.deleteAll();
-    countryDao.deleteAll();
-    assertEquals(0L, countryDao.count());
-    assertEquals(0L, articleDao.count());
-    assertEquals(0L, albumTypeDao.count());
-    assertEquals(0L, albumDao.count());
+  public static void clear(CrudRepository<?,?> ... daos) {
+    for(CrudRepository<?,?> dao:daos) {
+      dao.deleteAll();
+      assertEquals(0L, dao.count());
+    }
   }
   
 }
