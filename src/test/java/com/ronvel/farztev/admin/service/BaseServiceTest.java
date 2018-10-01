@@ -30,15 +30,16 @@ import com.ronvel.farztev.admin.enums.Continent;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
-@ActiveProfiles(profiles={"test"})
-@TestExecutionListeners({DependencyInjectionTestExecutionListener.class, FlywayTestExecutionListener.class})
+@ActiveProfiles(profiles = {"test"})
+@TestExecutionListeners({DependencyInjectionTestExecutionListener.class,
+    FlywayTestExecutionListener.class})
 @Import(SpringConfiguration.class)
 @FlywayTest(locationsForMigrate = {"db/test"})
 public abstract class BaseServiceTest {
 
   @Autowired
   protected ArticleDao articleDao;
-  
+
   @Autowired
   protected CountryDao countryDao;
 
@@ -50,35 +51,35 @@ public abstract class BaseServiceTest {
 
   @Autowired
   protected MediaDao mediaDao;
-  
-  public static List<CountryModel> createDummyCountriesForTest(){
+
+  public static List<CountryModel> createDummyCountriesForTest() {
     List<CountryModel> countries = new ArrayList<>();
-    
-    countries.add(createCountryModel(1L,"Switzerland"));
-    countries.add(createCountryModel(2L,"Spain"));
-    
+
+    countries.add(createCountryModel(1L, "Switzerland"));
+    countries.add(createCountryModel(2L, "Spain"));
+
     return countries;
   }
-  
-  public static List<AlbumTypeModel> createDummyAlbumTypesForTest(){
+
+  public static List<AlbumTypeModel> createDummyAlbumTypesForTest() {
     List<AlbumTypeModel> albumTypes = new ArrayList<>();
-    
-    albumTypes.add(createAlbumTypeModel(1L,"Zug canton",1L));
-    albumTypes.add(createAlbumTypeModel(2L,"Barcelona region",2L));
-    
+
+    albumTypes.add(createAlbumTypeModel(1L, "Zug canton", 1L));
+    albumTypes.add(createAlbumTypeModel(2L, "Barcelona region", 2L));
+
     return albumTypes;
   }
 
-  public static List<AlbumModel> createDummyAlbumsForTest(){
+  public static List<AlbumModel> createDummyAlbumsForTest() {
     List<AlbumModel> album = new ArrayList<>();
-    
-    album.add(createAlbumModel(1L,"Zug beach",1L));
-    album.add(createAlbumModel(2L,"Barcelona beach",2L));
-    
+
+    album.add(createAlbumModel(1L, "Zug beach", 1L));
+    album.add(createAlbumModel(2L, "Barcelona beach", 2L));
+
     return album;
   }
-  
-  private static CountryModel createCountryModel(Long id,String name) {    
+
+  private static CountryModel createCountryModel(Long id, String name) {
     String continent = Continent.EUROPE.toString();
     CountryModel country;
     country = new CountryModel();
@@ -90,8 +91,8 @@ public abstract class BaseServiceTest {
     country.setOnline(true);
     return country;
   }
-  
-  private static AlbumTypeModel createAlbumTypeModel(Long id,String name,Long countryId){
+
+  private static AlbumTypeModel createAlbumTypeModel(Long id, String name, Long countryId) {
     AlbumTypeModel albumTypeModel = new AlbumTypeModel();
     albumTypeModel.setId(id);
     albumTypeModel.setName(name);
@@ -100,8 +101,8 @@ public abstract class BaseServiceTest {
     albumTypeModel.setCountry(country);
     return albumTypeModel;
   }
-  
-  private static AlbumModel createAlbumModel(Long id,String name,Long albumTypeId){
+
+  private static AlbumModel createAlbumModel(Long id, String name, Long albumTypeId) {
     AlbumTypeModel albumTypeModel = new AlbumTypeModel();
     albumTypeModel.setId(albumTypeId);
     AlbumModel albumModel = new AlbumModel();
@@ -116,14 +117,14 @@ public abstract class BaseServiceTest {
   }
 
   protected void clear() {
-    clear(mediaDao,albumDao,articleDao,albumTypeDao,countryDao);
+    clear(mediaDao, albumDao, articleDao, albumTypeDao, countryDao);
   }
-  
-  public static void clear(CrudRepository<?,?> ... daos) {
-    for(CrudRepository<?,?> dao:daos) {
+
+  public static void clear(CrudRepository<?, ?>... daos) {
+    for (CrudRepository<?, ?> dao : daos) {
       dao.deleteAll();
       assertEquals(0L, dao.count());
     }
   }
-  
+
 }

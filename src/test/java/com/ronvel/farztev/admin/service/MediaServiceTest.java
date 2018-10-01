@@ -41,7 +41,7 @@ public class MediaServiceTest extends BaseServiceTest {
     assertEquals(1L, mediaDao.count());
     Optional<Media> optionalMedia = mediaService.findMediaById(media.getId());
     assertTrue(optionalMedia.isPresent());
-    testMedia(media.getId(),optionalMedia.get());
+    testMedia(media.getId(), optionalMedia.get());
   }
 
   @Test
@@ -55,7 +55,7 @@ public class MediaServiceTest extends BaseServiceTest {
     MediaModel media = mediaDao.save(createMedia(albumDao));
     assertEquals(1L, mediaDao.count());
     List<ListMedia> medias = mediaService.listMedias();
-    testListMedias(media.getId(),medias);
+    testListMedias(media.getId(), medias);
   }
 
   @Test
@@ -66,11 +66,18 @@ public class MediaServiceTest extends BaseServiceTest {
   }
 
   @Test
+  public void listAlbumMedias() {
+    MediaModel media = mediaDao.save(createMedia(albumDao));
+    assertEquals(1L, mediaDao.count());
+    List<ListMedia> medias = mediaService.listAlbumMedias(media.getAlbum().getId());
+    testListMedias(media.getId(), medias);
+  }
+
+  @Test
   public void addMedia() {
-    assertEquals(0L, mediaDao.count());
     Media newMedia = mapper.map(createMedia(albumDao), Media.class);
     Media media = mediaService.addMedia(newMedia);
-    testMedia(media.getId(),media);
+    testMedia(media.getId(), media);
     assertEquals(1L, mediaDao.count());
   }
 
@@ -82,7 +89,7 @@ public class MediaServiceTest extends BaseServiceTest {
     mediaService.updateMedia(media.getId(), updateMedia);
     Optional<Media> optionalMedia = mediaService.findMediaById(media.getId());
     assertTrue(optionalMedia.isPresent());
-    testUpdatedMedia(media.getId(),optionalMedia.get());
+    testUpdatedMedia(media.getId(), optionalMedia.get());
   }
 
   @Test
@@ -93,7 +100,7 @@ public class MediaServiceTest extends BaseServiceTest {
     assertEquals(0L, mediaDao.count());
   }
 
-  public static void testMedia(Long id,Media media) {
+  public static void testMedia(Long id, Media media) {
     assertNotNull(media);
     assertEquals(id, media.getId());
     assertEquals(1L, media.getAlbumId().longValue());
@@ -106,7 +113,7 @@ public class MediaServiceTest extends BaseServiceTest {
     assertEquals("the url zug", media.getUrl());
   }
 
-  public static void testListMedias(Long id,List<ListMedia> medias) {
+  public static void testListMedias(Long id, List<ListMedia> medias) {
     assertNotNull(medias);
     ListMedia media = medias.get(0);
     assertEquals(id, media.getId());
@@ -142,7 +149,7 @@ public class MediaServiceTest extends BaseServiceTest {
     return media;
   }
 
-  public static void testUpdatedMedia(Long id,Media media) {
+  public static void testUpdatedMedia(Long id, Media media) {
     assertNotNull(media);
     assertEquals(id, media.getId());
     assertEquals(2L, media.getAlbumId().longValue());

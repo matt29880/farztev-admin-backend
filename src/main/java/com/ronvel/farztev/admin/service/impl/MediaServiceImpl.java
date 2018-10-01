@@ -3,6 +3,7 @@ package com.ronvel.farztev.admin.service.impl;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,7 +22,7 @@ public class MediaServiceImpl implements MediaService {
 
   @Autowired
   private AlbumDao albumDao;
-  
+
   @Autowired
   private MediaDao mediaDao;
 
@@ -47,6 +48,12 @@ public class MediaServiceImpl implements MediaService {
   }
 
   @Override
+  public List<ListMedia> listAlbumMedias(Long albumId) {
+    List<MediaModel> medias = mediaDao.findByAlbumId(albumId);
+    return medias.stream().map(media -> mapListMedia(media)).collect(Collectors.toList());
+  }
+
+  @Override
   public Media addMedia(Media media) {
     MediaModel mediaModel = mapper.map(media, MediaModel.class);
     mediaModel.setAlbum(albumDao.findOne(mediaModel.getAlbum().getId()));
@@ -61,14 +68,14 @@ public class MediaServiceImpl implements MediaService {
     mediaModel.setAlbum(albumDao.findOne(media.getAlbumId()));
     mediaDao.save(mediaModel);
   }
-  
+
   private Media mapMedia(MediaModel resultMediaModel) {
     Media resultMedia = mapper.map(resultMediaModel, Media.class);
     resultMedia.setAlbumId(resultMediaModel.getAlbum().getId());
     resultMedia.setAlbumName(resultMediaModel.getAlbum().getName());
     return resultMedia;
   }
-  
+
   private ListMedia mapListMedia(MediaModel resultMediaModel) {
     ListMedia listMedia = mapper.map(resultMediaModel, ListMedia.class);
     return listMedia;

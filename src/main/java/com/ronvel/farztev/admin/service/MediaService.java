@@ -27,6 +27,13 @@ public interface MediaService {
 	 */
 	List<ListMedia> listMedias();
 
+    /**
+     * List all the medias of an album.
+     * 
+     * @return
+     */
+    List<ListMedia> listAlbumMedias(Long albumId);
+    
 	/**
 	 * Add a new media.
 	 * @param album
