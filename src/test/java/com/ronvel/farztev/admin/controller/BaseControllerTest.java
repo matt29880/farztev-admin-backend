@@ -1,6 +1,5 @@
 package com.ronvel.farztev.admin.controller;
 
-import static org.junit.Assert.assertEquals;
 import org.flywaydb.test.annotation.FlywayTest;
 import org.flywaydb.test.junit.FlywayTestExecutionListener;
 import org.junit.runner.RunWith;
@@ -17,6 +16,7 @@ import com.ronvel.farztev.admin.dao.AlbumDao;
 import com.ronvel.farztev.admin.dao.AlbumTypeDao;
 import com.ronvel.farztev.admin.dao.ArticleDao;
 import com.ronvel.farztev.admin.dao.CountryDao;
+import com.ronvel.farztev.admin.dao.MediaDao;
 import com.ronvel.farztev.admin.service.BaseServiceTest;
 
 @RunWith(SpringRunner.class)
@@ -37,9 +37,11 @@ public abstract class BaseControllerTest {
 
   @Autowired
   protected AlbumDao albumDao;
+  @Autowired
+  protected MediaDao mediaDao;
   
   protected void clear() {
-    BaseServiceTest.clear(countryDao, articleDao, albumTypeDao, albumDao);
+    BaseServiceTest.clear(mediaDao,albumDao,articleDao,albumTypeDao,countryDao);
   }
 
 }
