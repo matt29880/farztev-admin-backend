@@ -1,6 +1,7 @@
 package com.ronvel.farztev.admin.service.impl;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import org.modelmapper.ModelMapper;
@@ -44,6 +45,9 @@ public class ArticleServiceImpl implements ArticleService {
 
   @Override
   public Article addArticle(Article article) {
+    Date created = new Date();
+    article.setCreated(created);
+    article.setUpdated(created);
     ArticleModel articleModel = mapper.map(article, ArticleModel.class);
     ArticleModel resultArticleModel = articleDao.save(articleModel);
     Article resultArticle = mapper.map(resultArticleModel, Article.class);
@@ -53,6 +57,7 @@ public class ArticleServiceImpl implements ArticleService {
   @Override
   public void updateArticle(Long id, Article article) {
     article.setId(id);
+    article.setUpdated(new Date());
     ArticleModel articleModel = mapper.map(article, ArticleModel.class);
     articleDao.save(articleModel);
   }

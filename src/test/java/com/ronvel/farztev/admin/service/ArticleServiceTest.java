@@ -128,11 +128,9 @@ public class ArticleServiceTest extends BaseServiceTest {
     CountryModel country = new CountryModel();
     country.setId(1L);
     article.setCountry(country);
-    article.setCreated(new Date(1234567911L));
     article.setDescription("The zug description");
     article.setName("Zug, the place to be");
     article.setOnline(true);
-    article.setUpdated(new Date(1234567913L));
     return article;
   }
 
@@ -158,7 +156,7 @@ public class ArticleServiceTest extends BaseServiceTest {
     assertEquals("The zug description2", article.getDescription());
     assertEquals("Zug, the place to be2", article.getName());
     assertFalse(article.getOnline());
-    assertEquals(new Date(12345679132L), article.getUpdated());
+    assertTrue(article.getUpdated().after(new Date(12345679132L)));
   }
 
 }
