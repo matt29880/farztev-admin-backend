@@ -46,6 +46,8 @@ public class ArticleServiceTest extends BaseServiceTest {
     Optional<Article> optionalArticle = articleService.findArticleById(1L);
     assertTrue(optionalArticle.isPresent());
     testSwissArticle(optionalArticle.get());
+    assertEquals(new Date(1234567911L), optionalArticle.get().getCreated());
+    assertEquals(new Date(1234567913L), optionalArticle.get().getUpdated());
   }
 
   @Test
@@ -71,10 +73,13 @@ public class ArticleServiceTest extends BaseServiceTest {
 
   @Test
   public void addArticle() {
+    Date dateBeforeCreation = new Date();
     assertEquals(0L, articleDao.count());
     Article newArticle = mapper.map(createSwissArticle(), Article.class);
     Article article = articleService.addArticle(newArticle);
     testSwissArticle(article);
+    assertTrue(article.getCreated().after(dateBeforeCreation));
+    assertTrue(article.getUpdated().after(dateBeforeCreation));
     assertEquals(1L, articleDao.count());
   }
 
@@ -102,11 +107,9 @@ public class ArticleServiceTest extends BaseServiceTest {
     assertEquals(1L, article.getId().longValue());
     assertEquals(1L, article.getCountryId().longValue());
     assertEquals("Switzerland", article.getCountryName());
-    assertEquals(new Date(1234567911L), article.getCreated());
     assertEquals("The zug description", article.getDescription());
     assertEquals("Zug, the place to be", article.getName());
     assertTrue(article.getOnline());
-    assertEquals(new Date(1234567913L), article.getUpdated());
   }
 
   public static void testListArticles(List<ListArticle> articles) {
@@ -131,6 +134,8 @@ public class ArticleServiceTest extends BaseServiceTest {
     article.setDescription("The zug description");
     article.setName("Zug, the place to be");
     article.setOnline(true);
+    article.setCreated(new Date(1234567911L));
+    article.setUpdated(new Date(1234567913L));
     return article;
   }
 

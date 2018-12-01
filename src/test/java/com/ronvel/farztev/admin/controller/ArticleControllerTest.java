@@ -15,8 +15,7 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import com.ronvel.farztev.admin.controller.dto.Article;
 import com.ronvel.farztev.admin.controller.dto.ListArticle;
-import com.ronvel.farztev.admin.dao.ArticleDao;
-import com.ronvel.farztev.admin.dao.CountryDao;
+import com.ronvel.farztev.admin.dao.model.ArticleModel;
 import com.ronvel.farztev.admin.service.ArticleServiceTest;
 import com.ronvel.farztev.admin.service.BaseServiceTest;
 
@@ -62,7 +61,8 @@ public class ArticleControllerTest extends BaseControllerTest {
 
   @Test
   public void articlesArticleIdGet() {
-    articleDao.save(ArticleServiceTest.createSwissArticle());
+    ArticleModel newArticle = ArticleServiceTest.createSwissArticle();
+    articleDao.save(newArticle);
     HttpHeaders headers = new HttpHeaders();
     HttpEntity<String> request = new HttpEntity<String>(headers);
 
