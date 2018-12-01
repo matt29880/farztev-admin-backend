@@ -10,11 +10,8 @@ VOLUME /tmp
 # Make port 8080 available to the world outside this container
 EXPOSE 8080
 
-# The application's jar file
-ARG JAR_FILE=target/farztev-admin-backend-0.0.1.jar
-
 # Add the application's jar to the container
-ADD ${JAR_FILE} farztev-admin-backend.jar
+ADD target/farztev-admin-backend-0.0.1.jar farztev-admin-backend.jar
 
 # Run the jar file 
-ENTRYPOINT ["java","-Djava.security.egd=file:/dev/./urandom","-jar","$params","/farztev-admin-backend.jar"]
+ENTRYPOINT exec java $JAVA_OPTS -Djava.security.egd=file:/dev/./urandom -jar /farztev-admin-backend.jar
