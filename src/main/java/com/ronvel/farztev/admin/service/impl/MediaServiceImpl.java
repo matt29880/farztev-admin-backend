@@ -1,5 +1,13 @@
 package com.ronvel.farztev.admin.service.impl;
 
+import com.ronvel.farztev.admin.cdn.CdnRepository;
+import com.ronvel.farztev.admin.controller.dto.FileDetailDto;
+import com.ronvel.farztev.admin.controller.dto.ListMedia;
+import com.ronvel.farztev.admin.controller.dto.Media;
+import com.ronvel.farztev.admin.dao.AlbumDao;
+import com.ronvel.farztev.admin.dao.MediaDao;
+import com.ronvel.farztev.admin.dao.model.MediaModel;
+import com.ronvel.farztev.admin.service.MediaService;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -7,12 +15,6 @@ import java.util.stream.Collectors;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.ronvel.farztev.admin.controller.dto.ListMedia;
-import com.ronvel.farztev.admin.controller.dto.Media;
-import com.ronvel.farztev.admin.dao.AlbumDao;
-import com.ronvel.farztev.admin.dao.MediaDao;
-import com.ronvel.farztev.admin.dao.model.MediaModel;
-import com.ronvel.farztev.admin.service.MediaService;
 
 @Service
 public class MediaServiceImpl implements MediaService {
@@ -25,6 +27,9 @@ public class MediaServiceImpl implements MediaService {
 
   @Autowired
   private MediaDao mediaDao;
+
+  @Autowired
+  private CdnRepository cdnRepository;
 
   @Override
   public Optional<Media> findMediaById(Long id) {
@@ -84,6 +89,14 @@ public class MediaServiceImpl implements MediaService {
   @Override
   public void deleteMedia(Long id) {
     mediaDao.delete(id);
+  }
+
+  @Override
+  public List<FileDetailDto> listFiles(String folderPath) {
+    return cdnRepository.list(folderPath).stream()
+        .map(f -> FileDetailDto.builder().name(f.getName()).path(f.getPath())
+            .isDirectory(f.isDirectory()).build())
+        .collect(Collectors.toList());
   }
 
 }

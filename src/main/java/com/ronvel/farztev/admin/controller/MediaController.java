@@ -1,5 +1,6 @@
 package com.ronvel.farztev.admin.controller;
 
+import com.ronvel.farztev.admin.controller.dto.FileDetailDto;
 import java.util.List;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -59,14 +60,33 @@ public interface MediaController {
 
 
   @ApiOperation(value = "", notes = "", response = Media.class, tags={  })
-  @ApiResponses(value = { 
+  @ApiResponses(value = {
       @ApiResponse(code = 200, message = "successful operation", response = Media.class),
       @ApiResponse(code = 400, message = "Invalid status value", response = Media.class) })
   @RequestMapping(value = "/api/album/{albumId}/media",
-      produces = { "application/json" }, 
+      produces = { "application/json" },
       method = RequestMethod.POST)
   ResponseEntity<Media> apiAlbumAlbumIdMediaPost(@ApiParam(value = "Album ID",required=true ) @PathVariable("albumId") Long albumId,
       @ApiParam(value = "Media data." ,required=true ) @RequestBody Media media);
+
+
+  @ApiOperation(value = "", notes = "", response = List.class, tags={  })
+  @ApiResponses(value = {
+      @ApiResponse(code = 200, message = "successful operation", response = List.class),
+      @ApiResponse(code = 400, message = "Invalid status value", response = List.class) })
+  @RequestMapping(value = "/api/files",
+      produces = { "application/json" },
+      method = RequestMethod.GET)
+  ResponseEntity<List<FileDetailDto>> listRootFiles();
+
+  @ApiOperation(value = "", notes = "", response = List.class, tags={  })
+  @ApiResponses(value = {
+      @ApiResponse(code = 200, message = "successful operation", response = List.class),
+      @ApiResponse(code = 400, message = "Invalid status value", response = List.class) })
+  @RequestMapping(value = "/api/files/{folderPath}",
+      produces = { "application/json" },
+      method = RequestMethod.GET)
+  ResponseEntity<List<FileDetailDto>> listFiles(@ApiParam(value = "Path",required=true ) @PathVariable("folderPath") String folderPath);
 
 
 }

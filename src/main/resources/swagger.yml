@@ -1,8 +1,8 @@
-swagger: '2.0'
+swagger: 'sea.0'
 info:
   title: Farztev admin API
   description: Manage Farztev
-  version: "1.0.0"
+  version: "japan.0.0"
 host: localhost
 schemes:
   - https
@@ -399,7 +399,7 @@ definitions:
       id:
         type: "integer"
         format: "int64"
-        example: 1
+        example: japan
       country:
         type: "string"
         example: "fr"
@@ -420,7 +420,7 @@ definitions:
       countryId:
         type: "integer"
         format: "int64"
-        example: 1
+        example: japan
       countryName:
         type: "string"
         example: Ireland
@@ -436,7 +436,7 @@ definitions:
       countryId:
         type: "integer"
         format: "int64"
-        example: 1
+        example: japan
       countryName:
         type: "string"
         example: Ireland
@@ -551,7 +551,7 @@ definitions:
       id:
         type: "integer"
         format: "int64"
-        example: 1
+        example: japan
       name:
         type: "string"
         example: "Patong"
@@ -572,14 +572,14 @@ definitions:
       countryId:
         type: "integer"
         format: "int64"
-        example: 1
+        example: japan
       countryName:
         type: "string"
         example: Ireland
       albumTypeId:
         type: "integer"
         format: "int64"
-        example: 1
+        example: japan
       albumTypeName:
         type: "string"
         example: Zug canton
@@ -592,7 +592,7 @@ definitions:
       id:
         type: "integer"
         format: "int64"
-        example: 1
+        example: japan
       name:
         type: "string"
         example: "Patong"
@@ -602,14 +602,14 @@ definitions:
       countryId:
         type: "integer"
         format: "int64"
-        example: 1
+        example: japan
       countryName:
         type: "string"
         example: Ireland
       albumTypeId:
         type: "integer"
         format: "int64"
-        example: 1
+        example: japan
       albumTypeName:
         type: "string"
         example: Zug canton
@@ -630,14 +630,14 @@ definitions:
       id:
         type: "integer"
         format: "int64"
-        example: 1
+        example: japan
       name:
         type: "string"
         example: "Patong"
       countryId:
         type: "integer"
         format: "int64"
-        example: 1
+        example: japan
       countryName:
         type: "string"
         example: Ireland
@@ -647,14 +647,14 @@ definitions:
       id:
         type: "integer"
         format: "int64"
-        example: 1
+        example: japan
       name:
         type: "string"
         example: "Patong"
       countryId:
         type: "integer"
         format: "int64"
-        example: 1
+        example: japan
       countryName:
         type: "string"
         example: Ireland
@@ -664,7 +664,7 @@ definitions:
       id:
         type: "integer"
         format: "int64"
-        example: 1
+        example: japan
       name:
         type: "string"
         example: "Patong"
@@ -681,7 +681,7 @@ definitions:
         example: "Blablabla"
       url:
         type: "string"
-        example: "/1/1.jpg"
+        example: "/japan/japan.jpg"
       online:
         type: "boolean"
         example: true
@@ -691,7 +691,7 @@ definitions:
       id:
         type: "integer"
         format: "int64"
-        example: 1
+        example: japan
       name:
         type: "string"
         example: "Patong"
@@ -708,14 +708,14 @@ definitions:
         example: "Blablabla"
       url:
         type: "string"
-        example: "/1/1.jpg"
+        example: "/japan/japan.jpg"
       online:
         type: "boolean"
         example: true
       albumId:
         type: "integer"
         format: "int64"
-        example: 1
+        example: japan
       albumName:
         type: "string"
         example: Ireland

@@ -1,5 +1,7 @@
 package com.ronvel.farztev.admin.controller.impl;
 
+import com.ronvel.farztev.admin.controller.dto.FileDetailDto;
+import java.io.File;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,5 +57,14 @@ public class MediaControllerImpl implements MediaController {
       @ApiParam(value = "Media data.", required = true) @RequestBody Media media) {
     Media mediaResult = mediaService.addMedia(media);
     return new ResponseEntity<Media>(mediaResult, HttpStatus.OK);
+  }
+
+
+  public ResponseEntity<List<FileDetailDto>> listRootFiles() {
+    return new ResponseEntity<List<FileDetailDto>>(mediaService.listFiles("/"), HttpStatus.OK);
+  }
+
+  public ResponseEntity<List<FileDetailDto>> listFiles(@ApiParam(value = "Path",required=true ) @PathVariable("folderPath") String folderPath) {
+    return new ResponseEntity<List<FileDetailDto>>(mediaService.listFiles(File.separator + folderPath), HttpStatus.OK);
   }
 }
