@@ -1,8 +1,8 @@
-swagger: 'sea.0'
+swagger: '2.0'
 info:
   title: Farztev admin API
   description: Manage Farztev
-  version: "japan.0.0"
+  version: "1.0.0"
 host: localhost
 schemes:
   - https
@@ -84,7 +84,7 @@ paths:
   /api/article:
     get:
       produces:
-      - "application/json"
+        - "application/json"
       responses:
         200:
           description: "successful operation"
@@ -96,7 +96,7 @@ paths:
           description: "Invalid status value"
     post:
       produces:
-      - "application/json"
+        - "application/json"
       parameters:
         - $ref: '#/parameters/Article'
       responses:
@@ -109,7 +109,7 @@ paths:
   /api/article/{articleId}:
     get:
       produces:
-      - "application/json"
+        - "application/json"
       parameters:
         - $ref: '#/parameters/ArticleId'
       responses:
@@ -121,7 +121,7 @@ paths:
           description: "Article not found"
     put:
       produces:
-      - "application/json"
+        - "application/json"
       parameters:
         - $ref: '#/parameters/ArticleId'
         - $ref: '#/parameters/Article'
@@ -134,7 +134,7 @@ paths:
           description: "Invalid status value"
     delete:
       produces:
-      - "application/json"
+        - "application/json"
       parameters:
         - $ref: '#/parameters/ArticleId'
       responses:
@@ -145,7 +145,7 @@ paths:
   /api/country:
     get:
       produces:
-      - "application/json"
+        - "application/json"
       responses:
         200:
           description: "successful operation"
@@ -157,7 +157,7 @@ paths:
         description: "Invalid status value"
     post:
       produces:
-      - "application/json"
+        - "application/json"
       parameters:
         - $ref: '#/parameters/Country'
       responses:
@@ -170,7 +170,7 @@ paths:
   /api/country/{countryId}:
     get:
       produces:
-      - "application/json"
+        - "application/json"
       parameters:
         - $ref: '#/parameters/CountryId'
       responses:
@@ -182,7 +182,7 @@ paths:
           description: "Country not found"
     put:
       produces:
-      - "application/json"
+        - "application/json"
       parameters:
         - $ref: '#/parameters/CountryId'
         - $ref: '#/parameters/Country'
@@ -195,7 +195,7 @@ paths:
           description: "Invalid status value"
     delete:
       produces:
-      - "application/json"
+        - "application/json"
       parameters:
         - $ref: '#/parameters/CountryId'
       responses:
@@ -206,7 +206,7 @@ paths:
   /api/album:
     get:
       produces:
-      - "application/json"
+        - "application/json"
       responses:
         200:
           description: "successful operation"
@@ -218,7 +218,7 @@ paths:
         description: "Invalid status value"
     post:
       produces:
-      - "application/json"
+        - "application/json"
       parameters:
         - $ref: '#/parameters/Album'
       responses:
@@ -231,7 +231,7 @@ paths:
   /api/album/{albumId}:
     get:
       produces:
-      - "application/json"
+        - "application/json"
       parameters:
         - $ref: '#/parameters/AlbumId'
       responses:
@@ -243,7 +243,7 @@ paths:
           description: "Country not found"
     put:
       produces:
-      - "application/json"
+        - "application/json"
       parameters:
         - $ref: '#/parameters/AlbumId'
         - $ref: '#/parameters/Album'
@@ -256,7 +256,7 @@ paths:
           description: "Invalid status value"
     delete:
       produces:
-      - "application/json"
+        - "application/json"
       parameters:
         - $ref: '#/parameters/AlbumId'
       responses:
@@ -267,7 +267,7 @@ paths:
   /api/albumtype:
     get:
       produces:
-      - "application/json"
+        - "application/json"
       responses:
         200:
           description: "successful operation"
@@ -279,7 +279,7 @@ paths:
         description: "Invalid status value"
     post:
       produces:
-      - "application/json"
+        - "application/json"
       parameters:
         - $ref: '#/parameters/AlbumType'
       responses:
@@ -292,7 +292,7 @@ paths:
   /api/albumtype/{albumTypeId}:
     get:
       produces:
-      - "application/json"
+        - "application/json"
       parameters:
         - $ref: '#/parameters/AlbumTypeId'
       responses:
@@ -304,7 +304,7 @@ paths:
           description: "Country not found"
     put:
       produces:
-      - "application/json"
+        - "application/json"
       parameters:
         - $ref: '#/parameters/AlbumTypeId'
         - $ref: '#/parameters/AlbumType'
@@ -317,7 +317,7 @@ paths:
           description: "Invalid status value"
     delete:
       produces:
-      - "application/json"
+        - "application/json"
       parameters:
         - $ref: '#/parameters/AlbumTypeId'
       responses:
@@ -328,7 +328,7 @@ paths:
   /api/album/{albumId}/media:
     get:
       produces:
-      - "application/json"
+        - "application/json"
       parameters:
         - $ref: '#/parameters/AlbumId'
       responses:
@@ -342,7 +342,7 @@ paths:
         description: "Invalid status value"
     post:
       produces:
-      - "application/json"
+        - "application/json"
       parameters:
         - $ref: '#/parameters/AlbumId'
         - $ref: '#/parameters/Media'
@@ -356,7 +356,7 @@ paths:
   /api/album/{albumId}/media/{mediaId}:
     get:
       produces:
-      - "application/json"
+        - "application/json"
       parameters:
         - $ref: '#/parameters/AlbumId'
         - $ref: '#/parameters/MediaId'
@@ -369,7 +369,7 @@ paths:
           description: "Country not found"
     put:
       produces:
-      - "application/json"
+        - "application/json"
       parameters:
         - $ref: '#/parameters/AlbumId'
         - $ref: '#/parameters/MediaId'
@@ -383,7 +383,7 @@ paths:
           description: "Invalid status value"
     delete:
       produces:
-      - "application/json"
+        - "application/json"
       parameters:
         - $ref: '#/parameters/AlbumId'
         - $ref: '#/parameters/MediaId'
@@ -399,7 +399,7 @@ definitions:
       id:
         type: "integer"
         format: "int64"
-        example: japan
+        example: 1
       country:
         type: "string"
         example: "fr"
@@ -420,7 +420,7 @@ definitions:
       countryId:
         type: "integer"
         format: "int64"
-        example: japan
+        example: 1
       countryName:
         type: "string"
         example: Ireland
@@ -436,7 +436,7 @@ definitions:
       countryId:
         type: "integer"
         format: "int64"
-        example: japan
+        example: 1
       countryName:
         type: "string"
         example: Ireland
@@ -551,7 +551,7 @@ definitions:
       id:
         type: "integer"
         format: "int64"
-        example: japan
+        example: 1
       name:
         type: "string"
         example: "Patong"
@@ -572,14 +572,14 @@ definitions:
       countryId:
         type: "integer"
         format: "int64"
-        example: japan
+        example: 1
       countryName:
         type: "string"
         example: Ireland
       albumTypeId:
         type: "integer"
         format: "int64"
-        example: japan
+        example: 1
       albumTypeName:
         type: "string"
         example: Zug canton
@@ -592,7 +592,7 @@ definitions:
       id:
         type: "integer"
         format: "int64"
-        example: japan
+        example: 1
       name:
         type: "string"
         example: "Patong"
@@ -602,14 +602,14 @@ definitions:
       countryId:
         type: "integer"
         format: "int64"
-        example: japan
+        example: 1
       countryName:
         type: "string"
         example: Ireland
       albumTypeId:
         type: "integer"
         format: "int64"
-        example: japan
+        example: 1
       albumTypeName:
         type: "string"
         example: Zug canton
@@ -630,14 +630,14 @@ definitions:
       id:
         type: "integer"
         format: "int64"
-        example: japan
+        example: 1
       name:
         type: "string"
         example: "Patong"
       countryId:
         type: "integer"
         format: "int64"
-        example: japan
+        example: 1
       countryName:
         type: "string"
         example: Ireland
@@ -647,14 +647,14 @@ definitions:
       id:
         type: "integer"
         format: "int64"
-        example: japan
+        example: 1
       name:
         type: "string"
         example: "Patong"
       countryId:
         type: "integer"
         format: "int64"
-        example: japan
+        example: 1
       countryName:
         type: "string"
         example: Ireland
@@ -664,7 +664,7 @@ definitions:
       id:
         type: "integer"
         format: "int64"
-        example: japan
+        example: 1
       name:
         type: "string"
         example: "Patong"
@@ -681,7 +681,7 @@ definitions:
         example: "Blablabla"
       url:
         type: "string"
-        example: "/japan/japan.jpg"
+        example: "/1/1.jpg"
       online:
         type: "boolean"
         example: true
@@ -691,7 +691,7 @@ definitions:
       id:
         type: "integer"
         format: "int64"
-        example: japan
+        example: 1
       name:
         type: "string"
         example: "Patong"
@@ -708,14 +708,14 @@ definitions:
         example: "Blablabla"
       url:
         type: "string"
-        example: "/japan/japan.jpg"
+        example: "/1/1.jpg"
       online:
         type: "boolean"
         example: true
       albumId:
         type: "integer"
         format: "int64"
-        example: japan
+        example: 1
       albumName:
         type: "string"
         example: Ireland
