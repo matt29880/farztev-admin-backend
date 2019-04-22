@@ -1,4 +1,5 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>farztev-admin-backend</groupId>
@@ -15,7 +16,7 @@
 	<properties>
 		<springfox.swagger.version>2.6.1</springfox.swagger.version>
 		<swagger.version>2.2.2</swagger.version>
-		<jackson.version>2.9.5</jackson.version>
+		<jackson.version>2.9.8</jackson.version>
 	</properties>
 	<dependencies>
 		<!-- Spring -->
@@ -69,6 +70,23 @@
 			<artifactId>jackson-annotations</artifactId>
 			<version>${jackson.version}</version>
 		</dependency>
+
+		<dependency>
+			<groupId>javax.xml.bind</groupId>
+			<artifactId>jaxb-api</artifactId>
+			<version>2.3.0</version>
+		</dependency>
+		<dependency>
+			<groupId>com.sun.xml.bind</groupId>
+			<artifactId>jaxb-core</artifactId>
+			<version>2.3.0</version>
+		</dependency>
+		<dependency>
+			<groupId>com.sun.xml.bind</groupId>
+			<artifactId>jaxb-impl</artifactId>
+			<version>2.3.0</version>
+		</dependency>
+
 		<dependency>
 			<groupId>org.modelmapper</groupId>
 			<artifactId>modelmapper</artifactId>
@@ -100,12 +118,12 @@
 	<build>
 		<sourceDirectory>src</sourceDirectory>
 		<plugins>
-			<!--  <plugin> <groupId>io.swagger</groupId> <artifactId>swagger-codegen-maven-plugin</artifactId> 
+			<!-- <plugin> <groupId>io.swagger</groupId> <artifactId>swagger-codegen-maven-plugin</artifactId> 
 				<version>2.2.2</version> <executions> <execution> <goals> <goal>generate</goal> 
 				</goals> <configuration> <inputSpec>src/main/resources/swagger.yml</inputSpec> 
 				<language>spring</language> <apiPackage>com.ronvel.farztev.admin.controller</apiPackage> 
 				<configOptions> <sourceFolder>generated</sourceFolder> </configOptions> </configuration> 
-				</execution> </executions> </plugin>-->
+				</execution> </executions> </plugin> -->
 			<plugin>
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>3.6.1</version>
@@ -114,11 +132,11 @@
 					<target>1.8</target>
 				</configuration>
 			</plugin>
-		    <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-            </plugin>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
 		</plugins>
-        
+
 	</build>
 </project>
