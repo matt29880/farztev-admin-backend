@@ -1,7 +1,10 @@
 package com.ronvel.farztev.admin.controller;
 
 import com.ronvel.farztev.admin.controller.dto.FileDetailDto;
+import java.io.IOException;
 import java.util.List;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -69,7 +72,7 @@ public interface MediaController {
   ResponseEntity<Media> apiAlbumAlbumIdMediaPost(@ApiParam(value = "Album ID",required=true ) @PathVariable("albumId") Long albumId,
       @ApiParam(value = "Media data." ,required=true ) @RequestBody Media media);
 
-
+/*
   @ApiOperation(value = "", notes = "", response = List.class, tags={  })
   @ApiResponses(value = {
       @ApiResponse(code = 200, message = "successful operation", response = List.class),
@@ -78,15 +81,17 @@ public interface MediaController {
       produces = { "application/json" },
       method = RequestMethod.GET)
   ResponseEntity<List<FileDetailDto>> listRootFiles();
-
+*/
   @ApiOperation(value = "", notes = "", response = List.class, tags={  })
   @ApiResponses(value = {
       @ApiResponse(code = 200, message = "successful operation", response = List.class),
       @ApiResponse(code = 400, message = "Invalid status value", response = List.class) })
-  @RequestMapping(value = "/api/files/{folderPath}",
+  @RequestMapping(value = "/api/files/**",
       produces = { "application/json" },
       method = RequestMethod.GET)
-  ResponseEntity<List<FileDetailDto>> listFiles(@ApiParam(value = "Path",required=true ) @PathVariable("folderPath") String folderPath);
+  ResponseEntity<List<FileDetailDto>> listFiles(HttpServletRequest request);
 
+  @RequestMapping(value = "/api/image/**", method = RequestMethod.GET)
+  void getFile(HttpServletRequest request,HttpServletResponse response) throws IOException;
 
 }

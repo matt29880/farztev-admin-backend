@@ -2,8 +2,13 @@ package com.ronvel.farztev.admin.controller.impl;
 
 import com.ronvel.farztev.admin.controller.dto.FileDetailDto;
 import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
 import java.util.Optional;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -59,12 +64,22 @@ public class MediaControllerImpl implements MediaController {
     return new ResponseEntity<Media>(mediaResult, HttpStatus.OK);
   }
 
-
+/*
   public ResponseEntity<List<FileDetailDto>> listRootFiles() {
     return new ResponseEntity<List<FileDetailDto>>(mediaService.listFiles("/"), HttpStatus.OK);
   }
+*/
 
-  public ResponseEntity<List<FileDetailDto>> listFiles(@ApiParam(value = "Path",required=true ) @PathVariable("folderPath") String folderPath) {
+  @Override
+  public ResponseEntity<List<FileDetailDto>> listFiles(HttpServletRequest request) {
+    String folderPath  = request.getRequestURI().replaceAll("/api/files/", "");
     return new ResponseEntity<List<FileDetailDto>>(mediaService.listFiles(File.separator + folderPath), HttpStatus.OK);
+  }
+
+  public void getFile(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    String folderPath  = request.getRequestURI().replaceAll("/api/image/", "");
+    ClassLoader classLoader = getClass().getClassLoader();
+    InputStream in = classLoader.getResourceAsStream("photos/" + folderPath);
+    IOUtils.copy(in, response.getOutputStream());
   }
 }
