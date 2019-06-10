@@ -22,8 +22,9 @@ public class ArticleModel extends BaseModel {
   private CountryModel country;
 
   @NotNull
-  @Size(max = 30)
+  @Size(max = 255)
   private String name;
+  
   @NotNull
   @Column(name = "description", nullable = true, length = 65535, columnDefinition="TEXT")
   private String description;

@@ -1,17 +1,22 @@
 package com.ronvel.farztev.admin.controller;
 
-import com.ronvel.farztev.admin.controller.dto.FileDetailDto;
 import java.io.IOException;
 import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+
+import com.ronvel.farztev.admin.controller.dto.FileDetailDto;
 import com.ronvel.farztev.admin.controller.dto.ListMedia;
 import com.ronvel.farztev.admin.controller.dto.Media;
+import com.ronvel.farztev.admin.enums.MediaType;
+
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
@@ -22,10 +27,11 @@ public interface MediaController {
   @ApiOperation(value = "", notes = "", response = ListMedia.class, responseContainer = "List", tags={  })
   @ApiResponses(value = { 
       @ApiResponse(code = 200, message = "successful operation", response = ListMedia.class) })
-  @RequestMapping(value = "/api/album/{albumId}/media",
+  @RequestMapping(value = "/api/album/{albumId}/media/type/{albumType}",
       produces = { "application/json" }, 
       method = RequestMethod.GET)
-  ResponseEntity<List<ListMedia>> apiAlbumAlbumIdMediaGet(@ApiParam(value = "Album ID",required=true ) @PathVariable("albumId") Long albumId);
+  ResponseEntity<List<ListMedia>> apiAlbumAlbumIdMediaGet(@ApiParam(value = "Album ID",required=true ) @PathVariable("albumId") Long albumId,
+		  @ApiParam(value = "Album type",required=true ) @PathVariable("albumType") MediaType albumType);
 
 
   @ApiOperation(value = "", notes = "", response = Void.class, tags={  })

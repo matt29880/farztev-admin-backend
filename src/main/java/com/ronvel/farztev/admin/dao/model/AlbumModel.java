@@ -17,7 +17,7 @@ import org.hibernate.annotations.Type;
 @Table(name="album")
 public class AlbumModel extends BaseModel {
   @NotNull
-  @Size(max = 30)
+  @Size(max = 255)
   private String name;
   @NotNull
   @Column(name = "description", nullable = true, length = 65535, columnDefinition="TEXT")
@@ -32,7 +32,7 @@ public class AlbumModel extends BaseModel {
   @Type(type = "org.hibernate.type.NumericBooleanType")
   @Column(columnDefinition = "TINYINT(1)")
   private Boolean online;
-  
+
   @NotNull
   @ManyToOne(fetch = FetchType.EAGER)
   @JoinColumn(name = "album_type")

@@ -43,7 +43,7 @@ public class MediaControllerTest extends BaseControllerTest {
     HttpEntity<String> request = new HttpEntity<String>(headers);
 
     ResponseEntity<List<ListMedia>> mediasResponse =
-        this.restTemplate.exchange("/api/album/1/media", HttpMethod.GET, request,
+        this.restTemplate.exchange("/api/album/1/media/type/PHOTO", HttpMethod.GET, request,
             new ParameterizedTypeReference<List<ListMedia>>() {});
     assertTrue(mediasResponse.getStatusCode().is2xxSuccessful());
 
@@ -56,7 +56,7 @@ public class MediaControllerTest extends BaseControllerTest {
     HttpEntity<String> request = new HttpEntity<String>(headers);
 
     ResponseEntity<List<ListMedia>> mediasResponse =
-        this.restTemplate.exchange("/api/album/1/media", HttpMethod.GET, request,
+        this.restTemplate.exchange("/api/album/1/media/type/PHOTO", HttpMethod.GET, request,
             new ParameterizedTypeReference<List<ListMedia>>() {});
     assertTrue(mediasResponse.getStatusCode().is2xxSuccessful());
     assertTrue(mediasResponse.getBody().isEmpty());

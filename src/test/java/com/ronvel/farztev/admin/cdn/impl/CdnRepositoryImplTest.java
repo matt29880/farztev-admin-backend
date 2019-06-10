@@ -2,11 +2,14 @@ package com.ronvel.farztev.admin.cdn.impl;
 
 import static org.junit.Assert.assertEquals;
 
-import com.google.common.collect.ImmutableList;
-import com.ronvel.farztev.admin.cdn.FileDetail;
 import java.io.File;
+import java.util.List;
+
 import org.junit.Before;
 import org.junit.Test;
+
+import com.google.common.collect.ImmutableList;
+import com.ronvel.farztev.admin.cdn.FileDetail;
 
 public class CdnRepositoryImplTest {
 
@@ -21,8 +24,11 @@ public class CdnRepositoryImplTest {
 
   @Test
   public void list_directories() {
-    assertEquals(ImmutableList.of(new FileDetail("animals", "/animals", true),
-        new FileDetail("japan", "/japan", true)), cdnRepository.list("/"));
+	List<FileDetail> fileDetailsList = cdnRepository.list("/");
+    assertEquals(List.of(
+    		new FileDetail("animals", "/animals", true),
+    		new FileDetail("japan", "/japan", true),
+    		new FileDetail("no-image.jpg", "/no-image.jpg", false)), fileDetailsList);
   }
 
 

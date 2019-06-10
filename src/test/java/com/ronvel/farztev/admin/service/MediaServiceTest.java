@@ -69,7 +69,7 @@ public class MediaServiceTest extends BaseServiceTest {
   public void listAlbumMedias() {
     MediaModel media = mediaDao.save(createMedia(albumDao));
     assertEquals(1L, mediaDao.count());
-    List<ListMedia> medias = mediaService.listAlbumMedias(media.getAlbum().getId());
+    List<ListMedia> medias = mediaService.listAlbumMedias(media.getAlbum().getId(), MediaType.PHOTO);
     testListMedias(media.getId(), medias);
   }
 
@@ -131,7 +131,7 @@ public class MediaServiceTest extends BaseServiceTest {
     media.setCreated(new Date(1234567911L));
     media.setName("Main place of Zug");
     media.setOnline(true);
-    media.setType(MediaType.PHOTO.name());
+    media.setType(MediaType.PHOTO);
     media.setUpdated(new Date(1234567913L));
     media.setUrl("the url zug");
     return media;
