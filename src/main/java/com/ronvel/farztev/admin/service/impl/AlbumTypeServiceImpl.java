@@ -41,6 +41,15 @@ public class AlbumTypeServiceImpl implements AlbumTypeService {
     albumTypes.forEach(albumTypeModel -> listAlbumTypes.add(mapToListAlbumType(albumTypeModel)));
     return listAlbumTypes;
   }
+
+  @Override
+  public List<ListAlbumType> listAlbumTypesByCountry(Long countryId) {
+    List<ListAlbumType> listAlbumTypes = new ArrayList<>();
+    Iterable<AlbumTypeModel> albumTypes = albumTypeDao.findAllByCountryId(countryId);
+    albumTypes.forEach(albumTypeModel -> listAlbumTypes.add(mapToListAlbumType(albumTypeModel)));
+    return listAlbumTypes;
+  }
+  
   @Override
   public ListAlbumType mapToListAlbumType(AlbumTypeModel albumTypeModel) {
     ListAlbumType listAlbumType = mapper.map(albumTypeModel, ListAlbumType.class);

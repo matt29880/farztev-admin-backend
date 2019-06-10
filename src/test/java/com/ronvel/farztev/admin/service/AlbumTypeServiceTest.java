@@ -66,6 +66,14 @@ public class AlbumTypeServiceTest extends BaseServiceTest {
     assertNotNull(albumTypes);
     assertTrue(albumTypes.isEmpty());
   }
+  
+  @Test
+  public void listAlbumTypesByCountry() {
+    albumTypeDao.save(createSwissAlbumType(countryDao));
+    assertEquals(1L, albumTypeDao.count());
+    List<ListAlbumType> albumTypes = albumTypeService.listAlbumTypesByCountry(1L);
+    testListAlbumTypes(albumTypes);
+  }
 
   @Test
   public void addAlbumType() {

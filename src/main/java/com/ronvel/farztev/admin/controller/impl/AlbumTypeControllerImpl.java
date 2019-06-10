@@ -53,6 +53,12 @@ public class AlbumTypeControllerImpl implements AlbumTypeController {
   }
 
   @Override
+  public ResponseEntity<List<ListAlbumType>> apiAlbumtypeByCountryGet(@PathVariable("countryId") Long countryId) {
+    List<ListAlbumType> listAlbumTypes = albumTypeService.listAlbumTypesByCountry(countryId);
+    return new ResponseEntity<List<ListAlbumType>>(listAlbumTypes,HttpStatus.OK);
+  }
+
+  @Override
   public ResponseEntity<AlbumType> apiAlbumtypePost(@RequestBody AlbumType albumType) {
     AlbumType newAlbumType = albumTypeService.addAlbumType(albumType);
     return new ResponseEntity<AlbumType>(newAlbumType,HttpStatus.OK);

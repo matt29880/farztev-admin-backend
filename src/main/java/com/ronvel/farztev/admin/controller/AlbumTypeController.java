@@ -57,7 +57,14 @@ public interface AlbumTypeController {
       produces = { "application/json" }, 
       method = RequestMethod.GET)
   ResponseEntity<List<ListAlbumType>> apiAlbumtypeGet();
-
+  
+  @ApiOperation(value = "", notes = "", response = ListAlbumType.class, responseContainer = "List", tags={  })
+  @ApiResponses(value = { 
+      @ApiResponse(code = 200, message = "successful operation", response = ListAlbumType.class) })
+  @RequestMapping(value = "/api/albumtype/country/{countryId}",
+      produces = { "application/json" }, 
+      method = RequestMethod.GET)
+  public ResponseEntity<List<ListAlbumType>> apiAlbumtypeByCountryGet(@PathVariable("countryId") Long countryId);
 
   @ApiOperation(value = "", notes = "", response = AlbumType.class, tags={  })
   @ApiResponses(value = { 
