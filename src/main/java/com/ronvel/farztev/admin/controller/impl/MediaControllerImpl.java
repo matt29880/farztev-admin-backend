@@ -1,13 +1,14 @@
 package com.ronvel.farztev.admin.controller.impl;
 
-import com.ronvel.farztev.admin.controller.dto.FileDetailDto;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
 import java.util.Optional;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -15,11 +16,14 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
+
 import com.ronvel.farztev.admin.controller.MediaController;
-import com.ronvel.farztev.admin.controller.dto.Country;
+import com.ronvel.farztev.admin.controller.dto.FileDetailDto;
 import com.ronvel.farztev.admin.controller.dto.ListMedia;
 import com.ronvel.farztev.admin.controller.dto.Media;
+import com.ronvel.farztev.admin.enums.MediaType;
 import com.ronvel.farztev.admin.service.MediaService;
+
 import io.swagger.annotations.ApiParam;
 
 @Controller
@@ -29,8 +33,9 @@ public class MediaControllerImpl implements MediaController {
   MediaService mediaService;
 
   public ResponseEntity<List<ListMedia>> apiAlbumAlbumIdMediaGet(
-      @ApiParam(value = "Album ID", required = true) @PathVariable("albumId") Long albumId) {
-    List<ListMedia> medias = mediaService.listMedias();
+	      @ApiParam(value = "Album ID", required = true) @PathVariable("albumId") Long albumId,
+	      @ApiParam(value = "Album type", required = true) @PathVariable("albumType") MediaType albumType) {
+    List<ListMedia> medias = mediaService.listAlbumMedias(albumId, albumType);
     return new ResponseEntity<List<ListMedia>>(medias, HttpStatus.OK);
   }
 

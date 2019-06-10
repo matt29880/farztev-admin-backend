@@ -1,8 +1,11 @@
 package com.ronvel.farztev.admin.dao.model;
 
 import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -11,17 +14,21 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+
 import org.hibernate.annotations.Type;
+
+import com.ronvel.farztev.admin.enums.MediaType;
 
 @Entity
 @Table(name = "media")
 public class MediaModel extends BaseModel {
   @NotNull
-  @Size(max = 30)
+  @Size(max = 255)
   private String name;
   @NotNull
-  @Size(max = 45)
-  private String type;
+  @Enumerated(EnumType.STRING)
+  @Column(length = 45)
+  private MediaType type;
   @NotNull
   @Temporal(TemporalType.TIMESTAMP)
   private Date created;
@@ -50,11 +57,11 @@ public class MediaModel extends BaseModel {
     this.name = name;
   }
 
-  public String getType() {
+  public MediaType getType() {
     return type;
   }
 
-  public void setType(String type) {
+  public void setType(MediaType type) {
     this.type = type;
   }
 

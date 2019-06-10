@@ -1,5 +1,14 @@
 package com.ronvel.farztev.admin.service.impl;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
+
+import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import com.ronvel.farztev.admin.cdn.CdnRepository;
 import com.ronvel.farztev.admin.controller.dto.FileDetailDto;
 import com.ronvel.farztev.admin.controller.dto.ListMedia;
@@ -7,14 +16,8 @@ import com.ronvel.farztev.admin.controller.dto.Media;
 import com.ronvel.farztev.admin.dao.AlbumDao;
 import com.ronvel.farztev.admin.dao.MediaDao;
 import com.ronvel.farztev.admin.dao.model.MediaModel;
+import com.ronvel.farztev.admin.enums.MediaType;
 import com.ronvel.farztev.admin.service.MediaService;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
-import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 @Service
 public class MediaServiceImpl implements MediaService {
@@ -53,8 +56,8 @@ public class MediaServiceImpl implements MediaService {
   }
 
   @Override
-  public List<ListMedia> listAlbumMedias(Long albumId) {
-    List<MediaModel> medias = mediaDao.findByAlbumId(albumId);
+  public List<ListMedia> listAlbumMedias(Long albumId, MediaType type) {
+    List<MediaModel> medias = mediaDao.findByAlbumIdAndType(albumId, type);
     return medias.stream().map(media -> mapListMedia(media)).collect(Collectors.toList());
   }
 

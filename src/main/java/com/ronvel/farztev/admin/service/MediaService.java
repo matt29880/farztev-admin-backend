@@ -1,10 +1,12 @@
 package com.ronvel.farztev.admin.service;
 
-import com.ronvel.farztev.admin.controller.dto.FileDetailDto;
 import java.util.List;
 import java.util.Optional;
+
+import com.ronvel.farztev.admin.controller.dto.FileDetailDto;
 import com.ronvel.farztev.admin.controller.dto.ListMedia;
 import com.ronvel.farztev.admin.controller.dto.Media;
+import com.ronvel.farztev.admin.enums.MediaType;
 
 /**
  * Service for selecting medias.
@@ -33,7 +35,7 @@ public interface MediaService {
    *
    * @return
    */
-  List<ListMedia> listAlbumMedias(Long albumId);
+  List<ListMedia> listAlbumMedias(Long albumId, MediaType type);
 
   /**
    * Add a new media.

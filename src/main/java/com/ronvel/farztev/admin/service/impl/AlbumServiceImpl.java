@@ -1,6 +1,7 @@
 package com.ronvel.farztev.admin.service.impl;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import org.modelmapper.ModelMapper;
@@ -50,6 +51,8 @@ public class AlbumServiceImpl implements AlbumService {
   public Album addAlbum(Album album) {
     AlbumModel albumModel = mapper.map(album, AlbumModel.class);
     albumModel.setAlbumType(albumTypeDao.findOne(albumModel.getAlbumType().getId()));
+    albumModel.setCreated(new Date());
+    albumModel.setUpdated(new Date());
     AlbumModel resultAlbumModel = albumDao.save(albumModel);
     return mapAlbum(resultAlbumModel);
   }
@@ -59,6 +62,7 @@ public class AlbumServiceImpl implements AlbumService {
     album.setId(id);
     AlbumModel albumModel = mapper.map(album, AlbumModel.class);
     albumModel.setAlbumType(albumTypeDao.findOne(album.getAlbumTypeId()));
+    albumModel.setUpdated(new Date());
     albumDao.save(albumModel);
   }
   

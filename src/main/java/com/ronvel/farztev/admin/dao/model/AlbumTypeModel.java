@@ -17,7 +17,7 @@ public class AlbumTypeModel extends BaseModel {
   private CountryModel country;
   
   @NotNull
-  @Size(max = 30)
+  @Size(max = 255)
   private String name;
 
   public String getName() {
