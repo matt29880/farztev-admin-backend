@@ -4,12 +4,15 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import com.ronvel.farztev.admin.controller.dto.Article;
 import com.ronvel.farztev.admin.controller.dto.ListArticle;
 import com.ronvel.farztev.admin.dao.ArticleDao;
+import com.ronvel.farztev.admin.dao.MediaDao;
 import com.ronvel.farztev.admin.dao.model.ArticleModel;
 import com.ronvel.farztev.admin.service.ArticleService;
 
@@ -22,6 +25,9 @@ public class ArticleServiceImpl implements ArticleService {
   @Autowired
   private ArticleDao articleDao;
 
+  @Autowired
+  private MediaDao mediaDao;
+
   @Override
   public Optional<Article> findArticleById(Long id) {
     Optional<Article> optional;
@@ -31,6 +37,10 @@ public class ArticleServiceImpl implements ArticleService {
     } else {
       Article article = mapper.map(articleModel, Article.class);
       optional = Optional.of(article);
+      if(articleModel.getThumbnail() != null) {
+    	  article.setThumbnailId(articleModel.getThumbnail().getId());
+    	  article.setThumbnailUrl(articleModel.getThumbnail().getUrl());
+      }
     }
     return optional;
   }
@@ -39,7 +49,14 @@ public class ArticleServiceImpl implements ArticleService {
   public List<ListArticle> listArticles() {
     List<ListArticle> listArticles = new ArrayList<>();
     Iterable<ArticleModel> articles = articleDao.findAll();
-    articles.forEach(article -> listArticles.add(mapper.map(article, ListArticle.class)));
+    articles.forEach(articleModel -> {
+    	ListArticle listArticle = mapper.map(articleModel, ListArticle.class);
+        if(articleModel.getThumbnail() != null) {
+        	listArticle.setThumbnailId(articleModel.getThumbnail().getId());
+        	listArticle.setThumbnailUrl(articleModel.getThumbnail().getUrl());
+        }
+    	listArticles.add(listArticle);
+    	});
     return listArticles;
   }
 
@@ -51,6 +68,9 @@ public class ArticleServiceImpl implements ArticleService {
     ArticleModel articleModel = mapper.map(article, ArticleModel.class);
     ArticleModel resultArticleModel = articleDao.save(articleModel);
     Article resultArticle = mapper.map(resultArticleModel, Article.class);
+    if(article.getThumbnailId() != null) {
+    	articleModel.setThumbnail(mediaDao.findOne(article.getThumbnailId()));
+    }
     return resultArticle;
   }
 
@@ -59,6 +79,9 @@ public class ArticleServiceImpl implements ArticleService {
     article.setId(id);
     article.setUpdated(new Date());
     ArticleModel articleModel = mapper.map(article, ArticleModel.class);
+    if(article.getThumbnailId() != null) {
+    	articleModel.setThumbnail(mediaDao.findOne(article.getThumbnailId()));
+    }
     articleDao.save(articleModel);
   }
 
