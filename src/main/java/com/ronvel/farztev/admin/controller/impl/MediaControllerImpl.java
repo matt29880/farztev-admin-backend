@@ -46,8 +46,7 @@ public class MediaControllerImpl implements MediaController {
     return new ResponseEntity<Void>(HttpStatus.OK);
   }
 
-  public ResponseEntity<Media> apiAlbumAlbumIdMediaMediaIdGet(
-      @ApiParam(value = "Album ID", required = true) @PathVariable("albumId") Long albumId,
+  public ResponseEntity<Media> apiMediaIdGet(
       @ApiParam(value = "Media ID", required = true) @PathVariable("mediaId") Long mediaId) {
     Optional<Media> mediaOptional = mediaService.findMediaById(mediaId);
     return mediaOptional.map(media -> new ResponseEntity<Media>(media, HttpStatus.OK))
@@ -55,7 +54,6 @@ public class MediaControllerImpl implements MediaController {
   }
 
   public ResponseEntity<Media> apiAlbumAlbumIdMediaMediaIdPut(
-      @ApiParam(value = "Album ID", required = true) @PathVariable("albumId") Long albumId,
       @ApiParam(value = "Media ID", required = true) @PathVariable("mediaId") Long mediaId,
       @ApiParam(value = "Media data.", required = true) @RequestBody Media media) {
     mediaService.updateMedia(mediaId, media);
@@ -63,7 +61,6 @@ public class MediaControllerImpl implements MediaController {
   }
 
   public ResponseEntity<Media> apiAlbumAlbumIdMediaPost(
-      @ApiParam(value = "Album ID", required = true) @PathVariable("albumId") Long albumId,
       @ApiParam(value = "Media data.", required = true) @RequestBody Media media) {
     Media mediaResult = mediaService.addMedia(media);
     return new ResponseEntity<Media>(mediaResult, HttpStatus.OK);
