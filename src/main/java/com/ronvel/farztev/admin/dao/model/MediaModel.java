@@ -40,7 +40,6 @@ public class MediaModel extends BaseModel {
   @Column(columnDefinition = "TINYINT(1)")
   private Boolean online;
 
-  @NotNull
   @ManyToOne(fetch = FetchType.EAGER)
   @JoinColumn(name = "album_id")
   private AlbumModel album;

@@ -33,4 +33,4 @@ logging:
 application:
   media:
     photo:
-      location: /tmp/farztev/photos
+      location: /home/mathieu/tmp/farztev/photos

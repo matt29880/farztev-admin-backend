@@ -1,6 +1,7 @@
 package com.ronvel.farztev.admin.service.impl;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -64,7 +65,11 @@ public class MediaServiceImpl implements MediaService {
   @Override
   public Media addMedia(Media media) {
     MediaModel mediaModel = mapper.map(media, MediaModel.class);
-    mediaModel.setAlbum(albumDao.findOne(mediaModel.getAlbum().getId()));
+    if(media.getAlbumId() != null) {
+        mediaModel.setAlbum(albumDao.findOne(media.getAlbumId()));
+    }
+    mediaModel.setCreated(new Date());
+    mediaModel.setUpdated(new Date());
     MediaModel resultMediaModel = mediaDao.save(mediaModel);
     return mapMedia(resultMediaModel);
   }
@@ -73,14 +78,19 @@ public class MediaServiceImpl implements MediaService {
   public void updateMedia(Long id, Media media) {
     media.setId(id);
     MediaModel mediaModel = mapper.map(media, MediaModel.class);
-    mediaModel.setAlbum(albumDao.findOne(media.getAlbumId()));
+    if(media.getAlbumId() != null) {
+        mediaModel.setAlbum(albumDao.findOne(media.getAlbumId()));
+    }
+    mediaModel.setUpdated(new Date());
     mediaDao.save(mediaModel);
   }
 
   private Media mapMedia(MediaModel resultMediaModel) {
     Media resultMedia = mapper.map(resultMediaModel, Media.class);
-    resultMedia.setAlbumId(resultMediaModel.getAlbum().getId());
-    resultMedia.setAlbumName(resultMediaModel.getAlbum().getName());
+    if (resultMediaModel.getAlbum() != null) {
+        resultMedia.setAlbumId(resultMediaModel.getAlbum().getId());
+        resultMedia.setAlbumName(resultMediaModel.getAlbum().getName());
+    }
     return resultMedia;
   }
 

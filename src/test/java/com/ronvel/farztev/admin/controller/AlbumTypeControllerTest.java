@@ -54,6 +54,20 @@ public class AlbumTypeControllerTest extends BaseControllerTest {
   }
 
   @Test
+  public void albumTypesByCountryGet() {
+    AlbumTypeModel albumType = albumTypeDao.save(AlbumTypeServiceTest.createSwissAlbumType(countryDao));
+
+    HttpHeaders headers = new HttpHeaders();
+    HttpEntity<String> request = new HttpEntity<String>(headers);
+
+    ResponseEntity<List<ListAlbumType>> albumTypesResponse = this.restTemplate.exchange("/api/albumtype/country/1L",
+        HttpMethod.GET, request, new ParameterizedTypeReference<List<ListAlbumType>>() {});
+    assertTrue(albumTypesResponse.getStatusCode().is2xxSuccessful());
+
+    AlbumTypeServiceTest.testListAlbumTypes(albumTypesResponse.getBody());
+  }
+
+  @Test
   public void albumTypesGet_empty() {
     HttpHeaders headers = new HttpHeaders();
     HttpEntity<String> request = new HttpEntity<String>(headers);

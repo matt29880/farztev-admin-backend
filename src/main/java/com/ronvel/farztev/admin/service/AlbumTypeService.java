@@ -29,6 +29,11 @@ public interface AlbumTypeService {
   List<ListAlbumType> listAlbumTypes();
 
   /**
+   * List all the articles for a country.
+   */
+  List<ListAlbumType> listAlbumTypesByCountry(Long countryId);
+
+  /**
    * Add a new album.
    * 
    * @param album
