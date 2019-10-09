@@ -3,10 +3,9 @@ package com.ronvel.farztev.admin.component;
 public class Timeline {
 	private String image;
 	private String title;
-	private String from;
-	private String to;
 	private String summary;
 	private boolean future;
+	private String date;
 
 	public String getImage() {
 		return image;
@@ -24,22 +23,6 @@ public class Timeline {
 		this.title = title;
 	}
 
-	public String getFrom() {
-		return from;
-	}
-
-	public void setFrom(String from) {
-		this.from = from;
-	}
-
-	public String getTo() {
-		return to;
-	}
-
-	public void setTo(String to) {
-		this.to = to;
-	}
-
 	public String getSummary() {
 		return summary;
 	}
@@ -54,6 +37,14 @@ public class Timeline {
 
 	public void setFuture(boolean future) {
 		this.future = future;
+	}
+
+	public String getDate() {
+		return date;
+	}
+
+	public void setDate(String date) {
+		this.date = date;
 	}
 
 }

@@ -4,13 +4,17 @@ import java.io.File;
 import java.io.IOException;
 
 import org.apache.commons.io.FileUtils;
+import org.springframework.stereotype.Service;
 
 import com.github.jknack.handlebars.Handlebars;
 import com.github.jknack.handlebars.Template;
 import com.ronvel.farztev.admin.component.Homepage;
+import com.ronvel.farztev.admin.service.HtmlService;
 
-public class HtmlServiceImpl {
+@Service
+public class HtmlServiceImpl implements HtmlService {
 
+	@Override
 	public String generateHomepage(Homepage homepage) throws IOException {
 		Handlebars handlebars = new Handlebars();
 //		handlebars.setPrettyPrint(true);
