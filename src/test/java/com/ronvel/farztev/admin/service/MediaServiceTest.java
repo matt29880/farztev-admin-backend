@@ -137,6 +137,17 @@ public class MediaServiceTest extends BaseServiceTest {
     return media;
   }
 
+  public static MediaModel createMediaWithoutAlbum() {
+    MediaModel media = new MediaModel();
+    media.setCreated(new Date(1234567911L));
+    media.setName("Main place of Zug");
+    media.setOnline(true);
+    media.setType(MediaType.PHOTO);
+    media.setUpdated(new Date(1234567913L));
+    media.setUrl("the url zug");
+    return media;
+  }
+
   public static Media createUpdateMedia() {
     Media media = new Media();
     media.setAlbumId(2L);

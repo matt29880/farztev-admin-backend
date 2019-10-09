@@ -1,6 +1,7 @@
 package com.ronvel.farztev.admin.controller.impl;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
@@ -11,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -25,12 +27,17 @@ import com.ronvel.farztev.admin.enums.MediaType;
 import com.ronvel.farztev.admin.service.MediaService;
 
 import io.swagger.annotations.ApiParam;
+import net.coobird.thumbnailator.Thumbnails;
+import net.coobird.thumbnailator.geometry.Positions;
 
 @Controller
 public class MediaControllerImpl implements MediaController {
 
   @Autowired
   MediaService mediaService;
+  
+  @Value("${application.media.photo.location}")
+  String mediaFolder;
 
   public ResponseEntity<List<ListMedia>> apiAlbumAlbumIdMediaGet(
 	      @ApiParam(value = "Album ID", required = true) @PathVariable("albumId") Long albumId,
@@ -80,8 +87,22 @@ public class MediaControllerImpl implements MediaController {
 
   public void getFile(HttpServletRequest request, HttpServletResponse response) throws IOException {
     String folderPath  = request.getRequestURI().replaceAll("/api/image/", "");
-    ClassLoader classLoader = getClass().getClassLoader();
-    InputStream in = classLoader.getResourceAsStream("photos/" + folderPath);
-    IOUtils.copy(in, response.getOutputStream());
+//    ClassLoader classLoader = getClass().getClassLoader();
+//    InputStream in = classLoader.getResourceAsStream("photos/" + folderPath);
+    InputStream in = new FileInputStream(mediaFolder + File.separator + folderPath);
+    
+    String[] widths = request.getParameterValues("width");
+    String[] heights = request.getParameterValues("height");
+    if (widths == null || heights == null) {
+      IOUtils.copy(in, response.getOutputStream());
+    } else {
+        int width = Integer.valueOf(widths[0]);
+        int height  = Integer.valueOf(heights[0]);
+        
+        Thumbnails.of(in)
+    	    .size(width, height)
+    	    .crop(Positions.CENTER)
+    	    .toOutputStream(response.getOutputStream());
+    }
   }
 }

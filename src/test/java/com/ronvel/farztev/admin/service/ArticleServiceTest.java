@@ -4,19 +4,23 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
+
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+
 import com.ronvel.farztev.admin.controller.dto.Article;
 import com.ronvel.farztev.admin.controller.dto.ListArticle;
 import com.ronvel.farztev.admin.dao.ArticleDao;
 import com.ronvel.farztev.admin.dao.CountryDao;
 import com.ronvel.farztev.admin.dao.model.ArticleModel;
 import com.ronvel.farztev.admin.dao.model.CountryModel;
+import com.ronvel.farztev.admin.dao.model.MediaModel;
 
 public class ArticleServiceTest extends BaseServiceTest {
 
@@ -31,21 +35,24 @@ public class ArticleServiceTest extends BaseServiceTest {
 
   @Autowired
   private ModelMapper mapper;
+  
+  private MediaModel mediaModel;
 
   @Before
   public void before() {
     clear();
     assertEquals(0L, articleDao.count());
     countryDao.save(createDummyCountriesForTest());
+    mediaModel = MediaServiceTest.createMediaWithoutAlbum();
   }
 
   @Test
   public void findArticle() {
-    articleDao.save(createSwissArticle());
+    articleDao.save(createSwissArticle(mediaModel));
     assertEquals(1L, articleDao.count());
     Optional<Article> optionalArticle = articleService.findArticleById(1L);
     assertTrue(optionalArticle.isPresent());
-    testSwissArticle(optionalArticle.get());
+    testSwissArticle(optionalArticle.get(), mediaModel);
     assertEquals(new Date(1234567911L), optionalArticle.get().getCreated());
     assertEquals(new Date(1234567913L), optionalArticle.get().getUpdated());
   }
@@ -58,7 +65,7 @@ public class ArticleServiceTest extends BaseServiceTest {
 
   @Test
   public void listArticles() {
-    articleDao.save(createSwissArticle());
+    articleDao.save(createSwissArticle(mediaModel));
     assertEquals(1L, articleDao.count());
     List<ListArticle> articles = articleService.listArticles();
     testListArticles(articles);
@@ -75,9 +82,9 @@ public class ArticleServiceTest extends BaseServiceTest {
   public void addArticle() {
     Date dateBeforeCreation = new Date();
     assertEquals(0L, articleDao.count());
-    Article newArticle = mapper.map(createSwissArticle(), Article.class);
+    Article newArticle = mapper.map(createSwissArticle(mediaModel), Article.class);
     Article article = articleService.addArticle(newArticle);
-    testSwissArticle(article);
+    testSwissArticle(article, mediaModel);
     assertTrue(article.getCreated().after(dateBeforeCreation));
     assertTrue(article.getUpdated().after(dateBeforeCreation));
     assertEquals(1L, articleDao.count());
@@ -85,7 +92,7 @@ public class ArticleServiceTest extends BaseServiceTest {
 
   @Test
   public void updateArticle() {
-    articleDao.save(createSwissArticle());
+    articleDao.save(createSwissArticle(mediaModel));
     assertEquals(1L, articleDao.count());
     Article updateArticle = createUpdateSwissArticle();
     articleService.updateArticle(1L, updateArticle);
@@ -96,13 +103,13 @@ public class ArticleServiceTest extends BaseServiceTest {
 
   @Test
   public void deleteArticle() {
-    articleDao.save(createSwissArticle());
+    articleDao.save(createSwissArticle(mediaModel));
     assertEquals(1L, articleDao.count());
     articleService.deleteArticle(1L);
     assertEquals(0L, articleDao.count());
   }
 
-  public static void testSwissArticle(Article article) {
+  public static void testSwissArticle(Article article, MediaModel mediaModel) {
     assertNotNull(article);
     assertEquals(1L, article.getId().longValue());
     assertEquals(1L, article.getCountryId().longValue());
@@ -110,6 +117,8 @@ public class ArticleServiceTest extends BaseServiceTest {
     assertEquals("The zug description", article.getDescription());
     assertEquals("Zug, the place to be", article.getName());
     assertTrue(article.getOnline());
+    assertEquals(mediaModel.getId(), article.getThumbnailId());
+    assertEquals(mediaModel.getUrl(), article.getThumbnailUrl());
   }
 
   public static void testListArticles(List<ListArticle> articles) {
@@ -125,7 +134,7 @@ public class ArticleServiceTest extends BaseServiceTest {
     assertEquals(new Date(1234567913L), article.getUpdated());
   }
 
-  public static ArticleModel createSwissArticle() {
+  public static ArticleModel createSwissArticle(MediaModel mediaModel) {
     ArticleModel article = new ArticleModel();
     article.setId(1L);
     CountryModel country = new CountryModel();
@@ -136,6 +145,7 @@ public class ArticleServiceTest extends BaseServiceTest {
     article.setOnline(true);
     article.setCreated(new Date(1234567911L));
     article.setUpdated(new Date(1234567913L));
+    article.setThumbnail(mediaModel);
     return article;
   }
 

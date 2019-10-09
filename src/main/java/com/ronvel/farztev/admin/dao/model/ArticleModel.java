@@ -39,6 +39,10 @@ public class ArticleModel extends BaseModel {
   @Column(columnDefinition = "TINYINT(1)")
   private Boolean online;
 
+  @ManyToOne(fetch = FetchType.EAGER)
+  @JoinColumn(name = "thumbnail")
+  private MediaModel thumbnail;
+
   public CountryModel getCountry() {
     return country;
   }
@@ -87,6 +91,12 @@ public class ArticleModel extends BaseModel {
     this.online = online;
   }
 
-
+	public MediaModel getThumbnail() {
+		return thumbnail;
+	}
+	
+	public void setThumbnail(MediaModel thumbnail) {
+		this.thumbnail = thumbnail;
+	}
 
 }
