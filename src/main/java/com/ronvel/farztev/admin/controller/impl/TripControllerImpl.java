@@ -28,7 +28,8 @@ public class TripControllerImpl implements TripController {
 
 	@GetMapping(value = "/api/trip", produces = { "application/json" })
 	public List<TripDto> listTrips() {
-		return tripService.listTrips();
+		List<TripDto> trips = tripService.listTrips();
+		return trips;
 	}
 
 

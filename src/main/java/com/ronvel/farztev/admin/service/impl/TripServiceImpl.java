@@ -1,5 +1,6 @@
 package com.ronvel.farztev.admin.service.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -28,9 +29,11 @@ public class TripServiceImpl implements TripService {
 	@Override
 	public List<TripDto> listTrips() {
 		Iterable<TripModel> trips = tripDao.findAll();
-		return Stream.of(trips)
-				.map(t -> mapper.map(t, TripDto.class))
-				.collect(Collectors.toList());
+		List<TripDto> tripDtos = new ArrayList<TripDto>();
+		for(TripModel trip : trips) {
+			tripDtos.add(mapper.map(trip, TripDto.class));
+		}
+		return tripDtos;
 	}
 
 	@Override
