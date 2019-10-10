@@ -112,6 +112,13 @@
 			<version>4.1.2</version>
 		</dependency>
 		
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<version>1.18.10</version>
+			<scope>provided</scope>
+		</dependency>
+		
 		<!-- Database -->
 		<dependency>
 			<groupId>org.mariadb.jdbc</groupId>
