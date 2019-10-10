@@ -1,6 +1,6 @@
 package com.ronvel.farztev.admin.dao.model;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -26,9 +26,11 @@ public class TripModel extends BaseModel {
 	@Column(name = "summary", nullable = true, length = 65535, columnDefinition = "TEXT")
 	private String summary;
 
-	private LocalDateTime start;
+    @Column(name = "start", columnDefinition = "DATE")
+	private LocalDate start;
 
-	private LocalDateTime end;
+    @Column(name = "end", columnDefinition = "DATE")
+	private LocalDate end;
 
 	@Column(name = "thumbnail_id")
 	private Long thumbnailId;

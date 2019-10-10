@@ -1,15 +1,15 @@
 package com.ronvel.farztev.admin.controller.config;
 
 import java.io.IOException;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonDeserializer;
 
-public class LocalDateTimeDeserializer extends JsonDeserializer<LocalDateTime> {
+public class LocalDateDeserializer extends JsonDeserializer<LocalDate> {
 	@Override
-	public LocalDateTime deserialize(JsonParser arg0, DeserializationContext arg1) throws IOException {
-		return LocalDateTime.parse(arg0.getText());
+	public LocalDate deserialize(JsonParser arg0, DeserializationContext arg1) throws IOException {
+		return LocalDate.parse(arg0.getText());
 	}
 }
