@@ -13,30 +13,30 @@ import org.springframework.stereotype.Service;
 import com.github.jknack.handlebars.internal.lang3.StringEscapeUtils;
 import com.ronvel.farztev.admin.component.Homepage;
 import com.ronvel.farztev.admin.component.Timeline;
-import com.ronvel.farztev.admin.controller.dto.ListArticle;
-import com.ronvel.farztev.admin.service.ArticleService;
+import com.ronvel.farztev.admin.controller.dto.TripDto;
 import com.ronvel.farztev.admin.service.HtmlService;
 import com.ronvel.farztev.admin.service.PublishService;
+import com.ronvel.farztev.admin.service.TripService;
 
 @Service
 public class PublishServiceImpl implements PublishService {
 
 	private final HtmlService htmlService;
-	private final ArticleService articleService;
+	private final TripService tripService;
 	
 	private static final String ROOT_FOLDER = "/home/mathieu/tmp/test";
 	
-	public PublishServiceImpl(HtmlService htmlService, ArticleService articleService) {
+	public PublishServiceImpl(HtmlService htmlService, TripService tripService) {
 		this.htmlService = htmlService;
-		this.articleService = articleService;
+		this.tripService = tripService;
 	}
 
 	@Override
 	public void publishAllWebsite() throws IOException {
 		copyCss(ROOT_FOLDER);
 		Homepage homepage = new Homepage();
-		List<ListArticle> articles = articleService.listArticles();
-		List<Timeline> timelines = articles.stream()
+		List<TripDto> trips = tripService.listTrips(true);
+		List<Timeline> timelines = trips.stream()
 				.map(this::mapToTimeline)
 				.collect(Collectors.toList());
 		homepage.setTimelines(timelines);
@@ -44,12 +44,13 @@ public class PublishServiceImpl implements PublishService {
 		FileUtils.write(new File(ROOT_FOLDER + "/index.html"), html, StandardCharsets.UTF_8);
 	}
 	
-	private Timeline mapToTimeline(ListArticle article) {
+	private Timeline mapToTimeline(TripDto trip) {
 		Timeline timeline = new Timeline();
-		timeline.setTitle(StringEscapeUtils.escapeHtml4(article.getName()));
+		timeline.setTitle(StringEscapeUtils.escapeHtml4(trip.getName()));
+		timeline.setSummary(trip.getSummary());
 		timeline.setFuture(false);
-		timeline.setImage(article.getThumbnailUrl());
-		timeline.setDate(article.getCreated().toString());
+//		timeline.setImage(trip.getThumbnailUrl());
+		timeline.setDate(trip.getStart().toString());
 		return timeline;
 	}
 	
