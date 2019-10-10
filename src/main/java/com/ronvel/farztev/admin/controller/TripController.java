@@ -8,13 +8,14 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.ronvel.farztev.admin.controller.dto.TripDto;
 
 public interface TripController {
 
 	@GetMapping(value = "/api/trip", produces = { "application/json" })
-	ResponseEntity<List<TripDto>> listTrips();
+	ResponseEntity<List<TripDto>> listTrips(@RequestParam(name = "online", required = false) Boolean online);
 
 	@GetMapping(value = "/api/trip/{mediaId}", produces = { "application/json" })
 	ResponseEntity<TripDto> getTrip(@PathVariable("tripId") Long tripId);

@@ -2,11 +2,13 @@ package com.ronvel.farztev.admin.service;
 
 import java.util.List;
 
+import javax.annotation.Nullable;
+
 import com.ronvel.farztev.admin.controller.dto.TripDto;
 
 public interface TripService {
 
-	List<TripDto> listTrips();
+	List<TripDto> listTrips(@Nullable Boolean online);
 	
 	TripDto getTrip(Long tripId);
 	

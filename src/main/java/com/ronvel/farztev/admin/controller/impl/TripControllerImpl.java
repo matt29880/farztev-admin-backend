@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import com.ronvel.farztev.admin.controller.TripController;
-import com.ronvel.farztev.admin.controller.dto.ListMedia;
 import com.ronvel.farztev.admin.controller.dto.TripDto;
 import com.ronvel.farztev.admin.service.TripService;
 
@@ -30,8 +29,8 @@ public class TripControllerImpl implements TripController {
 	
 
 	@GetMapping(value = "/api/trip", produces = { "application/json" })
-	public ResponseEntity<List<TripDto>> listTrips() {
-		List<TripDto> trips = tripService.listTrips();
+	public ResponseEntity<List<TripDto>> listTrips(Boolean online) {
+		List<TripDto> trips = tripService.listTrips(online);
 		return new ResponseEntity<List<TripDto>>(trips, HttpStatus.OK);
 	}
 

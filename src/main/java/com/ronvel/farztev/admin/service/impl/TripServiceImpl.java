@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import javax.annotation.Nullable;
+
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -27,8 +29,13 @@ public class TripServiceImpl implements TripService {
 	}
 
 	@Override
-	public List<TripDto> listTrips() {
-		Iterable<TripModel> trips = tripDao.findAll();
+	public List<TripDto> listTrips(@Nullable Boolean online) {
+		Iterable<TripModel> trips;
+		if (online == null) {
+			trips = tripDao.findAll();
+		} else {
+			trips = tripDao.findAllByOnline(online);
+		}
 		List<TripDto> tripDtos = new ArrayList<TripDto>();
 		for(TripModel trip : trips) {
 			tripDtos.add(mapper.map(trip, TripDto.class));
