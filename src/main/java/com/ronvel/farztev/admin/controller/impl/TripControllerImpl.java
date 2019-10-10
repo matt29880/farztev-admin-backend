@@ -3,6 +3,8 @@ package com.ronvel.farztev.admin.controller.impl;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import com.ronvel.farztev.admin.controller.TripController;
+import com.ronvel.farztev.admin.controller.dto.ListMedia;
 import com.ronvel.farztev.admin.controller.dto.TripDto;
 import com.ronvel.farztev.admin.service.TripService;
 
@@ -27,29 +30,33 @@ public class TripControllerImpl implements TripController {
 	
 
 	@GetMapping(value = "/api/trip", produces = { "application/json" })
-	public List<TripDto> listTrips() {
+	public ResponseEntity<List<TripDto>> listTrips() {
 		List<TripDto> trips = tripService.listTrips();
-		return trips;
+		return new ResponseEntity<List<TripDto>>(trips, HttpStatus.OK);
 	}
 
 
-	@GetMapping(value = "/api/trip/{mediaId}", produces = { "application/json" })
-	public TripDto getTrip(@PathVariable("tripId") Long tripId) {
-		return tripService.getTrip(tripId);
+	@GetMapping(value = "/api/trip/{tripId}", produces = { "application/json" })
+	public ResponseEntity<TripDto> getTrip(@PathVariable("tripId") Long tripId) {
+		TripDto tripDto = tripService.getTrip(tripId);
+		return new ResponseEntity<TripDto>(tripDto, HttpStatus.OK);
 	}
 
 	@PostMapping(value = "/api/trip", produces = { "application/json" })
-	public TripDto addTrip(@RequestBody TripDto trip) {
-		return tripService.addTrip(trip);
+	public ResponseEntity<TripDto> addTrip(@RequestBody TripDto trip) {
+		TripDto tripDto = tripService.addTrip(trip);
+		return new ResponseEntity<TripDto>(tripDto, HttpStatus.OK);
 	}
 
-	@PutMapping(value = "/api/trip/{mediaId}", produces = { "application/json" })
-	public void updateTrip(@PathVariable("tripId") Long tripId, @RequestBody TripDto trip) {
+	@PutMapping(value = "/api/trip/{tripId}", produces = { "application/json" })
+	public ResponseEntity<Void> updateTrip(@PathVariable("tripId") Long tripId, @RequestBody TripDto trip) {
 		tripService.updateTrip(tripId, trip);
+		return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
 	}
 
-	@DeleteMapping(value = "/api/trip")
-	public void deleteTrip(@PathVariable("tripId") Long tripId) {
+	@DeleteMapping(value = "/api/trip/{tripId}")
+	public ResponseEntity<Void> deleteTrip(@PathVariable("tripId") Long tripId) {
 		tripService.deleteTrip(tripId);
+		return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
 	}
 }
