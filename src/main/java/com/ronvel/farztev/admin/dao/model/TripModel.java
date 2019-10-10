@@ -5,8 +5,6 @@ import java.time.LocalDateTime;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -32,7 +30,8 @@ public class TripModel extends BaseModel {
 
 	private LocalDateTime end;
 
-	private Long thumbnail;
+	@Column(name = "thumbnail_id")
+	private Long thumbnailId;
 
 	@NotNull
 	@Type(type = "org.hibernate.type.NumericBooleanType")

@@ -4,7 +4,7 @@ CREATE TABLE `trip` (
   `summary` TEXT DEFAULT NULL,
   `start` datetime(6) DEFAULT NULL,
   `end` datetime(6) DEFAULT NULL,
-  `thumbnail` bigint(20),
+  `thumbnail_id` bigint(20),
   `online` tinyint(4) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
