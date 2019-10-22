@@ -1,9 +1,10 @@
 package com.ronvel.farztev.admin.service.impl;
 
-import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
 
-import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.IOUtils;
 import org.springframework.stereotype.Service;
 
 import com.github.jknack.handlebars.Handlebars;
@@ -26,9 +27,8 @@ public class HtmlServiceImpl implements HtmlService {
 	}
 
 	private String loadTemplate(String path) throws IOException {
-		ClassLoader classLoader = getClass().getClassLoader();
-		File file = new File(classLoader.getResource(path).getFile());
-		return FileUtils.readFileToString(file, "UTF-8");
+		InputStream is = HtmlServiceImpl.class.getClassLoader().getResourceAsStream(path);
+		return IOUtils.toString(is, StandardCharsets.UTF_8);
 	}
 
 }
