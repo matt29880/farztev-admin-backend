@@ -51,7 +51,10 @@ public class PublishServiceImpl implements PublishService {
 		timeline.setFuture(false);
 		timeline.setImage(trip.getThumbnailUrl());
 		if (trip.getStart() != null) {
-			timeline.setDate(trip.getStart().toString());			
+			timeline.setStart(trip.getStart().toString());			
+		}
+		if (trip.getEnd() != null) {
+			timeline.setEnd(trip.getEnd().toString());			
 		}
 		return timeline;
 	}
