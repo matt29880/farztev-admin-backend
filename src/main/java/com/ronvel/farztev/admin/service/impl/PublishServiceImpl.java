@@ -2,7 +2,7 @@ package com.ronvel.farztev.admin.service.impl;
 
 import java.io.File;
 import java.io.IOException;
-import java.net.URL;
+import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -60,9 +60,8 @@ public class PublishServiceImpl implements PublishService {
 	}
 	
 	public static void copyCss(String rootFolder) throws IOException {
-		URL url = rootFolder.getClass().getResource("./styles.css");
-		File css = new File(url.getFile());
-		FileUtils.copyFile(css, new File(rootFolder + "/style.css"));
+		InputStream is = ClassLoader.getSystemClassLoader().getResourceAsStream("./styles.css");
+		FileUtils.copyInputStreamToFile(is, new File(rootFolder + "/style.css"));
 	}
 	
 }
