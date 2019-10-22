@@ -5,7 +5,8 @@ public class Timeline {
 	private String title;
 	private String summary;
 	private boolean future;
-	private String date;
+	private String start;
+	private String end;
 
 	public String getImage() {
 		return image;
@@ -39,12 +40,20 @@ public class Timeline {
 		this.future = future;
 	}
 
-	public String getDate() {
-		return date;
+	public String getStart() {
+		return start;
 	}
 
-	public void setDate(String date) {
-		this.date = date;
+	public void setStart(String start) {
+		this.start = start;
+	}
+
+	public String getEnd() {
+		return end;
+	}
+
+	public void setEnd(String end) {
+		this.end = end;
 	}
 
 }

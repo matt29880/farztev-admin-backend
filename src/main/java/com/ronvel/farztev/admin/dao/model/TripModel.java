@@ -1,12 +1,10 @@
 package com.ronvel.farztev.admin.dao.model;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -28,11 +26,14 @@ public class TripModel extends BaseModel {
 	@Column(name = "summary", nullable = true, length = 65535, columnDefinition = "TEXT")
 	private String summary;
 
-	private LocalDateTime start;
+    @Column(name = "start", columnDefinition = "DATE")
+	private LocalDate start;
 
-	private LocalDateTime end;
+    @Column(name = "end", columnDefinition = "DATE")
+	private LocalDate end;
 
-	private Long thumbnail;
+	@Column(name = "thumbnail_id")
+	private Long thumbnailId;
 
 	@NotNull
 	@Type(type = "org.hibernate.type.NumericBooleanType")
