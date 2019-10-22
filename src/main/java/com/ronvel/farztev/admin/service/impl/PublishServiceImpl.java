@@ -60,7 +60,7 @@ public class PublishServiceImpl implements PublishService {
 	}
 	
 	public static void copyCss(String rootFolder) throws IOException {
-		InputStream is = PublishServiceImpl.class.getClassLoader().getResourceAsStream("./styles.css");
+		InputStream is = PublishServiceImpl.class.getClassLoader().getResourceAsStream("styles.css");
 		FileUtils.copyInputStreamToFile(is, new File(rootFolder + "/style.css"));
 	}
 	
