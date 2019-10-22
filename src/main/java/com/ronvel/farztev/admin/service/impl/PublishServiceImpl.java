@@ -18,7 +18,10 @@ import com.ronvel.farztev.admin.service.HtmlService;
 import com.ronvel.farztev.admin.service.PublishService;
 import com.ronvel.farztev.admin.service.TripService;
 
+import lombok.extern.slf4j.Slf4j;
+
 @Service
+@Slf4j
 public class PublishServiceImpl implements PublishService {
 
 	private final HtmlService htmlService;
@@ -33,15 +36,21 @@ public class PublishServiceImpl implements PublishService {
 
 	@Override
 	public void publishAllWebsite() throws IOException {
+		log.info("Generate homepage - start");
 		copyCss(ROOT_FOLDER);
+		log.info("Generate homepage - css copied");
 		Homepage homepage = new Homepage();
 		List<TripDto> trips = tripService.listTrips(true);
 		List<Timeline> timelines = trips.stream()
 				.map(this::mapToTimeline)
 				.collect(Collectors.toList());
 		homepage.setTimelines(timelines);
+		log.info("Generate homepage - mapping done");
 		String html = htmlService.generateHomepage(homepage);
-		FileUtils.write(new File(ROOT_FOLDER + "/index.html"), html, StandardCharsets.UTF_8);
+		log.info("Generate homepage - html generated = {}", html);
+		File indexHtml = new File(ROOT_FOLDER + "/index.html");
+		FileUtils.write(indexHtml, html, StandardCharsets.UTF_8);
+		log.info("Generate homepage - published in {}", indexHtml.getAbsolutePath()); 
 	}
 	
 	private Timeline mapToTimeline(TripDto trip) {
