@@ -27,7 +27,7 @@ public class PublishServiceImpl implements PublishService {
 	private final HtmlService htmlService;
 	private final TripService tripService;
 	
-	private static final String ROOT_FOLDER = "/home/mathieu/tmp/test";
+	private static final String ROOT_FOLDER = "/tmp/farzteo";
 	
 	public PublishServiceImpl(HtmlService htmlService, TripService tripService) {
 		this.htmlService = htmlService;
