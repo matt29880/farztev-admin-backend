@@ -34,3 +34,8 @@ application:
   media:
     photo:
       location: /home/mathieu/tmp/farztev/photos
+  ftp:
+    host: mustchangehost
+    username: mustchangelogin
+    password: mustchangepassword
+

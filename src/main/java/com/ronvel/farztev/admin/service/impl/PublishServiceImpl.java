@@ -1,6 +1,7 @@
 package com.ronvel.farztev.admin.service.impl;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
@@ -8,6 +9,10 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.net.ftp.FTP;
+import org.apache.commons.net.ftp.FTPClient;
+import org.apache.commons.net.ftp.FTPReply;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import com.github.jknack.handlebars.internal.lang3.StringEscapeUtils;
@@ -26,18 +31,28 @@ public class PublishServiceImpl implements PublishService {
 
 	private final HtmlService htmlService;
 	private final TripService tripService;
+	private final String host;
+	private final String username;
+	private final String password;
 	
 	private static final String ROOT_FOLDER = "/tmp/farzteo";
 	
-	public PublishServiceImpl(HtmlService htmlService, TripService tripService) {
+	public PublishServiceImpl(HtmlService htmlService, 
+			TripService tripService, 
+			@Value("${application.ftp.host}") String host,
+			@Value("${application.ftp.username}") String username,
+			@Value("${application.ftp.password}") String password) {
 		this.htmlService = htmlService;
 		this.tripService = tripService;
+		this.host = host;
+		this.username = username;
+		this.password = password;
 	}
 
 	@Override
 	public void publishAllWebsite() throws IOException {
 		log.info("Generate homepage - start");
-		copyCss(ROOT_FOLDER);
+		File css = copyCss(ROOT_FOLDER);
 		log.info("Generate homepage - css copied");
 		Homepage homepage = new Homepage();
 		List<TripDto> trips = tripService.listTrips(true);
@@ -51,6 +66,8 @@ public class PublishServiceImpl implements PublishService {
 		File indexHtml = new File(ROOT_FOLDER + "/index.html");
 		FileUtils.write(indexHtml, html, StandardCharsets.UTF_8);
 		log.info("Generate homepage - published in {}", indexHtml.getAbsolutePath()); 
+		
+		sendToFtp(indexHtml, css, host, username, password);
 	}
 	
 	private Timeline mapToTimeline(TripDto trip) {
@@ -68,9 +85,47 @@ public class PublishServiceImpl implements PublishService {
 		return timeline;
 	}
 	
-	public static void copyCss(String rootFolder) throws IOException {
+	public static File copyCss(String rootFolder) throws IOException {
 		InputStream is = PublishServiceImpl.class.getClassLoader().getResourceAsStream("styles.css");
-		FileUtils.copyInputStreamToFile(is, new File(rootFolder + "/style.css"));
+		File cssFile = new File(rootFolder + "/styles.css");
+		FileUtils.copyInputStreamToFile(is, cssFile);
+		return cssFile;
+	}
+	
+	public static void sendToFtp(File homepage, File css, String host, String username, String password) {
+		FTPClient client = new FTPClient();
+		FileInputStream fis = null;
+
+		try {
+			client.connect(host);
+			int reply = client.getReplyCode();
+	        if (!FTPReply.isPositiveCompletion(reply)) {
+	        	client.disconnect();
+	            throw new RuntimeException("Exception in connecting to FTP Server");
+	        }
+			client.login(username, password);
+			client.setFileType(FTP.BINARY_FILE_TYPE);
+			client.enterLocalPassiveMode();
+
+			client.changeWorkingDirectory("farztev_test");
+			boolean res = client.storeFile("index.html", FileUtils.openInputStream(homepage));
+			log.info("index.html send to ftp : {}", res);
+			res = client.storeFile("styles.css", FileUtils.openInputStream(css));
+			log.info("styles.css send to ftp : {}", res);
+			
+			client.logout();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (fis != null) {
+					fis.close();
+				}
+				client.disconnect();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
 	}
 	
 }
