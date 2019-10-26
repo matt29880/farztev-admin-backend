@@ -1,5 +1,6 @@
 package com.ronvel.farztev.admin.service.impl;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -105,7 +106,7 @@ public class MediaServiceImpl implements MediaService {
   }
 
   @Override
-  public List<FileDetailDto> listFiles(String folderPath) {
+  public List<FileDetailDto> listFiles(String folderPath) throws IOException {
     return cdnRepository.list(folderPath).stream()
         .map(f -> FileDetailDto.builder().name(f.getName()).path(f.getPath())
             .isDirectory(f.isDirectory()).build())

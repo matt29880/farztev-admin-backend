@@ -33,7 +33,7 @@ logging:
 application:
   media:
     photo:
-      location: /home/mathieu/tmp/farztev/photos
+      location: /farztev_test/images
   ftp:
     host: mustchangehost
     username: mustchangelogin

@@ -9,7 +9,8 @@ import java.util.stream.Stream;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
 
-@Repository
+// This CDN implementation was used for test purposes
+//@Repository
 public class CndRepositoryImpl implements CdnRepository {
 
   @Value("${application.media.photo.location}")

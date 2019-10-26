@@ -1,5 +1,6 @@
 package com.ronvel.farztev.admin.service;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
@@ -57,5 +58,5 @@ public interface MediaService {
    */
   void deleteMedia(Long id);
 
-	List<FileDetailDto> listFiles(String folderPath);
+	List<FileDetailDto> listFiles(String folderPath) throws IOException;
 }

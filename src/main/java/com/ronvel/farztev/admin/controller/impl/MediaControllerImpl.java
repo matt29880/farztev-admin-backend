@@ -80,7 +80,7 @@ public class MediaControllerImpl implements MediaController {
 */
 
   @Override
-  public ResponseEntity<List<FileDetailDto>> listFiles(HttpServletRequest request) {
+  public ResponseEntity<List<FileDetailDto>> listFiles(HttpServletRequest request) throws IOException {
     String folderPath  = request.getRequestURI().replaceAll("/api/files/", "");
     return new ResponseEntity<List<FileDetailDto>>(mediaService.listFiles(File.separator + folderPath), HttpStatus.OK);
   }

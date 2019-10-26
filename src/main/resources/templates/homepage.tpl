@@ -23,7 +23,7 @@
 				<div class="timeline-item">
 					<div class="date">{{start}} - {{end}}</div>
 					<div class="timeline-title">
-						<img src=".{{image}}" />
+						<img src="./images{{image}}" />
 						<h2>{{{title}}}</h2>
 					</div>
 					<div class="timeline-content">

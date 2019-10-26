@@ -92,7 +92,7 @@ public interface MediaController {
   @RequestMapping(value = "/api/files/**",
       produces = { "application/json" },
       method = RequestMethod.GET)
-  ResponseEntity<List<FileDetailDto>> listFiles(HttpServletRequest request);
+  ResponseEntity<List<FileDetailDto>> listFiles(HttpServletRequest request) throws IOException;
 
   @RequestMapping(value = "/api/image/**", method = RequestMethod.GET)
   void getFile(HttpServletRequest request,HttpServletResponse response) throws IOException;
