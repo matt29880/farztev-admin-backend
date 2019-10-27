@@ -5,7 +5,10 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 import java.util.stream.Collectors;
 
 import org.apache.commons.io.FileUtils;
@@ -18,9 +21,14 @@ import org.springframework.stereotype.Service;
 import com.github.jknack.handlebars.internal.lang3.StringEscapeUtils;
 import com.ronvel.farztev.admin.component.Homepage;
 import com.ronvel.farztev.admin.component.Timeline;
+import com.ronvel.farztev.admin.component.TripPage;
+import com.ronvel.farztev.admin.controller.dto.Album;
+import com.ronvel.farztev.admin.controller.dto.Article;
 import com.ronvel.farztev.admin.controller.dto.TripDto;
 import com.ronvel.farztev.admin.service.HtmlService;
 import com.ronvel.farztev.admin.service.PublishService;
+import com.ronvel.farztev.admin.service.TripAlbumService;
+import com.ronvel.farztev.admin.service.TripArticleService;
 import com.ronvel.farztev.admin.service.TripService;
 
 import lombok.extern.slf4j.Slf4j;
@@ -31,6 +39,8 @@ public class PublishServiceImpl implements PublishService {
 
 	private final HtmlService htmlService;
 	private final TripService tripService;
+	private final TripArticleService tripArticleService;
+	private final TripAlbumService tripAlbumService;
 	private final String host;
 	private final String username;
 	private final String password;
@@ -39,11 +49,15 @@ public class PublishServiceImpl implements PublishService {
 	
 	public PublishServiceImpl(HtmlService htmlService, 
 			TripService tripService, 
+			TripArticleService tripArticleService, 
+			TripAlbumService tripAlbumService, 
 			@Value("${application.ftp.host}") String host,
 			@Value("${application.ftp.username}") String username,
 			@Value("${application.ftp.password}") String password) {
 		this.htmlService = htmlService;
 		this.tripService = tripService;
+		this.tripArticleService = tripArticleService;
+		this.tripAlbumService = tripAlbumService;
 		this.host = host;
 		this.username = username;
 		this.password = password;
@@ -67,11 +81,30 @@ public class PublishServiceImpl implements PublishService {
 		FileUtils.write(indexHtml, html, StandardCharsets.UTF_8);
 		log.info("Generate homepage - published in {}", indexHtml.getAbsolutePath()); 
 		
-		sendToFtp(indexHtml, css, host, username, password);
+		Map<Long, File> tripHtmls = generateTrips();
+		
+		sendToFtp(indexHtml, css, tripHtmls, host, username, password);
+	}
+	
+	private Map<Long, File> generateTrips() throws IOException {
+		List<TripDto> trips = tripService.listTrips(true);
+		Map<Long, File> tripHtmls = new LinkedHashMap<>();
+		for(TripDto trip : trips) {
+			List<Article> articles = tripArticleService.listTripArticle(trip.getId());
+			articles.forEach(a -> a.setName(StringEscapeUtils.escapeHtml4(a.getName())));
+			List<Album> albums = tripAlbumService.listTripAlbum(trip.getId());
+			albums.forEach(a -> a.setName(StringEscapeUtils.escapeHtml4(a.getName())));
+			String tripHtml = htmlService.generateTrip(new TripPage(trip, articles, albums));
+			File indexHtml = new File(ROOT_FOLDER + "/trips/"+ trip.getId() + ".html");
+			FileUtils.write(indexHtml, tripHtml, StandardCharsets.UTF_8);
+			tripHtmls.put(trip.getId(), indexHtml);
+		}
+		return tripHtmls;
 	}
 	
 	private Timeline mapToTimeline(TripDto trip) {
 		Timeline timeline = new Timeline();
+		timeline.setId(trip.getId());
 		timeline.setTitle(StringEscapeUtils.escapeHtml4(trip.getName()));
 		timeline.setSummary(trip.getSummary());
 		timeline.setFuture(false);
@@ -92,7 +125,8 @@ public class PublishServiceImpl implements PublishService {
 		return cssFile;
 	}
 	
-	public static void sendToFtp(File homepage, File css, String host, String username, String password) {
+	public static void sendToFtp(File homepage, File css, Map<Long, File> tripHtmls, String host, String username,
+			String password) {
 		FTPClient client = new FTPClient();
 		FileInputStream fis = null;
 
@@ -112,7 +146,13 @@ public class PublishServiceImpl implements PublishService {
 			log.info("index.html send to ftp : {}", res);
 			res = client.storeFile("styles.css", FileUtils.openInputStream(css));
 			log.info("styles.css send to ftp : {}", res);
-			
+
+			client.changeWorkingDirectory("trips");
+			for (Entry<Long, File> entry : tripHtmls.entrySet()) {
+				res = client.storeFile(entry.getKey() + ".html", FileUtils.openInputStream(entry.getValue()));
+				log.info("{}.html send to ftp : {}", entry.getKey(), res);
+			}
+
 			client.logout();
 		} catch (IOException e) {
 			e.printStackTrace();
