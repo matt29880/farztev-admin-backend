@@ -38,6 +38,10 @@ public class AlbumModel extends BaseModel {
   @JoinColumn(name = "album_type")
   private AlbumTypeModel albumType;
 
+  @ManyToOne(fetch = FetchType.EAGER)
+  @JoinColumn(name = "thumbnail")
+  private MediaModel thumbnail;
+
   public String getName() {
     return name;
   }
@@ -86,6 +90,12 @@ public class AlbumModel extends BaseModel {
     this.albumType = albumType;
   }
 
+	public MediaModel getThumbnail() {
+		return thumbnail;
+	}
 
+	public void setThumbnail(MediaModel thumbnail) {
+		this.thumbnail = thumbnail;
+	}
 
 }

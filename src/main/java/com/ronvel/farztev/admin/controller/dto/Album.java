@@ -40,6 +40,10 @@ public class Album   {
   @JsonProperty("online")
   private Boolean online = null;
 
+  private Long thumbnailId = null;
+
+  private String thumbnailUrl = null;
+
   public Album id(Long id) {
     this.id = id;
     return this;
@@ -221,7 +225,23 @@ public class Album   {
   }
 
 
-  @Override
+  	public Long getThumbnailId() {
+  		return thumbnailId;
+	}
+	
+	public void setThumbnailId(Long thumbnailId) {
+		this.thumbnailId = thumbnailId;
+	}
+	
+	public String getThumbnailUrl() {
+		return thumbnailUrl;
+	}
+	
+	public void setThumbnailUrl(String thumbnailUrl) {
+		this.thumbnailUrl = thumbnailUrl;
+	}
+
+@Override
   public boolean equals(java.lang.Object o) {
     if (this == o) {
       return true;

@@ -26,7 +26,7 @@ public class ListAlbum   {
   private Date updated = null;
 
   @JsonProperty("thumbnail")
-  private Integer thumbnail = null;
+  private Long thumbnail = null;
 
   @JsonProperty("countryId")
   private Long countryId = null;
@@ -133,7 +133,7 @@ public class ListAlbum   {
     this.updated = updated;
   }
 
-  public ListAlbum thumbnail(Integer thumbnail) {
+  public ListAlbum thumbnail(Long thumbnail) {
     this.thumbnail = thumbnail;
     return this;
   }
@@ -143,11 +143,11 @@ public class ListAlbum   {
    * @return thumbnail
   **/
   @ApiModelProperty(example = "68", value = "")
-  public Integer getThumbnail() {
+  public Long getThumbnail() {
     return thumbnail;
   }
 
-  public void setThumbnail(Integer thumbnail) {
+  public void setThumbnail(Long thumbnail) {
     this.thumbnail = thumbnail;
   }
 
