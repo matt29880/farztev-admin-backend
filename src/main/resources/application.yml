@@ -38,4 +38,6 @@ application:
     host: mustchangehost
     username: mustchangelogin
     password: mustchangepassword
+  environment:
+    url: mustchange
 

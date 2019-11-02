@@ -59,10 +59,16 @@ public class AlbumServiceImpl implements AlbumService {
 
   @Override
   public Album addAlbum(Album album) {
-    AlbumModel albumModel = mapper.map(album, AlbumModel.class);
-    albumModel.setAlbumType(albumTypeDao.findOne(albumModel.getAlbumType().getId()));
+    AlbumModel albumModel = new AlbumModel();
+    albumModel.setName(album.getName());
     albumModel.setCreated(new Date());
     albumModel.setUpdated(new Date());
+    albumModel.setDescription(album.getDescription());
+    albumModel.setOnline(album.getOnline());
+    if(album.getThumbnailId() != null) {
+    	albumModel.setThumbnail(mediaDao.findOne(album.getThumbnailId()));
+    }
+    albumModel.setAlbumType(albumTypeDao.findOne(album.getAlbumTypeId()));
     AlbumModel resultAlbumModel = albumDao.save(albumModel);
     return mapAlbum(resultAlbumModel);
   }

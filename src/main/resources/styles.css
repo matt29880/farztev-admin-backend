@@ -76,3 +76,11 @@ header #banner img {
 .timeline-title img {
     width: 100%;
 }
+
+.article h1 {
+	margin-bottom: 2em;
+}
+
+.article p {
+	margin-bottom: 1.5em;
+}

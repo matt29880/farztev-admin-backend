@@ -13,7 +13,11 @@
 <section class="articles">
 	{{#articles}}
 		<div class="article">
-			<h2>{{{name}}}</h2>
+			<h2>
+				<a href="../articles/{{id}}.html">
+					{{{name}}}
+				</a>
+			</h2>
 			<img src="../images{{thumbnailUrl}}" />
 		</div>
 	{{/articles}}
@@ -24,7 +28,11 @@
 <section class="albums">
 	{{#albums}}
 		<div class="album">
-			<h2>{{name}}</h2>
+			<h2>
+				<a href="../albums/{{id}}.html">
+					{{{name}}}
+				</a>
+			</h2>
 			<img src="../images{{thumbnailUrl}}" />
 		</div>
 	{{/albums}}

@@ -1,6 +1,11 @@
 package com.ronvel.farztev.admin.service.impl;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -20,6 +25,9 @@ import com.ronvel.farztev.admin.dao.MediaDao;
 import com.ronvel.farztev.admin.dao.model.MediaModel;
 import com.ronvel.farztev.admin.enums.MediaType;
 import com.ronvel.farztev.admin.service.MediaService;
+
+import net.coobird.thumbnailator.Thumbnails;
+import net.coobird.thumbnailator.geometry.Positions;
 
 @Service
 public class MediaServiceImpl implements MediaService {
@@ -111,6 +119,20 @@ public class MediaServiceImpl implements MediaService {
         .map(f -> FileDetailDto.builder().name(f.getName()).path(f.getPath())
             .isDirectory(f.isDirectory()).build())
         .collect(Collectors.toList());
+  }
+  
+  @Override
+  public File scale(File file, String folderPath, int width, int height) throws IOException {
+	  InputStream in = new FileInputStream(file);
+	  String path = file.getAbsolutePath();
+	  String generatedFilePath = path.replace("/images", "/images/thumbnail");
+	  File generatedFile = new File(generatedFilePath);
+	  FileOutputStream out = new FileOutputStream(generatedFile);
+	    Thumbnails.of(in)
+		    .size(width, height)
+		    .crop(Positions.CENTER)
+		    .toOutputStream(out);
+	  return generatedFile;
   }
 
 }
