@@ -2,7 +2,7 @@
 	<h1>{{{name}}}</h1>
 	<div class="row">
 	  <div class="col-12 col-s-12">
-		<img src="../images/thumbnails/300{{thumbnailUrl}}" />
+		<img src="../images/thumbnails/300x300{{thumbnailUrl}}" />
 	  </div>
 	</div>
 	

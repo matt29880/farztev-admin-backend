@@ -1,24 +1,26 @@
 <h1>Nos voyages</h1>
 
-{{#timelines}}
 <section class="timeline">
-	<div class="container">
-		
-		<div class="timeline-item">
-			<div class="date">{{start}} - {{end}}</div>
-			<div class="timeline-title">
-				<img src="./images{{image}}" />
-				<h2>
+	<div class="row">
+	{{#timelines}}
+		<div class="col-3 col-s-3 container">
+			
+			<div class="timeline-item">
+				<div class="date">{{start}} - {{end}}</div>
+				<div class="timeline-title">
 					<a href="./trips/{{id}}.html">
-						{{{title}}}
+						<img src="./images/thumbnails/300x300{{image}}" />
+						<h2>
+								{{{title}}}
+						</h2>
 					</a>
-				</h2>
+				</div>
+				<div class="timeline-content">
+					<p>{{{summary}}}</p>
+				</div>
 			</div>
-			<div class="timeline-content">
-				<p>{{{summary}}}</p>
-			</div>
+			
 		</div>
-		
+	{{/timelines}}
 	</div>
 </section>
-{{/timelines}}

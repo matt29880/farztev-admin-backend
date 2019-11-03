@@ -10,7 +10,7 @@
 	<body>
 		<header>
 			<h1><a href="http://www.farzteo.com">Farzteo</a></h1>
-			<h2>Site d'un couple breton passionn&eacute; de voyage</h2>
+			<h2>Site d'un couple de bretons passionn&eacute;s de voyage</h2>
 			<div id="banner">
 				<img src="banner2.jpg" />
 			</div>
