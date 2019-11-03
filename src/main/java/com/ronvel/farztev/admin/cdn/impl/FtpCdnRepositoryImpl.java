@@ -80,9 +80,8 @@ public class FtpCdnRepositoryImpl implements CdnRepository {
 			client.setFileType(FTP.BINARY_FILE_TYPE);
 			client.enterLocalPassiveMode();
 
-			String folder = "farztev_" + environmentSuffix + "/" + folderPath;
-			boolean res = client.changeWorkingDirectory(folder);
-			System.out.println("chg " + folder);
+			boolean res = client.changeWorkingDirectory(folderPath);
+			System.out.println("chg " + folderPath + ", res = " + res);
 
 			if(!"/".equals(folderPath)) {
 				client.changeWorkingDirectory(folderPath);
