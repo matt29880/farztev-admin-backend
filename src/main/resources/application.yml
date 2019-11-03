@@ -39,5 +39,6 @@ application:
     username: mustchangelogin
     password: mustchangepassword
   environment:
+    suffix: mustchange
     url: mustchange
 

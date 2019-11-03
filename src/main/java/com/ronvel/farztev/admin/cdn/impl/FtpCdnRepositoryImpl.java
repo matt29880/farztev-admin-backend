@@ -24,16 +24,19 @@ public class FtpCdnRepositoryImpl implements CdnRepository {
 	private final String host;
 	private final String username;
 	private final String password;
+	private final String environmentSuffix;
 	
 	public FtpCdnRepositoryImpl(
 			@Value("${application.media.photo.location}") String mediaFolder, 
 			@Value("${application.ftp.host}") String host,
 			@Value("${application.ftp.username}") String username,
-			@Value("${application.ftp.password}") String password) {
+			@Value("${application.ftp.password}") String password,
+			@Value("${application.environment.suffix}") String environmentSuffix) {
 		this.mediaFolder = mediaFolder;
 		this.host = host;
 		this.username = username;
 		this.password = password;
+		this.environmentSuffix = environmentSuffix;
 	}
 
 	@Override
@@ -61,7 +64,7 @@ public class FtpCdnRepositoryImpl implements CdnRepository {
     	}
   	}
 
-	public static List<FTPFile> listFilesFromFtp(String folderPath, String host, String username, String password)
+	public List<FTPFile> listFilesFromFtp(String folderPath, String host, String username, String password)
 			throws IOException {
 		FTPClient client = new FTPClient();
 		FileInputStream fis = null;
@@ -76,10 +79,10 @@ public class FtpCdnRepositoryImpl implements CdnRepository {
 			client.login(username, password);
 			client.setFileType(FTP.BINARY_FILE_TYPE);
 			client.enterLocalPassiveMode();
-			
 
-			boolean res = client.changeWorkingDirectory("farztev_test/" + folderPath);
-			System.out.println("chg farztev_test = " + res);
+			String folder = "farztev_" + environmentSuffix + "/" + folderPath;
+			boolean res = client.changeWorkingDirectory(folder);
+			System.out.println("chg " + folder);
 
 			if(!"/".equals(folderPath)) {
 				client.changeWorkingDirectory(folderPath);

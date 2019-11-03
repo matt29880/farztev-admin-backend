@@ -55,9 +55,10 @@ public class PublishServiceImpl implements PublishService {
 	private final String host;
 	private final String username;
 	private final String password;
+	private final String environmentSuffix;
 	private final String environmentUrl;
 	
-	private static final String ROOT_FOLDER = "/tmp/farzteo";
+	private static final String TMP_FOLDER = "/tmp/farzteo";
 	private static final DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 	
 	public PublishServiceImpl(HtmlService htmlService, 
@@ -70,6 +71,7 @@ public class PublishServiceImpl implements PublishService {
 			@Value("${application.ftp.host}") String host,
 			@Value("${application.ftp.username}") String username,
 			@Value("${application.ftp.password}") String password,
+			@Value("${application.environment.suffix}") String environmentSuffix,
 			@Value("${application.environment.url}") String environmentUrl) {
 		this.htmlService = htmlService;
 		this.tripService = tripService;
@@ -81,13 +83,14 @@ public class PublishServiceImpl implements PublishService {
 		this.host = host;
 		this.username = username;
 		this.password = password;
+		this.environmentSuffix = environmentSuffix; 
 		this.environmentUrl = environmentUrl; 
 	}
 
 	@Override
 	public void publishAllWebsite(PublishType publishType) throws IOException {
 		log.info("Generate homepage - start");
-		File css = copyCss(ROOT_FOLDER);
+		File css = copyCss(TMP_FOLDER);
 		log.info("Generate homepage - css copied");
 		Homepage homepage = new Homepage();
 		List<TripDto> trips = tripService.listTrips(true);
@@ -98,7 +101,7 @@ public class PublishServiceImpl implements PublishService {
 		log.info("Generate homepage - mapping done");
 		String html = htmlService.generateHomepage(homepage);
 		log.info("Generate homepage - html generated = {}", html);
-		File indexHtml = new File(ROOT_FOLDER + "/index.html");
+		File indexHtml = new File(TMP_FOLDER + "/index.html");
 		FileUtils.write(indexHtml, html, StandardCharsets.UTF_8);
 		log.info("Generate homepage - published in {}", indexHtml.getAbsolutePath()); 
 		
@@ -107,9 +110,9 @@ public class PublishServiceImpl implements PublishService {
 		Map<Long, File> albumHtmls = generateAlbums();
 
 		if (publishType != PublishType.ONLY_HTML) {
-			new ThumbnailGenerator(host, username, password, environmentUrl, 300, 300, publishType)
+			new ThumbnailGenerator(host, username, password, environmentSuffix, environmentUrl, 300, 300, publishType)
 					.generateThumbnails();
-			new ThumbnailGenerator(host, username, password, environmentUrl, 600, 600, publishType)
+			new ThumbnailGenerator(host, username, password, environmentSuffix, environmentUrl, 600, 600, publishType)
 					.generateThumbnails();
 		}
 		
@@ -127,7 +130,7 @@ public class PublishServiceImpl implements PublishService {
 			List<Album> albums = tripAlbumService.listTripAlbum(trip.getId());
 			albums.forEach(a -> a.setName(StringEscapeUtils.escapeHtml4(a.getName())));
 			String tripHtml = htmlService.generateTrip(new TripPage(trip, articles, albums));
-			File tripFile = new File(ROOT_FOLDER + "/trips/"+ trip.getId() + ".html");
+			File tripFile = new File(TMP_FOLDER + "/trips/"+ trip.getId() + ".html");
 			FileUtils.write(tripFile, tripHtml, StandardCharsets.UTF_8);
 			tripHtmls.put(trip.getId(), tripFile);
 		}
@@ -141,7 +144,7 @@ public class PublishServiceImpl implements PublishService {
 		Map<Long, File> tripHtmls = new LinkedHashMap<>();
 		for(Article article : articles) {
 			articles.forEach(a -> a.setName(StringEscapeUtils.escapeHtml4(a.getName())));
-			File articleFile = new File(ROOT_FOLDER + "/articles/"+ article.getId() + ".html");
+			File articleFile = new File(TMP_FOLDER + "/articles/"+ article.getId() + ".html");
 			String articleHtml = htmlService.generateArticle(article);
 			FileUtils.write(articleFile, articleHtml, StandardCharsets.UTF_8);
 			tripHtmls.put(article.getId(), articleFile);
@@ -157,7 +160,7 @@ public class PublishServiceImpl implements PublishService {
 		for(Album album : albums) {
 			List<ListMedia> medias = mediaService.listAlbumMedias(album.getId(), MediaType.PHOTO);
 			albums.forEach(a -> a.setName(StringEscapeUtils.escapeHtml4(a.getName())));
-			File albumFile = new File(ROOT_FOLDER + "/albums/"+ album.getId() + ".html");
+			File albumFile = new File(TMP_FOLDER + "/albums/"+ album.getId() + ".html");
 			String albumHtml = htmlService.generateAlbum(album, medias);
 			FileUtils.write(albumFile, albumHtml, StandardCharsets.UTF_8);
 			tripHtmls.put(album.getId(), albumFile);
@@ -196,7 +199,7 @@ public class PublishServiceImpl implements PublishService {
 		try {
 
 			client = connectClient();
-			client.changeWorkingDirectory("farztev_test");
+			client.changeWorkingDirectory("farztev_" + environmentSuffix);
 
 			
 			boolean res = client.storeFile("index.html", FileUtils.openInputStream(homepage));

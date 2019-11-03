@@ -18,21 +18,26 @@ import org.apache.http.util.EntityUtils;
 
 import com.ronvel.farztev.admin.controller.dto.PublishType;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 public class ThumbnailGenerator {
 
 	private final String host;
 	private final String username;
 	private final String password;
+	private final String environmentSuffix;
 	private final String environmentUrl;
 	private final int width;
 	private final int height;
 	private final PublishType publishType;
-	
-	public ThumbnailGenerator(String host, String username, String password, String environmentUrl, int width,
-			int height, PublishType publishType) {
+
+	public ThumbnailGenerator(String host, String username, String password, String environmentSuffix,
+			String environmentUrl, int width, int height, PublishType publishType) {
 		this.host = host;
 		this.username = username;
 		this.password = password;
+		this.environmentSuffix = environmentSuffix;
 		this.environmentUrl = environmentUrl;
 		this.width = width;
 		this.height = height;
@@ -46,13 +51,39 @@ public class ThumbnailGenerator {
 		client2 = connectClient();
 		client.setFileType(FTP.BINARY_FILE_TYPE);
 		client2.setFileType(FTP.BINARY_FILE_TYPE);
+		
+		log.error("START generateThumbnails()"); 
 
-		client.changeWorkingDirectory("farztev_test");
-		client.changeWorkingDirectory("images");
-		client2.changeWorkingDirectory("farztev_test");
-		client2.changeWorkingDirectory("images");
-		client2.changeWorkingDirectory("thumbnails");
-		client2.changeWorkingDirectory(String.valueOf(width + "x" + height));
+		log.error("Client - change to directory '{}'", "farztev_" + environmentSuffix); 
+		if(client.changeWorkingDirectory("farztev_" + environmentSuffix)) {
+			log.error("Client - Could not change to directory '{}'", "farztev_" + environmentSuffix); 
+			return;
+		}
+		log.error("Client - Change to directory 'images'"); 
+		if(client.changeWorkingDirectory("images")) {
+			log.error("Client - Could not change to directory 'images'"); 
+			return;
+		}
+		log.error("Client2 - Change to directory '{}'", "farztev_" + environmentSuffix); 
+		if(client2.changeWorkingDirectory("farztev_" + environmentSuffix)) {
+			log.error("Client2 - Could not change to directory '{}'", "farztev_" + environmentSuffix); 
+			return;
+		}
+		log.error("Client2 - Change to directory 'images'"); 
+		if(client2.changeWorkingDirectory("images")) {
+			log.error("Client2 - Could not change to directory 'images'"); 
+			return;
+		}
+		log.error("Client2 - Change to directory 'thumbnails'"); 
+		if(client2.changeWorkingDirectory("thumbnails")) {
+			log.error("Client2 - Could not change to directory 'thumbnails'"); 
+			return;
+		}
+		log.error("Client2 - Change to directory '{}'", width + "x" + height); 
+		if(client2.changeWorkingDirectory(String.valueOf(width + "x" + height))) {
+			log.error("Client2 - Could not change to directory '{}'", width + "x" + height); 
+			return;
+		}
 
 		generateThumbails(client, client2, "", "");
 		
