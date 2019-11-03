@@ -1,9 +1,12 @@
-<h1>Trip</h1>
-
 <section class="trips">
 	<div class="trip">
-		<h2>{{{trip.name}}}</h2>
-		<img src="../images{{trip.thumbnailUrl}}" />
+		<h1>{{{trip.name}}}</h1>
+		
+		<div class="row">
+		  <div class="col-12 col-s-12 thumbnail">
+				<img src="../images/thumbnails/300{{trip.thumbnailUrl}}" />
+		  </div>
+		</div>
 		<p>{{{trip.summary}}}</p>
 	</div>
 </section>
@@ -18,7 +21,11 @@
 					{{{name}}}
 				</a>
 			</h2>
-			<img src="../images{{thumbnailUrl}}" />
+			<div class="row">
+			  <div class="col-12 col-s-12 thumbnail">
+				<img src="../images/thumbnails/300{{thumbnailUrl}}" />
+			  </div>
+			</div>
 		</div>
 	{{/articles}}
 </section>
@@ -33,7 +40,11 @@
 					{{{name}}}
 				</a>
 			</h2>
-			<img src="../images{{thumbnailUrl}}" />
+			<div class="row">
+			  <div class="col-12 col-s-12 thumbnail">
+				<img src="../images/thumbnails/300{{thumbnailUrl}}" />
+			  </div>
+			</div>
 		</div>
 	{{/albums}}
 </section>

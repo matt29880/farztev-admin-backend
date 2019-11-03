@@ -28,7 +28,7 @@ import org.apache.http.util.EntityUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import com.github.jknack.handlebars.internal.lang3.StringEscapeUtils;
+import org.apache.commons.lang3.StringEscapeUtils;
 import com.ronvel.farztev.admin.component.Homepage;
 import com.ronvel.farztev.admin.component.Timeline;
 import com.ronvel.farztev.admin.component.TripPage;
@@ -119,6 +119,8 @@ public class PublishServiceImpl implements PublishService {
 		List<TripDto> trips = tripService.listTrips(true);
 		Map<Long, File> tripHtmls = new LinkedHashMap<>();
 		for(TripDto trip : trips) {
+			trip.setName(StringEscapeUtils.escapeHtml4(trip.getName()));
+			trip.setSummary(StringEscapeUtils.escapeHtml4(trip.getSummary()));
 			List<Article> articles = tripArticleService.listTripArticle(trip.getId());
 			articles.forEach(a -> a.setName(StringEscapeUtils.escapeHtml4(a.getName())));
 			List<Album> albums = tripAlbumService.listTripAlbum(trip.getId());
@@ -166,7 +168,7 @@ public class PublishServiceImpl implements PublishService {
 		Timeline timeline = new Timeline();
 		timeline.setId(trip.getId());
 		timeline.setTitle(StringEscapeUtils.escapeHtml4(trip.getName()));
-		timeline.setSummary(trip.getSummary());
+		timeline.setSummary(StringEscapeUtils.escapeHtml4(trip.getSummary()));
 		timeline.setFuture(false);
 		timeline.setImage(trip.getThumbnailUrl());
 		if (trip.getStart() != null) {
@@ -191,12 +193,11 @@ public class PublishServiceImpl implements PublishService {
 		FTPClient client = null;
 
 		try {
-			generateThumbnails();
+			//generateThumbnails();
 
 			client = connectClient();
 			client.changeWorkingDirectory("farztev_test");
 
-			client.setFileType(FTP.ASCII_FILE_TYPE);
 			
 			boolean res = client.storeFile("index.html", FileUtils.openInputStream(homepage));
 			log.info("index.html send to ftp : {}", res);
@@ -243,6 +244,8 @@ public class PublishServiceImpl implements PublishService {
         	client.disconnect();
             throw new RuntimeException("Exception in connecting to FTP Server");
         }
+//		client.setFileType(FTP.ASCII_FILE_TYPE);
+//		client.setControlEncoding("UTF-8");
 		client.login(username, password);
 		client.enterLocalPassiveMode(); 
 		client.setControlKeepAliveTimeout(300); // set timeout to 5 minutes
