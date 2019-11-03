@@ -128,6 +128,7 @@ section p {
 .timeline .timeline-item .date {
     text-align: left;
     padding-top: 1em;
+    font-weight: bold;
 }
 
 .timeline-title img {
@@ -136,6 +137,14 @@ section p {
 
 .article h1 {
 	margin-bottom: 0.5em;
+}
+
+.article .row {
+	text-align: center;
+}
+
+.article .descriptions {
+	padding: 0.5em;
 }
 
 .article p {

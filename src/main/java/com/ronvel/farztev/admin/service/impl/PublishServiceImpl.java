@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.SocketException;
 import java.nio.charset.StandardCharsets;
+import java.time.format.DateTimeFormatter;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -57,6 +58,7 @@ public class PublishServiceImpl implements PublishService {
 	private final String environmentUrl;
 	
 	private static final String ROOT_FOLDER = "/tmp/farzteo";
+	private static final DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 	
 	public PublishServiceImpl(HtmlService htmlService, 
 			TripService tripService, 
@@ -171,10 +173,10 @@ public class PublishServiceImpl implements PublishService {
 		timeline.setFuture(false);
 		timeline.setImage(trip.getThumbnailUrl());
 		if (trip.getStart() != null) {
-			timeline.setStart(trip.getStart().toString());			
+			timeline.setStart(dateTimeFormatter.format(trip.getStart()));			
 		}
 		if (trip.getEnd() != null) {
-			timeline.setEnd(trip.getEnd().toString());			
+			timeline.setEnd(dateTimeFormatter.format(trip.getEnd()));			
 		}
 		return timeline;
 	}

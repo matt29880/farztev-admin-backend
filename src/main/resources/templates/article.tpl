@@ -6,10 +6,11 @@
 	  </div>
 	</div>
 	
-	
-	{{#descriptions}}
-	<p>
-		{{{content}}}
-	</p>
-	{{/descriptions}}
+	<div class="descriptions">
+		{{#descriptions}}
+		<p>
+			{{{content}}}
+		</p>
+		{{/descriptions}}
+	</div>
 </div>

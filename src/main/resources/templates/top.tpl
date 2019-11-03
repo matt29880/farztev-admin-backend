@@ -3,7 +3,7 @@
 	<head>
 		<meta name="robots" content="noindex">
 		<link rel="stylesheet" type="text/css" href="styles.css">
-        <title>Site d'un couple breton passionné de voyage</title>
+        <title>Site d'un couple de bretons passionn&eacute;s de voyage</title>
 		<link rel="icon" href="farztev.png" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	</head>
