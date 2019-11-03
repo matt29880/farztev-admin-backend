@@ -3,6 +3,6 @@
 
 {{#images}}
 <p>
-	<img src="../images{{url}}" />
+	<img src="../images/thumbnails/300{{url}}" />
 </p>
 {{/images}}

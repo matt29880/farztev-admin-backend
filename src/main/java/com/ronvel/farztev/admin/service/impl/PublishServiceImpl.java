@@ -263,6 +263,7 @@ public class PublishServiceImpl implements PublishService {
 		client2.changeWorkingDirectory("farztev_test");
 		client2.changeWorkingDirectory("images");
 		client2.changeWorkingDirectory("thumbnails");
+		client2.changeWorkingDirectory("300");
 
 		generateThumbails(client, client2, "", "");
 	}
@@ -301,7 +302,9 @@ public class PublishServiceImpl implements PublishService {
 	}
 	
 	private void scale(String absolutePath) throws ClientProtocolException, IOException {
-		HttpGet request = new HttpGet(environmentUrl + "/images/scaler.php?filename=" + absolutePath);
+		String url = environmentUrl + "/images/scaler.php?filename=" + absolutePath;
+		System.out.println(url);
+		HttpGet request = new HttpGet(url);
         
         CloseableHttpClient httpClient = HttpClients.createDefault();
         
