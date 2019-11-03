@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.SocketException;
 import java.nio.charset.StandardCharsets;
+import java.time.format.DateTimeFormatter;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -13,28 +14,20 @@ import java.util.Map.Entry;
 import java.util.stream.Collectors;
 
 import org.apache.commons.io.FileUtils;
-import org.apache.commons.net.ftp.FTP;
+import org.apache.commons.lang3.StringEscapeUtils;
 import org.apache.commons.net.ftp.FTPClient;
-import org.apache.commons.net.ftp.FTPFile;
 import org.apache.commons.net.ftp.FTPReply;
-import org.apache.http.Header;
-import org.apache.http.HttpEntity;
-import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.methods.CloseableHttpResponse;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.CloseableHttpClient;
-import org.apache.http.impl.client.HttpClients;
-import org.apache.http.util.EntityUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import com.github.jknack.handlebars.internal.lang3.StringEscapeUtils;
 import com.ronvel.farztev.admin.component.Homepage;
+import com.ronvel.farztev.admin.component.ThumbnailGenerator;
 import com.ronvel.farztev.admin.component.Timeline;
 import com.ronvel.farztev.admin.component.TripPage;
 import com.ronvel.farztev.admin.controller.dto.Album;
 import com.ronvel.farztev.admin.controller.dto.Article;
 import com.ronvel.farztev.admin.controller.dto.ListMedia;
+import com.ronvel.farztev.admin.controller.dto.PublishType;
 import com.ronvel.farztev.admin.controller.dto.TripDto;
 import com.ronvel.farztev.admin.enums.MediaType;
 import com.ronvel.farztev.admin.service.AlbumService;
@@ -65,6 +58,7 @@ public class PublishServiceImpl implements PublishService {
 	private final String environmentUrl;
 	
 	private static final String ROOT_FOLDER = "/tmp/farzteo";
+	private static final DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 	
 	public PublishServiceImpl(HtmlService htmlService, 
 			TripService tripService, 
@@ -91,7 +85,7 @@ public class PublishServiceImpl implements PublishService {
 	}
 
 	@Override
-	public void publishAllWebsite() throws IOException {
+	public void publishAllWebsite(PublishType publishType) throws IOException {
 		log.info("Generate homepage - start");
 		File css = copyCss(ROOT_FOLDER);
 		log.info("Generate homepage - css copied");
@@ -111,6 +105,13 @@ public class PublishServiceImpl implements PublishService {
 		Map<Long, File> tripHtmls = generateTrips();
 		Map<Long, File> articleHtmls = generateArticles();
 		Map<Long, File> albumHtmls = generateAlbums();
+
+		if (publishType != PublishType.ONLY_HTML) {
+			new ThumbnailGenerator(host, username, password, environmentUrl, 300, 300, publishType)
+					.generateThumbnails();
+			new ThumbnailGenerator(host, username, password, environmentUrl, 600, 600, publishType)
+					.generateThumbnails();
+		}
 		
 		sendToFtp(indexHtml, css, tripHtmls, articleHtmls, albumHtmls);
 	}
@@ -119,6 +120,8 @@ public class PublishServiceImpl implements PublishService {
 		List<TripDto> trips = tripService.listTrips(true);
 		Map<Long, File> tripHtmls = new LinkedHashMap<>();
 		for(TripDto trip : trips) {
+			trip.setName(StringEscapeUtils.escapeHtml4(trip.getName()));
+			trip.setSummary(StringEscapeUtils.escapeHtml4(trip.getSummary()));
 			List<Article> articles = tripArticleService.listTripArticle(trip.getId());
 			articles.forEach(a -> a.setName(StringEscapeUtils.escapeHtml4(a.getName())));
 			List<Album> albums = tripAlbumService.listTripAlbum(trip.getId());
@@ -166,14 +169,14 @@ public class PublishServiceImpl implements PublishService {
 		Timeline timeline = new Timeline();
 		timeline.setId(trip.getId());
 		timeline.setTitle(StringEscapeUtils.escapeHtml4(trip.getName()));
-		timeline.setSummary(trip.getSummary());
+		timeline.setSummary(StringEscapeUtils.escapeHtml4(trip.getSummary()));
 		timeline.setFuture(false);
 		timeline.setImage(trip.getThumbnailUrl());
 		if (trip.getStart() != null) {
-			timeline.setStart(trip.getStart().toString());			
+			timeline.setStart(dateTimeFormatter.format(trip.getStart()));			
 		}
 		if (trip.getEnd() != null) {
-			timeline.setEnd(trip.getEnd().toString());			
+			timeline.setEnd(dateTimeFormatter.format(trip.getEnd()));			
 		}
 		return timeline;
 	}
@@ -191,12 +194,10 @@ public class PublishServiceImpl implements PublishService {
 		FTPClient client = null;
 
 		try {
-			generateThumbnails();
 
 			client = connectClient();
 			client.changeWorkingDirectory("farztev_test");
 
-			client.setFileType(FTP.ASCII_FILE_TYPE);
 			
 			boolean res = client.storeFile("index.html", FileUtils.openInputStream(homepage));
 			log.info("index.html send to ftp : {}", res);
@@ -243,87 +244,13 @@ public class PublishServiceImpl implements PublishService {
         	client.disconnect();
             throw new RuntimeException("Exception in connecting to FTP Server");
         }
+//		client.setFileType(FTP.ASCII_FILE_TYPE);
+//		client.setControlEncoding("UTF-8");
 		client.login(username, password);
 		client.enterLocalPassiveMode(); 
 		client.setControlKeepAliveTimeout(300); // set timeout to 5 minutes
 		client.setSoTimeout(300000);
 		return client;
-	}
-	
-	private void generateThumbnails() throws SocketException, IOException {
-		FTPClient client = new FTPClient();
-		FTPClient client2 = new FTPClient();
-		client = connectClient();
-		client2 = connectClient();
-		client.setFileType(FTP.BINARY_FILE_TYPE);
-		client2.setFileType(FTP.BINARY_FILE_TYPE);
-
-		client.changeWorkingDirectory("farztev_test");
-		client.changeWorkingDirectory("images");
-		client2.changeWorkingDirectory("farztev_test");
-		client2.changeWorkingDirectory("images");
-		client2.changeWorkingDirectory("thumbnails");
-		client2.changeWorkingDirectory("300");
-
-		generateThumbails(client, client2, "", "");
-	}
-	
-	private void generateThumbails(FTPClient client,FTPClient client2, String directory, String absolutePath) throws IOException {
-		System.out.println("Directory : " + directory);
-		if (!directory.isEmpty()) {
-			client.changeWorkingDirectory(directory);
-			if (client2.makeDirectory(directory)) {
-				System.out.println("Directory has been created : " + absolutePath);
-			}
-			client2.changeWorkingDirectory(directory);
-		}
-		
-		FTPFile[] files = client.listFiles();
-		for(FTPFile file : files) {
-			String fileName = file.getName();
-			if(file.isFile()) {
-				String filePath = absolutePath + "/" + fileName;
-				String fileToCopy = filePath.substring(1, filePath.length());
-				scale(fileToCopy);
-				System.out.println("File : " + fileToCopy);
-				System.out.println("Thumbnail generated : " + fileToCopy);
-			}
-		}
-		
-		FTPFile[] subDirectories = client.listDirectories();
-		for(FTPFile subDirectory : subDirectories) {
-			String subDirectoryName = subDirectory.getName();
-			if(!(".".equals(subDirectoryName) || "..".equals(subDirectoryName) || "thumbnails".equals(subDirectoryName))) {
-				generateThumbails(client, client2, subDirectoryName, absolutePath + "/" + subDirectoryName);
-			}
-		}
-		client.changeWorkingDirectory("..");
-		client2.changeWorkingDirectory("..");
-	}
-	
-	private void scale(String absolutePath) throws ClientProtocolException, IOException {
-		String url = environmentUrl + "/images/scaler.php?filename=" + absolutePath;
-		System.out.println(url);
-		HttpGet request = new HttpGet(url);
-        
-        CloseableHttpClient httpClient = HttpClients.createDefault();
-        
-        try (CloseableHttpResponse response = httpClient.execute(request)) {
-
-            // Get HttpResponse Status
-            System.out.println(response.getStatusLine().toString());
-
-            HttpEntity entity = response.getEntity();
-            Header headers = entity.getContentType();
-            System.out.println(headers);
-
-            if (entity != null) {
-                // return it as a String
-                String result = EntityUtils.toString(entity);
-                System.out.println(result);
-            }
-
-        }
 	}
 	
 

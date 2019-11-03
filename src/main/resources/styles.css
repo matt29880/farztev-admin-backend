@@ -1,23 +1,54 @@
 * {
-   margin: 0;
-   padding: 0;
+  margin:0;
+  padding:0;	
+  box-sizing: border-box;
 }
 
-html {
-  margin: auto auto;
-  padding: 0;
+.row::after {
+  content: "";
+  clear: both;
+  display: table;
+}
+
+[class*="col-"] {
+  float: left;
+  padding: 15px;
+}
+
+/* For mobile phones: */
+[class*="col-"] {
   width: 100%;
 }
 
-body {
-  background-color: white;
-  height: 100%;
-  margin: 0;
-  padding: 0;
-  padding-left: 2em;
-  padding-right: 2em;
-  margin-bottom: 50px;
+@media only screen and (min-width: 600px) {
+  .col-s-1 {width: 8.33%;}
+  .col-s-2 {width: 16.66%;}
+  .col-s-3 {width: 25%;}
+  .col-s-4 {width: 33.33%;}
+  .col-s-5 {width: 41.66%;}
+  .col-s-6 {width: 50%;}
+  .col-s-7 {width: 58.33%;}
+  .col-s-8 {width: 66.66%;}
+  .col-s-9 {width: 75%;}
+  .col-s-10 {width: 83.33%;}
+  .col-s-11 {width: 91.66%;}
+  .col-s-12 {width: 100%;}
 }
+@media only screen and (min-width: 768px) {
+  .col-1 {width: 8.33%;}
+  .col-2 {width: 16.66%;}
+  .col-3 {width: 25%;}
+  .col-4 {width: 33.33%;}
+  .col-5 {width: 41.66%;}
+  .col-6 {width: 50%;}
+  .col-7 {width: 58.33%;}
+  .col-8 {width: 66.66%;}
+  .col-9 {width: 75%;}
+  .col-10 {width: 83.33%;}
+  .col-11 {width: 91.66%;}
+  .col-12 {width: 100%;}
+}
+
 
 a {
   color: black;
@@ -34,24 +65,50 @@ header {
 
 header h1 {
   font-family: vfsans, Arial, Serif;
-  padding-top: 0.5em;
-  font-size: 5em;
+  padding-top: 0.1em;
+  font-size: 2em;
 }
 
 header h2 {
   color: grey;
   font-family: vfsans, Arial, Serif;
-  font-size: 3em;
-  margin-top: 0.5em;
+  font-size: 1.5em;
 }
 
 header #banner {
-    margin-top: 2em;
-    margin-bottom: 2em;
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
 }
 
 header #banner img {
     width: 100%;
+}
+
+h1 {
+	text-align: center;
+}
+
+h2 {
+	text-align: center;
+}
+
+section h1 {
+	text-align: center;
+}
+
+section h2 {
+	text-align: center;
+  	color: grey;
+  	font-size: 1rem;
+}
+
+section p {
+	padding-left: 15px;
+	padding-right: 15px;
+}
+
+.thumbnail {
+	text-align: center;
 }
 
 .timeline {
@@ -61,7 +118,7 @@ header #banner img {
 
 .timeline .container {
     margin: auto;
-    width: 100%;
+    /*width: 100%;*/
 }
 
 .timeline .timeline-item {
@@ -71,6 +128,7 @@ header #banner img {
 .timeline .timeline-item .date {
     text-align: left;
     padding-top: 1em;
+    font-weight: bold;
 }
 
 .timeline-title img {
@@ -78,9 +136,21 @@ header #banner img {
 }
 
 .article h1 {
-	margin-bottom: 2em;
+	margin-bottom: 0.5em;
+}
+
+.article .row {
+	text-align: center;
+}
+
+.article .descriptions {
+	padding: 0.5em;
 }
 
 .article p {
 	margin-bottom: 1.5em;
+}
+
+.trips p {
+	text-align: center;
 }
