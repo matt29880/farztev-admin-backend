@@ -17,6 +17,14 @@ import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.StringEscapeUtils;
 import org.apache.commons.net.ftp.FTPClient;
 import org.apache.commons.net.ftp.FTPReply;
+import org.apache.http.Header;
+import org.apache.http.HttpEntity;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClients;
+import org.apache.http.util.EntityUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -109,12 +117,12 @@ public class PublishServiceImpl implements PublishService {
 		Map<Long, File> articleHtmls = generateArticles();
 		Map<Long, File> albumHtmls = generateAlbums();
 
-		if (publishType != PublishType.ONLY_HTML) {
-			new ThumbnailGenerator(host, username, password, environmentSuffix, environmentUrl, 300, 300, publishType)
-					.generateThumbnails();
-			new ThumbnailGenerator(host, username, password, environmentSuffix, environmentUrl, 600, 600, publishType)
-					.generateThumbnails();
-		}
+//		if (publishType != PublishType.ONLY_HTML) {
+//			new ThumbnailGenerator(host, username, password, environmentSuffix, environmentUrl, 300, 300, publishType)
+//					.generateThumbnails();
+//			new ThumbnailGenerator(host, username, password, environmentSuffix, environmentUrl, 600, 600, publishType)
+//					.generateThumbnails();
+//		}
 		
 		sendToFtp(indexHtml, css, tripHtmls, articleHtmls, albumHtmls);
 	}
@@ -199,7 +207,8 @@ public class PublishServiceImpl implements PublishService {
 		try {
 
 			client = connectClient();
-			client.changeWorkingDirectory("farztev_" + environmentSuffix);
+			log.info("Base directory : {}", "farzteo_" + environmentSuffix);
+			client.changeWorkingDirectory("farzteo_" + environmentSuffix);
 
 			
 			boolean res = client.storeFile("index.html", FileUtils.openInputStream(homepage));
@@ -224,6 +233,8 @@ public class PublishServiceImpl implements PublishService {
 			}
 
 			client.logout();
+			
+			scale();
 		} catch (IOException e) {
 			e.printStackTrace();
 		} finally {
@@ -256,6 +267,30 @@ public class PublishServiceImpl implements PublishService {
 		return client;
 	}
 	
+	private void scale() throws ClientProtocolException, IOException {
+		String url = environmentUrl + "/images/scale.php";
+		System.out.println(url);
+		HttpGet request = new HttpGet(url);
+        
+        CloseableHttpClient httpClient = HttpClients.createDefault();
+        
+        try (CloseableHttpResponse response = httpClient.execute(request)) {
+
+            // Get HttpResponse Status
+            System.out.println(response.getStatusLine().toString());
+
+            HttpEntity entity = response.getEntity();
+            Header headers = entity.getContentType();
+            System.out.println(headers);
+
+            if (entity != null) {
+                // return it as a String
+                String result = EntityUtils.toString(entity);
+                System.out.println(result);
+            }
+
+        }
+	}
 
 	
 }

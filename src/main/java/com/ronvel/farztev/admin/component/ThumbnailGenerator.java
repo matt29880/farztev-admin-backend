@@ -54,9 +54,9 @@ public class ThumbnailGenerator {
 		
 		log.error("START generateThumbnails()"); 
 
-		log.error("Client - change to directory '{}'", "farztev_" + environmentSuffix); 
-		if(client.changeWorkingDirectory("farztev_" + environmentSuffix)) {
-			log.error("Client - Could not change to directory '{}'", "farztev_" + environmentSuffix); 
+		log.error("Client - change to directory '{}'", "farzteo_" + environmentSuffix); 
+		if(client.changeWorkingDirectory("farzteo_" + environmentSuffix)) {
+			log.error("Client - Could not change to directory '{}'", "farzteo_" + environmentSuffix); 
 			return;
 		}
 		log.error("Client - Change to directory 'images'"); 
@@ -64,9 +64,9 @@ public class ThumbnailGenerator {
 			log.error("Client - Could not change to directory 'images'"); 
 			return;
 		}
-		log.error("Client2 - Change to directory '{}'", "farztev_" + environmentSuffix); 
-		if(client2.changeWorkingDirectory("farztev_" + environmentSuffix)) {
-			log.error("Client2 - Could not change to directory '{}'", "farztev_" + environmentSuffix); 
+		log.error("Client2 - Change to directory '{}'", "farzteo_" + environmentSuffix); 
+		if(client2.changeWorkingDirectory("farzteo_" + environmentSuffix)) {
+			log.error("Client2 - Could not change to directory '{}'", "farzteo_" + environmentSuffix); 
 			return;
 		}
 		log.error("Client2 - Change to directory 'images'"); 

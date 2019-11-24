@@ -80,7 +80,7 @@ public class HtmlServiceImpl implements HtmlService {
 			.forEach(d -> d.setContent(StringEscapeUtils.escapeHtml4(d.getContent())));
 		descriptions.stream()
 			.filter(d -> d instanceof ArticleDescriptionTitle)
-			.map(d -> (ArticleDescriptionParagraph)d)
+			.map(d -> (ArticleDescriptionTitle)d)
 			.forEach(d -> d.setContent(StringEscapeUtils.escapeHtml4(d.getContent())));
 		articlePage.setDescriptions(descriptions);
 
