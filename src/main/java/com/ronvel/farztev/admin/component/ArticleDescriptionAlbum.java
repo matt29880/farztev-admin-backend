@@ -7,4 +7,8 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper = true)
 public class ArticleDescriptionAlbum extends ArticleDescription {
 	private Long albumId;
+	
+	public ArticleDescriptionAlbum() {
+		super(ArticleDescriptionType.ALBUM);
+	}
 }

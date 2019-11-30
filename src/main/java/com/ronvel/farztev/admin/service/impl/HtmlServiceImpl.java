@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.apache.commons.io.IOUtils;
 import org.springframework.stereotype.Service;
@@ -12,12 +11,15 @@ import org.springframework.stereotype.Service;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.jknack.handlebars.Handlebars;
+import com.github.jknack.handlebars.Helper;
+import com.github.jknack.handlebars.Options;
 import com.github.jknack.handlebars.Template;
 import com.github.jknack.handlebars.internal.lang3.StringEscapeUtils;
 import com.ronvel.farztev.admin.component.AlbumPage;
 import com.ronvel.farztev.admin.component.ArticleDescription;
 import com.ronvel.farztev.admin.component.ArticleDescriptionParagraph;
 import com.ronvel.farztev.admin.component.ArticleDescriptionTitle;
+import com.ronvel.farztev.admin.component.ArticleDescriptionType;
 import com.ronvel.farztev.admin.component.ArticlePage;
 import com.ronvel.farztev.admin.component.Homepage;
 import com.ronvel.farztev.admin.component.TripPage;
@@ -33,6 +35,20 @@ public class HtmlServiceImpl implements HtmlService {
 	
 	public HtmlServiceImpl() {
 		handlebars = new Handlebars();
+		handlebars.registerHelper("article-description", new Helper<ArticleDescription>() {
+			public String apply(ArticleDescription description, Options options) throws IOException {
+				final Handlebars handlebars = new Handlebars();
+				String templateAsString;
+				if (description.getType() == ArticleDescriptionType.UL) {
+					templateAsString = loadTemplate("templates/article-descriptions/ul.tpl");
+				} else {
+					templateAsString = loadTemplate("templates/article-descriptions/content.tpl");
+				}
+				Template template = handlebars.compileInline(templateAsString);
+				String res = template.apply(description);
+				return res;
+			}
+		});
 	}
 	
 	@Override

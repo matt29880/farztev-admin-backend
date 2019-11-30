@@ -7,4 +7,8 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper = true)
 public class ArticleDescriptionTitle extends ArticleDescription {
 	private String content;
+	
+	public ArticleDescriptionTitle() {
+		super(ArticleDescriptionType.TITLE);
+	}
 }

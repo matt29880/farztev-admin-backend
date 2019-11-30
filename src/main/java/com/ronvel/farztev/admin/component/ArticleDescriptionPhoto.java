@@ -8,4 +8,8 @@ import lombok.EqualsAndHashCode;
 public class ArticleDescriptionPhoto extends ArticleDescription {
 	private Long id;
 	private String url;
+	
+	public ArticleDescriptionPhoto() {
+		super(ArticleDescriptionType.PHOTO);
+	}
 }

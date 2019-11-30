@@ -8,9 +8,7 @@
 	
 	<div class="descriptions">
 		{{#descriptions}}
-		<p>
-			{{{content}}}
-		</p>
+			{{{article-description this}}}
 		{{/descriptions}}
 	</div>
 </div>

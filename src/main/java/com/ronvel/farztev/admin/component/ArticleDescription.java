@@ -14,9 +14,14 @@ import lombok.Data;
   @Type(value = ArticleDescriptionParagraph.class, name = "paragraph"), 
   @Type(value = ArticleDescriptionTitle.class, name = "title") , 
   @Type(value = ArticleDescriptionPhoto.class, name = "photo") , 
-  @Type(value = ArticleDescriptionAlbum.class, name = "album") 
+  @Type(value = ArticleDescriptionAlbum.class, name = "album") , 
+  @Type(value = ArticleUnorderedList.class, name = "ul") 
 })
 @Data
 public abstract class ArticleDescription {
-	private String type;
+	private final ArticleDescriptionType type;
+	
+	public ArticleDescription(ArticleDescriptionType type) {
+		this.type = type;
+	}
 }
