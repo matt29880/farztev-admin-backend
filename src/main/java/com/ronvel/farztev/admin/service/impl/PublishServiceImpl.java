@@ -206,7 +206,8 @@ public class PublishServiceImpl implements PublishService {
 
 		try {
 			client = connectClient();
-			String baseFolder = "prod".equals(environmentSuffix) ? "farzteo_" + environmentSuffix : "farzteo";
+			log.info("environmentSuffix : {}",environmentSuffix);
+			String baseFolder = "prod".equals(environmentSuffix) ? "farzteo" : "farzteo_" + environmentSuffix;
 			log.info("Base directory : {}", baseFolder);
 			client.changeWorkingDirectory(baseFolder);
 			
