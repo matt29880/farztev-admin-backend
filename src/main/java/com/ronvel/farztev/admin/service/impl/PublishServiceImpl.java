@@ -199,17 +199,16 @@ public class PublishServiceImpl implements PublishService {
 		return cssFile;
 	}
 	
-	public void sendToFtp(File homepage, File css, 
-			Map<Long, File> tripHtmls, Map<Long, File> articleHtmls, Map<Long, File> albumHtmls) {
+	public void sendToFtp(File homepage, File css, Map<Long, File> tripHtmls, Map<Long, File> articleHtmls,
+			Map<Long, File> albumHtmls) {
 		FileInputStream fis = null;
 		FTPClient client = null;
 
 		try {
-
 			client = connectClient();
-			log.info("Base directory : {}", "farzteo_" + environmentSuffix);
-			client.changeWorkingDirectory("farzteo_" + environmentSuffix);
-
+			String baseFolder = "prod".equals(environmentSuffix) ? "farzteo_" + environmentSuffix : "farzteo";
+			log.info("Base directory : {}", baseFolder);
+			client.changeWorkingDirectory(baseFolder);
 			
 			boolean res = client.storeFile("index.html", FileUtils.openInputStream(homepage));
 			log.info("index.html send to ftp : {}", res);

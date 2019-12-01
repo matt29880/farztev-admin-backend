@@ -38,15 +38,10 @@ public class HtmlServiceImpl implements HtmlService {
 		handlebars.registerHelper("article-description", new Helper<ArticleDescription>() {
 			public String apply(ArticleDescription description, Options options) throws IOException {
 				final Handlebars handlebars = new Handlebars();
-				String templateAsString;
-				if (description.getType() == ArticleDescriptionType.UL) {
-					templateAsString = loadTemplate("templates/article-descriptions/ul.tpl");
-				} else {
-					templateAsString = loadTemplate("templates/article-descriptions/content.tpl");
-				}
+				String templateAsString = loadTemplate(
+						"templates/article-descriptions/" + description.getType().toString().toLowerCase() + ".tpl");
 				Template template = handlebars.compileInline(templateAsString);
-				String res = template.apply(description);
-				return res;
+				return template.apply(description);
 			}
 		});
 	}
