@@ -21,6 +21,7 @@ import com.ronvel.farztev.admin.component.ArticleDescriptionParagraph;
 import com.ronvel.farztev.admin.component.ArticleDescriptionTitle;
 import com.ronvel.farztev.admin.component.ArticleDescriptionType;
 import com.ronvel.farztev.admin.component.ArticlePage;
+import com.ronvel.farztev.admin.component.ArticleUnorderedList;
 import com.ronvel.farztev.admin.component.Homepage;
 import com.ronvel.farztev.admin.component.TripPage;
 import com.ronvel.farztev.admin.controller.dto.Album;
@@ -93,6 +94,10 @@ public class HtmlServiceImpl implements HtmlService {
 			.filter(d -> d instanceof ArticleDescriptionTitle)
 			.map(d -> (ArticleDescriptionTitle)d)
 			.forEach(d -> d.setContent(StringEscapeUtils.escapeHtml4(d.getContent())));
+		descriptions.stream()
+				.filter(d -> d instanceof ArticleUnorderedList)
+				.map(d -> (ArticleUnorderedList)d)
+				.forEach(d -> d.getItems().forEach(i -> i.setText(StringEscapeUtils.escapeHtml4(i.getText()))));
 		articlePage.setDescriptions(descriptions);
 
 		return top + template.apply(articlePage) + bottom;
