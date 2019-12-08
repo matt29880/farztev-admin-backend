@@ -38,11 +38,11 @@ public interface MediaController {
   @ApiResponses(value = { 
       @ApiResponse(code = 200, message = "successful operation", response = Void.class),
       @ApiResponse(code = 400, message = "Invalid status value", response = Void.class) })
-  @RequestMapping(value = "/api/album/{albumId}/media/{mediaId}",
+  @RequestMapping(value = "/api/media/{mediaId}",
       produces = { "application/json" }, 
       method = RequestMethod.DELETE)
-  ResponseEntity<Void> apiAlbumAlbumIdMediaMediaIdDelete(@ApiParam(value = "Album ID",required=true ) @PathVariable("albumId") Long albumId,
-      @ApiParam(value = "Media ID",required=true ) @PathVariable("mediaId") Long mediaId);
+  ResponseEntity<Void> deleteMedia(
+			@ApiParam(value = "Media ID", required = true) @PathVariable("mediaId") Long mediaId);
 
 
   @ApiOperation(value = "", notes = "", response = Media.class, tags={  })

@@ -162,3 +162,7 @@ section p {
 li {
   margin-left: 1em;
 }
+
+.descriptions ul {
+    margin-bottom: 2em;
+}

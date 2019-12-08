@@ -46,8 +46,8 @@ public class MediaControllerImpl implements MediaController {
     return new ResponseEntity<List<ListMedia>>(medias, HttpStatus.OK);
   }
 
-  public ResponseEntity<Void> apiAlbumAlbumIdMediaMediaIdDelete(
-      @ApiParam(value = "Album ID", required = true) @PathVariable("albumId") Long albumId,
+  @Override
+  public ResponseEntity<Void> deleteMedia(
       @ApiParam(value = "Media ID", required = true) @PathVariable("mediaId") Long mediaId) {
     mediaService.deleteMedia(mediaId);
     return new ResponseEntity<Void>(HttpStatus.OK);
