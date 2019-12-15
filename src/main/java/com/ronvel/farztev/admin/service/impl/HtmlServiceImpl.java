@@ -88,7 +88,7 @@ public class HtmlServiceImpl implements HtmlService {
 		List<ArticleDescription> descriptions = mapper.readValue(article.getDescription(), new TypeReference<List<ArticleDescription>>() {});
 		descriptions.stream()
 			.filter(d -> d instanceof ArticleDescriptionParagraph)
-			.map(d -> (ArticleDescriptionParagraph)d)
+			.map(d -> (ArticleDescriptionParagraph)d)	
 			.forEach(d -> d.setContent(StringEscapeUtils.escapeHtml4(d.getContent())));
 		descriptions.stream()
 			.filter(d -> d instanceof ArticleDescriptionTitle)
