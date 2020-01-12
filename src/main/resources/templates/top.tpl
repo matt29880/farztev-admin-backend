@@ -1,7 +1,9 @@
 <!DOCTYPE html>
 <html lang="fr">
 	<head>
-		<meta name="robots" content="noindex">
+		{{#if disableSeo}}
+			<meta name="robots" content="noindex">
+		{{/if}}
 		<link rel="stylesheet" type="text/css" href="styles.css">
         <title>Site d'un couple de bretons passionn&eacute;s de voyage</title>
 		<link rel="icon" href="farztev.png" />

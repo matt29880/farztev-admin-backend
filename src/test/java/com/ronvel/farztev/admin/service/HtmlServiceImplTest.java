@@ -16,7 +16,7 @@ import com.ronvel.farztev.admin.service.impl.PublishServiceImpl;
 
 public class HtmlServiceImplTest {
 
-	private final HtmlServiceImpl sut = new HtmlServiceImpl();
+	private final HtmlServiceImpl sut = new HtmlServiceImpl(true);
 
 	@Test
 	public void generateHomepage() throws IOException {

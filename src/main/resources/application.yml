@@ -41,4 +41,5 @@ application:
   environment:
     suffix: mustchange
     url: mustchange
+  disableSeo: true
 

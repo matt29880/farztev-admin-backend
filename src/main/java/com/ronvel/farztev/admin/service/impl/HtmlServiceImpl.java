@@ -6,6 +6,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 import org.apache.commons.io.IOUtils;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -23,6 +24,7 @@ import com.ronvel.farztev.admin.component.ArticleDescriptionType;
 import com.ronvel.farztev.admin.component.ArticlePage;
 import com.ronvel.farztev.admin.component.ArticleUnorderedList;
 import com.ronvel.farztev.admin.component.Homepage;
+import com.ronvel.farztev.admin.component.TopPageContext;
 import com.ronvel.farztev.admin.component.TripPage;
 import com.ronvel.farztev.admin.controller.dto.Album;
 import com.ronvel.farztev.admin.controller.dto.Article;
@@ -33,8 +35,9 @@ import com.ronvel.farztev.admin.service.HtmlService;
 public class HtmlServiceImpl implements HtmlService {
 
 	private final Handlebars handlebars;
+	private final boolean disableSeo;
 	
-	public HtmlServiceImpl() {
+	public HtmlServiceImpl(@Value("${application.disableSeo}") boolean disableSeo) {
 		handlebars = new Handlebars();
 		handlebars.registerHelper("article-description", new Helper<ArticleDescription>() {
 			public String apply(ArticleDescription description, Options options) throws IOException {
@@ -45,11 +48,12 @@ public class HtmlServiceImpl implements HtmlService {
 				return template.apply(description);
 			}
 		});
+		this.disableSeo = disableSeo;
 	}
 	
 	@Override
 	public String generateHomepage(Homepage homepage) throws IOException {
-		String top = loadTemplate("templates/top.tpl");
+		String top = getTop();
 		String bottom = loadTemplate("templates/bottom.tpl");
 		
 		String templateAsString = loadTemplate("templates/homepage.tpl");
@@ -60,7 +64,7 @@ public class HtmlServiceImpl implements HtmlService {
 
 	@Override
 	public String generateTrip(TripPage tripPage) throws IOException {
-		String top = loadTemplate("templates/topN1.tpl");
+		String top = getTopN1();
 		String bottom = loadTemplate("templates/bottom.tpl");
 		
 		String templateAsString = loadTemplate("templates/trip.tpl");
@@ -69,9 +73,23 @@ public class HtmlServiceImpl implements HtmlService {
 		return top + template.apply(tripPage) + bottom;
 	}
 
+	private String getTop() throws IOException {
+		String top = loadTemplate("templates/top.tpl");
+		Template template = handlebars.compileInline(top);
+		TopPageContext context = new TopPageContext(disableSeo);
+		String s = template.apply(context);
+		return s;
+	}
+	private String getTopN1() throws IOException {
+		String top = loadTemplate("templates/topN1.tpl");
+		Template template = handlebars.compileInline(top);
+		TopPageContext context = new TopPageContext(disableSeo);
+		return template.apply(context);
+	}
+
 	@Override
 	public String generateArticle(Article article) throws IOException {
-		String top = loadTemplate("templates/topN1.tpl");
+		String top = getTopN1();
 		String bottom = loadTemplate("templates/bottom.tpl");
 		
 		String templateAsString = loadTemplate("templates/article.tpl");
@@ -105,7 +123,7 @@ public class HtmlServiceImpl implements HtmlService {
 
 	@Override
 	public String generateAlbum(Album album, List<ListMedia> medias) throws IOException {
-		String top = loadTemplate("templates/topN1.tpl");
+		String top = getTopN1();
 		String bottom = loadTemplate("templates/bottom.tpl");
 
 		AlbumPage albumPage = new AlbumPage();
