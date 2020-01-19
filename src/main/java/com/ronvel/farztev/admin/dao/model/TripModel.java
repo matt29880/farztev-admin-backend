@@ -40,4 +40,8 @@ public class TripModel extends BaseModel {
 	@Column(columnDefinition = "TINYINT(1)")
 	private Boolean online;
 
+	@NotNull
+	@Column(name = "period_description", nullable = true, length = 255, columnDefinition = "TEXT")
+	@Size(max = 255)
+	private String periodDescription;
 }

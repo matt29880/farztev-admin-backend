@@ -190,6 +190,7 @@ public class PublishServiceImpl implements PublishService {
 		if (trip.getEnd() != null) {
 			timeline.setEnd(dateTimeFormatter.format(trip.getEnd()));			
 		}
+		timeline.setPeriodDescription(StringEscapeUtils.escapeHtml4(trip.getPeriodDescription()));
 		return timeline;
 	}
 	

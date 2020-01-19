@@ -11,4 +11,5 @@ public class Timeline {
 	private boolean future;
 	private String start;
 	private String end;
+	private String periodDescription;
 }

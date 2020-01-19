@@ -20,6 +20,7 @@ public class TripDto {
 	@JsonSerialize(using = LocalDateSerializer.class)
 	@JsonDeserialize(using = LocalDateDeserializer.class)
 	private LocalDate end;
+	private String periodDescription;
 	private Long thumbnailId;
 	private String thumbnailUrl;
 	private boolean online;
