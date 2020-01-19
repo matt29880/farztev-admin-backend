@@ -29,7 +29,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import com.ronvel.farztev.admin.component.Homepage;
-import com.ronvel.farztev.admin.component.ThumbnailGenerator;
 import com.ronvel.farztev.admin.component.Timeline;
 import com.ronvel.farztev.admin.component.TripPage;
 import com.ronvel.farztev.admin.controller.dto.Album;
