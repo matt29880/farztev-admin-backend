@@ -104,14 +104,17 @@ h3 {
 	font-family: Pacifico;
 }
 
+section {
+  background-color: #F5F5F5;
+}
+
 section h1 {
 	text-align: center;
 }
 
 section h2 {
-	text-align: center;
-  color: grey;
-  font-size: 1rem;
+  text-align: center;
+  font-size: 1rem;  
 }
 
 section p {
@@ -164,7 +167,7 @@ section p {
 }
 
 .trips p {
-	text-align: center;
+	text-align: left;
 }
 
 li {

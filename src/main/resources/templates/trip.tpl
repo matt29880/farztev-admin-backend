@@ -1,19 +1,21 @@
 <p>
 	> <a href="../">Farzteo.com</a>
 </p>
+
+<h1>{{{trip.name}}}</h1>
+
 <section class="trips">
-	<h1>{{{trip.name}}}</h1>
 	<div class="row">
 		<div class="col-6 col-s-6 trip">
 			  <div class="thumbnail">
 					<picture>
-					  <source media="(min-width: 600px)" srcset="../images/thumbnails/600x600{{trip.thumbnailUrl}}">
+					  <source media="(min-width: 450px)" srcset="../images/thumbnails/450x450{{trip.thumbnailUrl}}">
 					  <img src="../images/thumbnails/300x300{{trip.thumbnailUrl}}" 
 					  		alt="Flowers" style="width:auto;">
 					</picture>
 			  </div>
 		</div>
-		<div class="col-3 col-s-3 trip">
+		<div class="col-6 col-s-6 trip">
 			<p>{{{trip.summary}}}</p>
 		</div>
 	</div>
