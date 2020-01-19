@@ -20,7 +20,6 @@ import com.ronvel.farztev.admin.component.AlbumPage;
 import com.ronvel.farztev.admin.component.ArticleDescription;
 import com.ronvel.farztev.admin.component.ArticleDescriptionParagraph;
 import com.ronvel.farztev.admin.component.ArticleDescriptionTitle;
-import com.ronvel.farztev.admin.component.ArticleDescriptionType;
 import com.ronvel.farztev.admin.component.ArticlePage;
 import com.ronvel.farztev.admin.component.ArticleUnorderedList;
 import com.ronvel.farztev.admin.component.Homepage;
@@ -29,6 +28,7 @@ import com.ronvel.farztev.admin.component.TripPage;
 import com.ronvel.farztev.admin.controller.dto.Album;
 import com.ronvel.farztev.admin.controller.dto.Article;
 import com.ronvel.farztev.admin.controller.dto.ListMedia;
+import com.ronvel.farztev.admin.controller.dto.TripDto;
 import com.ronvel.farztev.admin.service.HtmlService;
 
 @Service
@@ -88,7 +88,7 @@ public class HtmlServiceImpl implements HtmlService {
 	}
 
 	@Override
-	public String generateArticle(Article article) throws IOException {
+	public String generateArticle(Article article, TripDto trip) throws IOException {
 		String top = getTopN1();
 		String bottom = loadTemplate("templates/bottom.tpl");
 		
@@ -101,6 +101,7 @@ public class HtmlServiceImpl implements HtmlService {
 		articlePage.setThumbnailUrl(article.getThumbnailUrl());
 		articlePage.setCreated(article.getCreated());
 		articlePage.setUpdated(article.getUpdated());
+		articlePage.setTrip(trip);
 		
 		ObjectMapper mapper = new ObjectMapper();
 		List<ArticleDescription> descriptions = mapper.readValue(article.getDescription(), new TypeReference<List<ArticleDescription>>() {});
@@ -122,7 +123,7 @@ public class HtmlServiceImpl implements HtmlService {
 	}
 
 	@Override
-	public String generateAlbum(Album album, List<ListMedia> medias) throws IOException {
+	public String generateAlbum(Album album, List<ListMedia> medias, TripDto trip) throws IOException {
 		String top = getTopN1();
 		String bottom = loadTemplate("templates/bottom.tpl");
 
@@ -133,6 +134,7 @@ public class HtmlServiceImpl implements HtmlService {
 		albumPage.setCreated(album.getCreated());
 		albumPage.setUpdated(album.getUpdated());
 		albumPage.setImages(medias);
+		albumPage.setTrip(trip);
 		
 		String templateAsString = loadTemplate("templates/album.tpl");
 		Template template = handlebars.compileInline(templateAsString);

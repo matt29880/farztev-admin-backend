@@ -10,5 +10,6 @@ import com.ronvel.farztev.admin.dao.model.TripArticleModelId;
 public interface TripArticleDao extends CrudRepository<TripArticleModel, TripArticleModelId> {
 	
 	List<TripArticleModel> getByTripArticleIdTripId(Long tripId);
+	List<TripArticleModel> getByTripArticleIdArticleId(Long articleId);
 	
 }

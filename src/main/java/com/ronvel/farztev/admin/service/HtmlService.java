@@ -8,6 +8,7 @@ import com.ronvel.farztev.admin.component.TripPage;
 import com.ronvel.farztev.admin.controller.dto.Album;
 import com.ronvel.farztev.admin.controller.dto.Article;
 import com.ronvel.farztev.admin.controller.dto.ListMedia;
+import com.ronvel.farztev.admin.controller.dto.TripDto;
 
 public interface HtmlService {
 
@@ -15,8 +16,8 @@ public interface HtmlService {
 	
 	String generateTrip(TripPage tripPage) throws IOException;
 
-	String generateArticle(Article article) throws IOException;
+	String generateArticle(Article article, TripDto trip) throws IOException;
 
-	String generateAlbum(Album album, List<ListMedia> medias) throws IOException;
+	String generateAlbum(Album album, List<ListMedia> medias, TripDto trip) throws IOException;
 
 }

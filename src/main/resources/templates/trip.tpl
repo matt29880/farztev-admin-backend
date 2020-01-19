@@ -1,3 +1,6 @@
+<p>
+	> <a href="../">Farzteo.com</a>
+</p>
 <section class="trips">
 	<h1>{{{trip.name}}}</h1>
 	<div class="row">

@@ -10,5 +10,6 @@ import com.ronvel.farztev.admin.dao.model.TripAlbumModelId;
 public interface TripAlbumDao extends CrudRepository<TripAlbumModel, TripAlbumModelId> {
 	
 	List<TripAlbumModel> getByTripAlbumIdTripId(Long tripId);
+	List<TripAlbumModel> getByTripAlbumIdAlbumId(Long albumId);
 	
 }
