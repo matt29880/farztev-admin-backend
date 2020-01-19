@@ -148,33 +148,35 @@ public class PublishServiceImpl implements PublishService {
 		List<Article> articles = articleService.listArticles().stream()
 				.map(a -> articleService.findArticleById(a.getId()).get())
 				.collect(Collectors.toList());
-		Map<Long, File> tripHtmls = new LinkedHashMap<>();
+		Map<Long, File> articlesHtml = new LinkedHashMap<>();
 		for(Article article : articles) {
 			articles.forEach(a -> a.setName(StringEscapeUtils.escapeHtml4(a.getName())));
 			File articleFile = new File(TMP_FOLDER + "/articles/"+ article.getId() + ".html");
-			String articleHtml = htmlService.generateArticle(article);
+			TripDto trip = tripArticleService.getTripByArticle(article.getId());
+			String articleHtml = htmlService.generateArticle(article, trip);
 			FileUtils.write(articleFile, articleHtml, StandardCharsets.UTF_8);
-			tripHtmls.put(article.getId(), articleFile);
+			articlesHtml.put(article.getId(), articleFile);
 		}
-		return tripHtmls;
+		return articlesHtml;
 	}
 	
 	private Map<Long, File> generateAlbums() throws IOException {
 		List<Album> albums = albumService.listAlbums().stream()
 				.map(a -> albumService.findAlbumById(a.getId()).get())
 				.collect(Collectors.toList());
-		Map<Long, File> tripHtmls = new LinkedHashMap<>();
+		Map<Long, File> albumHtmls = new LinkedHashMap<>();
 		for(Album album : albums) {
 			List<ListMedia> medias = mediaService.listAlbumMedias(album.getId(), MediaType.PHOTO);
 			albums.forEach(a -> a.setName(StringEscapeUtils.escapeHtml4(a.getName())));
 			File albumFile = new File(TMP_FOLDER + "/albums/"+ album.getId() + ".html");
-			String albumHtml = htmlService.generateAlbum(album, medias);
+			TripDto albumTrip = tripAlbumService.getTripByAlbum(album.getId());
+			String albumHtml = htmlService.generateAlbum(album, medias, albumTrip);
 			FileUtils.write(albumFile, albumHtml, StandardCharsets.UTF_8);
-			tripHtmls.put(album.getId(), albumFile);
+			albumHtmls.put(album.getId(), albumFile);
 		}
-		return tripHtmls;
+		return albumHtmls;
 	}
-	
+
 	private Timeline mapToTimeline(TripDto trip) {
 		Timeline timeline = new Timeline();
 		timeline.setId(trip.getId());

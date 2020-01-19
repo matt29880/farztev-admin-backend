@@ -9,7 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ronvel.farztev.admin.controller.dto.Article;
+import com.ronvel.farztev.admin.controller.dto.TripDto;
 import com.ronvel.farztev.admin.dao.TripArticleDao;
+import com.ronvel.farztev.admin.dao.model.TripAlbumModel;
 import com.ronvel.farztev.admin.dao.model.TripArticleModel;
 import com.ronvel.farztev.admin.dao.model.TripArticleModelId;
 import com.ronvel.farztev.admin.service.TripArticleService;
@@ -19,11 +21,14 @@ public class TripArticleServiceImpl implements TripArticleService {
 
 	private final TripArticleDao tripArticleDao;
 	private final ArticleServiceImpl articleService;
+	private final TripServiceImpl tripService;
 
 	@Autowired
-	public TripArticleServiceImpl(TripArticleDao tripArticleDao, ArticleServiceImpl articleService) {
+	public TripArticleServiceImpl(TripArticleDao tripArticleDao, ArticleServiceImpl articleService,
+			TripServiceImpl tripService) {
 		this.tripArticleDao = tripArticleDao;
 		this.articleService = articleService;
+		this.tripService = tripService;
 	}
 
 	@Override
@@ -47,6 +52,12 @@ public class TripArticleServiceImpl implements TripArticleService {
 	@Override
 	public void deleteTripArticle(Long tripId, Long articleId) {
 		tripArticleDao.delete(new TripArticleModelId(tripId, articleId));
+	}
+
+	@Override
+	public TripDto getTripByArticle(Long articleId) {
+		List<TripArticleModel> tripArticles = tripArticleDao.getByTripArticleIdArticleId(articleId);
+		return tripService.getTrip(tripArticles.get(0).getTripArticleId().getTripId());
 	}
 
 }
