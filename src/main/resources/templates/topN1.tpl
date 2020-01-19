@@ -7,6 +7,7 @@
 		<link rel="stylesheet" type="text/css" href="../styles.css">
         <title>Site d'un couple de bretons passionn&eacute;s de voyage</title>
 		<link rel="icon" href="../farztev.png" />
+		<link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Pacifico" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	</head>
 	<body>
