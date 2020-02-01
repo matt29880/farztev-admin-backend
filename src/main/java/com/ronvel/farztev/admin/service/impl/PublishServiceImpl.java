@@ -97,8 +97,10 @@ public class PublishServiceImpl implements PublishService {
 	@Override
 	public void publishAllWebsite(PublishType publishType) throws IOException {
 		log.info("Generate homepage - start");
-		File css = copyCss(TMP_FOLDER);
-		log.info("Generate homepage - css copied");
+		File mainCss = copyCss(TMP_FOLDER, "styles.css");
+		log.info("Generate homepage - styles.css copied");
+		File timelineCss = copyCss(TMP_FOLDER, "timeline.css");
+		log.info("Generate homepage - timeline.css copied");
 		Homepage homepage = new Homepage();
 		List<TripDto> trips = tripService.listTrips(true);
 		List<Timeline> timelines = trips.stream()
@@ -123,7 +125,7 @@ public class PublishServiceImpl implements PublishService {
 //					.generateThumbnails();
 //		}
 		
-		sendToFtp(indexHtml, css, tripHtmls, articleHtmls, albumHtmls);
+		sendToFtp(indexHtml, mainCss, timelineCss, tripHtmls, articleHtmls, albumHtmls);
 	}
 	
 	private Map<Long, File> generateTrips() throws IOException {
@@ -194,14 +196,14 @@ public class PublishServiceImpl implements PublishService {
 		return timeline;
 	}
 	
-	public static File copyCss(String rootFolder) throws IOException {
-		InputStream is = PublishServiceImpl.class.getClassLoader().getResourceAsStream("styles.css");
-		File cssFile = new File(rootFolder + "/styles.css");
+	public static File copyCss(String rootFolder, String filename) throws IOException {
+		InputStream is = PublishServiceImpl.class.getClassLoader().getResourceAsStream(filename);
+		File cssFile = new File(rootFolder + filename);
 		FileUtils.copyInputStreamToFile(is, cssFile);
 		return cssFile;
 	}
 	
-	public void sendToFtp(File homepage, File css, Map<Long, File> tripHtmls, Map<Long, File> articleHtmls,
+	public void sendToFtp(File homepage, File css, File timelineCss, Map<Long, File> tripHtmls, Map<Long, File> articleHtmls,
 			Map<Long, File> albumHtmls) {
 		FileInputStream fis = null;
 		FTPClient client = null;
@@ -217,6 +219,8 @@ public class PublishServiceImpl implements PublishService {
 			log.info("index.html send to ftp : {}", res);
 			res = client.storeFile("styles.css", FileUtils.openInputStream(css));
 			log.info("styles.css send to ftp : {}", res);
+			res = client.storeFile("timeline.css", FileUtils.openInputStream(timelineCss));
+			log.info("timeline.css send to ftp : {}", res);
 
 			client.changeWorkingDirectory("trips");
 			for (Entry<Long, File> entry : tripHtmls.entrySet()) {

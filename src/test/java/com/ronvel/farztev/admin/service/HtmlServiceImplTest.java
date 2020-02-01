@@ -39,7 +39,8 @@ public class HtmlServiceImplTest {
 		String actual = sut.generateHomepage(homepage);
 		String expected = loadResource("html/homepage.html");
 		FileUtils.write(new File("/home/mathieu/tmp/html/homepage.html"), actual);
-		PublishServiceImpl.copyCss("/home/mathieu/tmp/html");
+		PublishServiceImpl.copyCss("/home/mathieu/tmp/html", "styles.css");
+		PublishServiceImpl.copyCss("/home/mathieu/tmp/html", "timeline.css");
 		assertEquals(expected, actual);
 	}
 

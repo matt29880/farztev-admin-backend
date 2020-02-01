@@ -5,6 +5,7 @@
 			<meta name="robots" content="noindex">
 		{{/if}}
 		<link rel="stylesheet" type="text/css" href="styles.css">
+		<link rel="stylesheet" type="text/css" href="timeline.css">
         <title>Site d'un couple de bretons passionn&eacute;s de voyage</title>
 		<link rel="icon" href="farztev.png" />
 		<link rel="stylesheet" type="text/css" href="../pacifico" />
