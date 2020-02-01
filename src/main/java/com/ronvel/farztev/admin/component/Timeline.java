@@ -9,7 +9,9 @@ public class Timeline {
 	private String title;
 	private String summary;
 	private boolean future;
-	private String start;
-	private String end;
+	private int day;
+	private String month;
+	private int year;
 	private String periodDescription;
+	private String side; // left or right
 }

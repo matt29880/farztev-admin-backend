@@ -1,7 +1,7 @@
 <h1>Nos voyages</h1>
 <div class="timeline">
   {{#timelines}}
-  <div class="container left">
+  <div class="container {{side}}">
     <div class="content">
       <h2>
 		<a href="./trips/{{id}}.html">
@@ -15,9 +15,9 @@
       </p>
     </div>	
     <div class="date">
-	<p class="day">12</p>
-	<p class="month">Mai</p>
-	<p class="year">2019</p>
+	<p class="day">{{day}}</p>
+	<p class="month">{{month}}</p>
+	<p class="year">{{year}}</p>
     </div>
   </div>
   {{/timelines}}

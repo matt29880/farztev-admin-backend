@@ -6,9 +6,13 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.SocketException;
 import java.nio.charset.StandardCharsets;
+import java.text.DateFormatSymbols;
+import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.stream.Collectors;
@@ -103,9 +107,13 @@ public class PublishServiceImpl implements PublishService {
 		log.info("Generate homepage - timeline.css copied");
 		Homepage homepage = new Homepage();
 		List<TripDto> trips = tripService.listTrips(true);
-		List<Timeline> timelines = trips.stream()
-				.map(this::mapToTimeline)
-				.collect(Collectors.toList());
+		
+		List<Timeline> timelines = new ArrayList<>();
+		int i = 0;
+		for(TripDto trip : trips) {
+			timelines.add(mapToTimeline(trip, i));
+			i++;
+		}
 		homepage.setTimelines(timelines);
 		log.info("Generate homepage - mapping done");
 		String html = htmlService.generateHomepage(homepage);
@@ -179,7 +187,7 @@ public class PublishServiceImpl implements PublishService {
 		return albumHtmls;
 	}
 
-	private Timeline mapToTimeline(TripDto trip) {
+	private Timeline mapToTimeline(TripDto trip, int index) {
 		Timeline timeline = new Timeline();
 		timeline.setId(trip.getId());
 		timeline.setTitle(StringEscapeUtils.escapeHtml4(trip.getName()));
@@ -187,13 +195,17 @@ public class PublishServiceImpl implements PublishService {
 		timeline.setFuture(false);
 		timeline.setImage(trip.getThumbnailUrl());
 		if (trip.getStart() != null) {
-			timeline.setStart(dateTimeFormatter.format(trip.getStart()));			
-		}
-		if (trip.getEnd() != null) {
-			timeline.setEnd(dateTimeFormatter.format(trip.getEnd()));			
+			timeline.setDay(trip.getStart().getDayOfMonth());
+			timeline.setMonth(formatMonth(trip.getStart()));
+			timeline.setYear(trip.getStart().getYear());
 		}
 		timeline.setPeriodDescription(StringEscapeUtils.escapeHtml4(trip.getPeriodDescription()));
+		timeline.setSide(index % 2 == 0 ? "left" : "right");
 		return timeline;
+	}
+	
+	private String formatMonth(LocalDate date) {
+		return date.format(DateTimeFormatter.ofPattern("MMM"));
 	}
 	
 	public static File copyCss(String rootFolder, String filename) throws IOException {

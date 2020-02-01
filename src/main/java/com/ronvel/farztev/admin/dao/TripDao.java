@@ -8,6 +8,6 @@ import com.ronvel.farztev.admin.dao.model.TripModel;
 
 public interface TripDao extends CrudRepository<TripModel, Long> {
 	
-	List<TripModel> findAllByOnline(boolean online);
+	List<TripModel> findAllByOnlineOrderByStartDesc(boolean online);
 	
 }
