@@ -6,9 +6,13 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.SocketException;
 import java.nio.charset.StandardCharsets;
+import java.text.DateFormatSymbols;
+import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.stream.Collectors;
@@ -97,13 +101,19 @@ public class PublishServiceImpl implements PublishService {
 	@Override
 	public void publishAllWebsite(PublishType publishType) throws IOException {
 		log.info("Generate homepage - start");
-		File css = copyCss(TMP_FOLDER);
-		log.info("Generate homepage - css copied");
+		File mainCss = copyCss(TMP_FOLDER, "styles.css");
+		log.info("Generate homepage - styles.css copied");
+		File timelineCss = copyCss(TMP_FOLDER, "timeline.css");
+		log.info("Generate homepage - timeline.css copied");
 		Homepage homepage = new Homepage();
 		List<TripDto> trips = tripService.listTrips(true);
-		List<Timeline> timelines = trips.stream()
-				.map(this::mapToTimeline)
-				.collect(Collectors.toList());
+		
+		List<Timeline> timelines = new ArrayList<>();
+		int i = 0;
+		for(TripDto trip : trips) {
+			timelines.add(mapToTimeline(trip, i));
+			i++;
+		}
 		homepage.setTimelines(timelines);
 		log.info("Generate homepage - mapping done");
 		String html = htmlService.generateHomepage(homepage);
@@ -123,7 +133,7 @@ public class PublishServiceImpl implements PublishService {
 //					.generateThumbnails();
 //		}
 		
-		sendToFtp(indexHtml, css, tripHtmls, articleHtmls, albumHtmls);
+		sendToFtp(indexHtml, mainCss, timelineCss, tripHtmls, articleHtmls, albumHtmls);
 	}
 	
 	private Map<Long, File> generateTrips() throws IOException {
@@ -177,7 +187,7 @@ public class PublishServiceImpl implements PublishService {
 		return albumHtmls;
 	}
 
-	private Timeline mapToTimeline(TripDto trip) {
+	private Timeline mapToTimeline(TripDto trip, int index) {
 		Timeline timeline = new Timeline();
 		timeline.setId(trip.getId());
 		timeline.setTitle(StringEscapeUtils.escapeHtml4(trip.getName()));
@@ -185,23 +195,27 @@ public class PublishServiceImpl implements PublishService {
 		timeline.setFuture(false);
 		timeline.setImage(trip.getThumbnailUrl());
 		if (trip.getStart() != null) {
-			timeline.setStart(dateTimeFormatter.format(trip.getStart()));			
-		}
-		if (trip.getEnd() != null) {
-			timeline.setEnd(dateTimeFormatter.format(trip.getEnd()));			
+			timeline.setDay(trip.getStart().getDayOfMonth());
+			timeline.setMonth(formatMonth(trip.getStart()));
+			timeline.setYear(trip.getStart().getYear());
 		}
 		timeline.setPeriodDescription(StringEscapeUtils.escapeHtml4(trip.getPeriodDescription()));
+		timeline.setSide(index % 2 == 0 ? "left" : "right");
 		return timeline;
 	}
 	
-	public static File copyCss(String rootFolder) throws IOException {
-		InputStream is = PublishServiceImpl.class.getClassLoader().getResourceAsStream("styles.css");
-		File cssFile = new File(rootFolder + "/styles.css");
+	private String formatMonth(LocalDate date) {
+		return date.format(DateTimeFormatter.ofPattern("MMM"));
+	}
+	
+	public static File copyCss(String rootFolder, String filename) throws IOException {
+		InputStream is = PublishServiceImpl.class.getClassLoader().getResourceAsStream(filename);
+		File cssFile = new File(rootFolder + filename);
 		FileUtils.copyInputStreamToFile(is, cssFile);
 		return cssFile;
 	}
 	
-	public void sendToFtp(File homepage, File css, Map<Long, File> tripHtmls, Map<Long, File> articleHtmls,
+	public void sendToFtp(File homepage, File css, File timelineCss, Map<Long, File> tripHtmls, Map<Long, File> articleHtmls,
 			Map<Long, File> albumHtmls) {
 		FileInputStream fis = null;
 		FTPClient client = null;
@@ -217,6 +231,8 @@ public class PublishServiceImpl implements PublishService {
 			log.info("index.html send to ftp : {}", res);
 			res = client.storeFile("styles.css", FileUtils.openInputStream(css));
 			log.info("styles.css send to ftp : {}", res);
+			res = client.storeFile("timeline.css", FileUtils.openInputStream(timelineCss));
+			log.info("timeline.css send to ftp : {}", res);
 
 			client.changeWorkingDirectory("trips");
 			for (Entry<Long, File> entry : tripHtmls.entrySet()) {

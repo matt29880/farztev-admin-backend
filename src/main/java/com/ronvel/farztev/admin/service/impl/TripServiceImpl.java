@@ -37,7 +37,7 @@ public class TripServiceImpl implements TripService {
 		if (online == null) {
 			trips = tripDao.findAll();
 		} else {
-			trips = tripDao.findAllByOnline(online);
+			trips = tripDao.findAllByOnlineOrderByStartDesc(online);
 		}
 		List<TripDto> tripDtos = new ArrayList<TripDto>();
 		for(TripModel trip : trips) {

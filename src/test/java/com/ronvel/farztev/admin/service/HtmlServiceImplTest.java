@@ -25,21 +25,24 @@ public class HtmlServiceImplTest {
 		timeline1.setFuture(true);
 		timeline1.setTitle("Valencia");
 		timeline1.setSummary("We'll go to Valencia to visit this beautiful spanish city.");
-		timeline1.setStart("12 MAY 2019");
-		timeline1.setEnd("15 MAY 2019");
+		timeline1.setDay(12);
+		timeline1.setMonth("Mai");
+		timeline1.setYear(2020);
 		
 		Timeline timeline2 = new Timeline();
 		timeline2.setFuture(true);
 		timeline2.setTitle("Göteborg");
 		timeline2.setSummary("Göteborg is located in the south-west of Sweden");
-		timeline2.setStart("28 SEPTEMBER 2018");
-		timeline2.setEnd("28 SEPTEMBER 2018");
+		timeline1.setDay(28);
+		timeline1.setMonth("Sept.");
+		timeline1.setYear(2019);
 		
 		homepage.setTimelines(List.of(timeline1, timeline2));
 		String actual = sut.generateHomepage(homepage);
 		String expected = loadResource("html/homepage.html");
 		FileUtils.write(new File("/home/mathieu/tmp/html/homepage.html"), actual);
-		PublishServiceImpl.copyCss("/home/mathieu/tmp/html");
+		PublishServiceImpl.copyCss("/home/mathieu/tmp/html", "styles.css");
+		PublishServiceImpl.copyCss("/home/mathieu/tmp/html", "timeline.css");
 		assertEquals(expected, actual);
 	}
 

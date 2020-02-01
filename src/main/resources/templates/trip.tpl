@@ -51,7 +51,7 @@
 					{{{name}}}
 				</h2>
 		 	 	<div class="thumbnail">
-					<img src="../images/thumbnails/300x300{{thumbnailUrl}}" />
+					<img src="../images/thumbnails/300x300{{thumbnailUrl}}" width="200" />
 			  	</div>
 			</a>
 		</div>
