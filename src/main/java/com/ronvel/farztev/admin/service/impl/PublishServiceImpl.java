@@ -160,7 +160,7 @@ public class PublishServiceImpl implements PublishService {
 				.collect(Collectors.toList());
 		Map<Long, File> articlesHtml = new LinkedHashMap<>();
 		for(Article article : articles) {
-			articles.forEach(a -> a.setName(StringEscapeUtils.escapeHtml4(a.getName())));
+			article.setName(StringEscapeUtils.escapeHtml4(article.getName()));
 			File articleFile = new File(TMP_FOLDER + "/articles/"+ article.getId() + ".html");
 			TripDto trip = tripArticleService.getTripByArticle(article.getId());
 			trip.setName(StringEscapeUtils.escapeHtml4(trip.getName()));
