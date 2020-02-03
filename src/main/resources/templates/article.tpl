@@ -1,5 +1,5 @@
 <p>
-	> <a href="../">Farzteo.com</a> > <a href="../trips/{{trip.id}}.html">Trip : {{trip.name}}</a>
+	> <a href="../">Farzteo.com</a> > <a href="../trips/{{trip.id}}.html">Trip : {{{trip.name}}}</a>
 </p>
 <div class="article">
 	<h1>{{{name}}}</h1>

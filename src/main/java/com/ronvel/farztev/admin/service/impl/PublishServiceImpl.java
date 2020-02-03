@@ -163,6 +163,7 @@ public class PublishServiceImpl implements PublishService {
 			articles.forEach(a -> a.setName(StringEscapeUtils.escapeHtml4(a.getName())));
 			File articleFile = new File(TMP_FOLDER + "/articles/"+ article.getId() + ".html");
 			TripDto trip = tripArticleService.getTripByArticle(article.getId());
+			trip.setName(StringEscapeUtils.escapeHtml4(trip.getName()));
 			String articleHtml = htmlService.generateArticle(article, trip);
 			FileUtils.write(articleFile, articleHtml, StandardCharsets.UTF_8);
 			articlesHtml.put(article.getId(), articleFile);
@@ -180,6 +181,7 @@ public class PublishServiceImpl implements PublishService {
 			albums.forEach(a -> a.setName(StringEscapeUtils.escapeHtml4(a.getName())));
 			File albumFile = new File(TMP_FOLDER + "/albums/"+ album.getId() + ".html");
 			TripDto albumTrip = tripAlbumService.getTripByAlbum(album.getId());
+			albumTrip.setName(StringEscapeUtils.escapeHtml4(albumTrip.getName()));
 			String albumHtml = htmlService.generateAlbum(album, medias, albumTrip);
 			FileUtils.write(albumFile, albumHtml, StandardCharsets.UTF_8);
 			albumHtmls.put(album.getId(), albumFile);
