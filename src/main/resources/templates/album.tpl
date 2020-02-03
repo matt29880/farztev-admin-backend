@@ -8,7 +8,7 @@
   </div>
 </div>
 
-<div class="row">
+<div class="album row">
 {{#images}}
   <div class="col-3 col-s-3">
   	<a href="../images{{url}}">

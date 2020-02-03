@@ -172,3 +172,7 @@ li {
 .descriptions ul {
     margin-bottom: 2em;
 }
+
+.album img {
+	width: 100%;
+}
