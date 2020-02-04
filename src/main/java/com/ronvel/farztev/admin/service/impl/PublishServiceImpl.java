@@ -6,13 +6,11 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.SocketException;
 import java.nio.charset.StandardCharsets;
-import java.text.DateFormatSymbols;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.stream.Collectors;
@@ -38,7 +36,6 @@ import com.ronvel.farztev.admin.component.TripPage;
 import com.ronvel.farztev.admin.controller.dto.Album;
 import com.ronvel.farztev.admin.controller.dto.Article;
 import com.ronvel.farztev.admin.controller.dto.ListMedia;
-import com.ronvel.farztev.admin.controller.dto.PublishType;
 import com.ronvel.farztev.admin.controller.dto.TripDto;
 import com.ronvel.farztev.admin.enums.MediaType;
 import com.ronvel.farztev.admin.service.AlbumService;
@@ -99,7 +96,7 @@ public class PublishServiceImpl implements PublishService {
 	}
 
 	@Override
-	public void publishAllWebsite(PublishType publishType) throws IOException {
+	public void publishAllWebsite() throws IOException {
 		log.info("Generate homepage - start");
 		File mainCss = copyCss(TMP_FOLDER, "styles.css");
 		log.info("Generate homepage - styles.css copied");
@@ -125,13 +122,6 @@ public class PublishServiceImpl implements PublishService {
 		Map<Long, File> tripHtmls = generateTrips();
 		Map<Long, File> articleHtmls = generateArticles();
 		Map<Long, File> albumHtmls = generateAlbums();
-
-//		if (publishType != PublishType.ONLY_HTML) {
-//			new ThumbnailGenerator(host, username, password, environmentSuffix, environmentUrl, 300, 300, publishType)
-//					.generateThumbnails();
-//			new ThumbnailGenerator(host, username, password, environmentSuffix, environmentUrl, 600, 600, publishType)
-//					.generateThumbnails();
-//		}
 		
 		sendToFtp(indexHtml, mainCss, timelineCss, tripHtmls, articleHtmls, albumHtmls);
 	}
