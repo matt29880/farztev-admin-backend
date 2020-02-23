@@ -1,5 +1,6 @@
 package com.ronvel.farztev.admin.component;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonSubTypes.Type;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
@@ -17,6 +18,7 @@ import lombok.Data;
   @Type(value = ArticleDescriptionAlbum.class, name = "album") , 
   @Type(value = ArticleUnorderedList.class, name = "ul") 
 })
+@JsonIgnoreProperties(ignoreUnknown = true)
 @Data
 public abstract class ArticleDescription {
 	private final ArticleDescriptionType type;

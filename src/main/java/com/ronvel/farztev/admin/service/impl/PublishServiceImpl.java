@@ -67,7 +67,6 @@ public class PublishServiceImpl implements PublishService {
 	private final String environmentUrl;
 	
 	private static final String TMP_FOLDER = "/tmp/farzteo";
-	private static final DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 	
 	public PublishServiceImpl(HtmlService htmlService, 
 			TripService tripService, 
