@@ -167,7 +167,7 @@ public class PublishServiceImpl implements PublishService {
 		Map<Long, File> albumHtmls = new LinkedHashMap<>();
 		for(Album album : albums) {
 			List<ListMedia> medias = mediaService.listAlbumMedias(album.getId(), MediaType.PHOTO);
-			albums.forEach(a -> a.setName(StringEscapeUtils.escapeHtml4(a.getName())));
+			album.setName(StringEscapeUtils.escapeHtml4(album.getName()));
 			File albumFile = new File(TMP_FOLDER + "/albums/"+ album.getId() + ".html");
 			TripDto albumTrip = tripAlbumService.getTripByAlbum(album.getId());
 			albumTrip.setName(StringEscapeUtils.escapeHtml4(albumTrip.getName()));
