@@ -15,7 +15,8 @@ import lombok.Data;
   @Type(value = ArticleDescriptionParagraph.class, name = "paragraph"), 
   @Type(value = ArticleDescriptionTitle.class, name = "title") , 
   @Type(value = ArticleDescriptionPhoto.class, name = "photo") , 
-  @Type(value = ArticleDescriptionAlbum.class, name = "album") , 
+  @Type(value = ArticleDescriptionPhotoList.class, name = "photo_list"), 
+  @Type(value = ArticleDescriptionAlbum.class, name = "album"), 
   @Type(value = ArticleUnorderedList.class, name = "ul") 
 })
 @JsonIgnoreProperties(ignoreUnknown = true)
