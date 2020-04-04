@@ -169,12 +169,24 @@ section p {
 	text-align: left;
 }
 
+.trip-articles-title h2 {
+  margin-top: 0.5em;
+}
+
 li {
   margin-left: 1em;
 }
 
 .descriptions ul {
     margin-bottom: 2em;
+}
+
+.article-photo {
+	text-align: center;
+}
+
+.article-photo-list {
+	text-align: center;
 }
 
 .album img {

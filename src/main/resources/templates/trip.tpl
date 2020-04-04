@@ -4,24 +4,7 @@
 
 <h1>{{{trip.name}}}</h1>
 
-<section class="trips">
-	<div class="row">
-		<div class="col-6 col-s-6 trip">
-			  <div class="thumbnail">
-					<picture>
-					  <source media="(min-width: 450px)" srcset="../images/thumbnails/450x450{{trip.thumbnailUrl}}">
-					  <img src="../images/thumbnails/300x300{{trip.thumbnailUrl}}" 
-					  		alt="Flowers" style="width:auto;">
-					</picture>
-			  </div>
-		</div>
-		<div class="col-6 col-s-6 trip">
-			<p>{{{trip.summary}}}</p>
-		</div>
-	</div>
-</section>
-
-<h2>Articles</h2>
+<h2 class="trip-articles-title">Articles</h2>
 
 <section class="articles">
 	<div class="row">
