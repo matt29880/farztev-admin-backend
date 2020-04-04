@@ -161,6 +161,10 @@ section p {
 	margin-bottom: 1.5em;
 }
 
+.article-panorama img {
+	max-width: 100%;
+}
+
 .trips p {
 	text-align: left;
 }
